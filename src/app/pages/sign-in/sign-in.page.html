@@ -1,0 +1,56 @@
+<ion-content>
+
+  <div class="wrapper">
+    <div class="header">
+
+      <div class="row1">Suvai</div>
+      <div class="row2">Suvai - Guest Survey app</div>
+      <div class="row3">for food caterers</div>
+    </div>
+    <div class="main">
+      <div class="row1">
+        <span class="label">
+          SIGNIN
+        </span>
+        
+      </div>
+      <div class="row2">
+        <ion-input placeholder="Enter Mobile Number"  class="input-text-align"></ion-input>
+      </div>
+      <div class="row3">
+        <ion-row center >
+          <ion-col text-center class="test">
+            <ion-button expand="block" fill="solid" shape="round" class="button-align"
+            (click)="onSubmit()"  type="button" name="action" color="primary">SIGN IN</ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+      <div class="row4">New to Suvai?</div>
+      <div class="row5">
+          <ion-row center >
+              <ion-col text-center class="test">
+                <ion-button expand="block" fill="solid" shape="round" class="button-align"
+                (click)="signUp()"  type="button" name="action" color="vibrant">SIGN UP FOR FREE</ion-button>
+              </ion-col>
+            </ion-row>
+      </div>
+
+    </div>
+    <div class="survey">
+      <div class="survey-mode">
+        SURVEY MODE
+      </div>
+      <div class="enter-survey-mode">
+        <ion-button (click)="onClick()">
+        ENTER SURVEY MODE
+        </ion-button>
+      </div>
+      <div class="why-survey-mode">
+        What is survey mode?
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+

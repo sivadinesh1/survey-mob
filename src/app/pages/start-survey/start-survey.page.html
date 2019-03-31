@@ -1,0 +1,58 @@
+<ion-content class="wrapper">
+
+  <div class="top">
+    <div class="item1 item">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </div>
+    <div class="item2 ">சர்வே </div>
+    <div class="item3 item">
+      <ion-icon name="eye"></ion-icon>
+    </div>
+    <div class="item4 item">
+      <ion-icon name="close"></ion-icon>
+    </div>
+    <div class="item5 item">
+      <ion-icon name="checkmark"></ion-icon>
+    </div>
+  </div>
+  <div class="main">
+    <div class="row1">சர்வே தகவல்கள்</div>
+    <div>
+      <form [formGroup]="submitForm" >
+      <ion-item>
+          <ion-input formControlName="custname" type="text"  placeholder="கஸ்டமர் பெயர்"  ></ion-input>
+          <ion-icon name="person" slot="start"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+          <ion-input formControlName="venue" type="text"  placeholder="விருந்து / சமையல் நடக்கும் இடம்"  ></ion-input>
+          <ion-icon name="pin" slot="start"></ion-icon>
+      </ion-item>
+      <ion-item>
+          <ion-input formControlName="eventdate" type="text"  placeholder="தேதி"  ></ion-input>
+          <ion-icon name="calendar" slot="start"></ion-icon>
+      </ion-item>
+     
+      <ion-item>
+          <ion-label> நேரம்</ion-label>
+          <ion-select formControlName="eventtime" placeholder="தேர்வு செய்க">
+            <ion-select-option value="f">பகல் விருந்து</ion-select-option>
+            <ion-select-option value="m">மதிய விருந்து</ion-select-option>
+            <ion-select-option value="m">மாலை விருந்து</ion-select-option>
+            <ion-select-option value="m">இரவு விருந்து</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+
+    </div>
+    <div class="mid">கேள்வி - பதில்கள்</div>
+    <div  class="label-1">முதல் கேள்வியையும் அதற்கான தோடு பதில்களையும் உருவாக்குங்கள்</div>
+    <div class="add-question">
+        <ion-icon *ngIf="!addquestions" name="add-circle-outline" class="ion-icon-3x" color="dark" (click)="addQuestions()"></ion-icon>
+    </div>
+  </div>
+  <div class="bottom">
+    &nbsp;
+  </div>
+
+</ion-content>

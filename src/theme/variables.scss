@@ -74,4 +74,13 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  .ion-color-vibrant {
+    --ion-color-base: #f8c045;
+    --ion-color-base-rgb: 255,255,0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0,0,0;
+    --ion-color-shade: #f8c045;
+    --ion-color-tint: #f8c045;
+  }
 }

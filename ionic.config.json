@@ -1,5 +1,7 @@
 {
-  "name": "scoreit",
-  "integrations": {},
+  "name": "suvai",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

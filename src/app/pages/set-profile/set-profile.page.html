@@ -1,0 +1,55 @@
+<ion-content>
+
+    <div class="wrapper">
+      <div class="header">
+  
+        <div class="row1">Suvai</div>
+        <div class="row2">Suvai - Guest Survey app</div>
+        <div class="row3">for food caterers</div>
+      </div>
+      <div class="main fill">
+          <form [formGroup]="submitForm" (ngSubmit)="onSubmit()">
+        <div class="row1">
+          <span class="about-us">
+            Tell Us About You
+          </span>
+          
+        </div>
+        <div class="row2">
+         <ion-item>
+            <ion-input formControlName="firstname" type="text"  placeholder="What's your name?"  ></ion-input>
+         </ion-item>
+         <ion-item>
+            <ion-input formControlName="companyname" type="text"  placeholder="What's your Company name?"  ></ion-input>
+         </ion-item>
+             
+              
+              <ion-item>
+                  <ion-label>Choose Language</ion-label>
+                  <ion-select placeholder="Select One">
+                    <ion-select-option value="f">English</ion-select-option>
+                    <ion-select-option value="m">Tamil</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              
+      
+
+        </div>
+        <br>
+        <div class="row3">
+          <ion-row center >
+            <ion-col text-center class="test">
+              <ion-button expand="block" fill="solid" shape="round" class="button-align"
+              (click)="save()"  type="button" name="action" color="primary">NEXT</ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+     
+      </form>
+      </div>
+    
+    </div>
+  
+  </ion-content>
+  
+  
