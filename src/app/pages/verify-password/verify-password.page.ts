@@ -12,4 +12,8 @@ export class VerifyPasswordPage implements OnInit {
   ngOnInit() {
   }
 
+  onSubmit() {
+    
+  }
+
 }

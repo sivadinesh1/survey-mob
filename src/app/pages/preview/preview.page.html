@@ -1,0 +1,76 @@
+
+<ion-content>
+    <div class="wrapper">
+  
+      <div class="top">
+        <div>
+            <ion-icon (click)="goDashboard()" name="arrow-back"></ion-icon>
+        </div>
+        <div>
+            &nbsp;சர்வே முன்னோட்டம்
+        </div>
+        <div class="golive" >
+            &nbsp;
+          </div>
+         <div class="edit" (click)="edit()" >
+           Edit
+         </div>
+  
+      </div>
+      <div class="top-info">
+        <div class="side-left">
+          <div class="side-left-top">
+         
+           {{surveydata?.surveyname}}
+          </div>
+          <div class="side-left-bottom">
+            {{surveydata?.surveyvenue}}
+          </div>
+  
+        </div>
+  
+        <div class="side-right">
+  
+          <div class="side-right-top">
+            {{surveydata?.surveydate | date: 'dd/MMM/yyyy'}}
+          </div>
+          <div class="side-right-bottom">
+            {{surveydata?.servicetype}}
+          </div>
+  
+        </div>
+  
+      </div>
+      <div class="main">&nbsp;
+       
+      </div>
+      <div class="question">
+        {{this.message}}
+
+          <div class="container">
+              <div class="scroll" scrollY="true">
+                <span *ngFor="let item of result | keyvalue let i = index;" >
+                  <span class="item">
+                      
+                    <div class="question-keys">
+                        <span class="numberCircle"><span>{{i + 1}}</span></span>
+                        {{item.key}}
+                    </div>
+                    
+                    <div *ngFor="let item1 of item.value" class="res-options">
+                      <div class="style-btn">
+                          {{item1.res_options}}
+                      </div>
+                      
+                    </div>
+                  </span> 
+                  
+                </span>
+              </div>
+            </div>
+        </div>
+  
+    </div>
+  </ion-content>
+  
+  

@@ -1,0 +1,96 @@
+<ion-content>
+    <div class="wrapper">
+  
+      <div class="top">
+        <div class="item1 item">
+          <ion-icon name="arrow-round-back" (click)="back()"></ion-icon>
+        </div>
+        <div class="item2 ">சர்வே தகவல்கள்</div>
+        <div class="item3 item">
+         &nbsp;
+        </div>
+        <div class="item4 item">
+          <ion-icon name="trash" (click)="delete()"></ion-icon>
+        </div>
+        <div class="item5 item">
+          <ion-icon (click)="onSubmit()" name="checkmark"></ion-icon>
+        </div>
+  
+      </div>
+      <div class="top-info">
+        <div class="side-left">
+          <div class="side-left-top">
+      &nbsp;
+          </div>
+          <div class="side-left-bottom">
+           &nbsp;
+          </div>
+  
+        </div>
+  
+        <div class="side-right">
+  
+          <div class="side-right-top">
+          &nbsp;
+          </div>
+          <div class="side-right-bottom">
+           &nbsp;
+          </div>
+  
+        </div>
+  
+      </div>
+      <div class="main">&nbsp;</div>
+      <div class="question">
+        <form [formGroup]="submitForm" accept-charset="UTF-8">
+          <div class="row1">விருந்தினருக்கு காட்ட வேண்டிய கேள்வி எண்</div>
+          <div class=row2>
+            <ion-textarea rows="6" cols="20" formControlName="question" class="textareacss"
+              placeholder="Enter Survey questions...">
+            </ion-textarea>
+          </div>
+  
+          <div
+            [ngClass]="{'has-error' : (submitForm.get('question').hasError('required') || submitForm.get('question').hasError('pattern')) && submitForm.get('question').touched}"
+            *ngIf="(submitForm.get('question').hasError('required') || submitForm.get('question').hasError('pattern')) && submitForm.get('question').touched">
+            Questions missing or invalid questions format.
+          </div>
+  
+          <!-- <div class="has-error">
+              {{responsemsg}}
+          </div> -->
+          <div
+          [ngClass]="{'has-error' : (submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched}"
+          *ngIf="(submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched">
+          Response Choice missing or invalid format.
+        </div>
+  
+          <div class="row3">
+            விருந்தினர்களுக்கு காட்டக்கூடிய பதில்கள் கீழாய் கொடுக்கப்பட்டு உள்ளன. அவற்றில் இருந்து ஒன்றை தேர்ந்து
+            எடுக்கவும்
+            
+          </div>
+          <div class=row4>
+          <ion-list >
+            <ion-radio-group formControlName="optiongroupname">
+              <ion-list-header>
+                விருந்தினருக்கு காட்ட வேண்டிய பதில்கள்
+              </ion-list-header>
+              <div *ngFor="let item of flatMap; let i = index;">
+                <ion-item>
+                  <ion-label text-wrap>{{item.name}}</ion-label>
+                  <ion-radio slot="start" (click)="onClick(item)" value="{{item.id}}">
+                  </ion-radio>
+  
+                </ion-item>
+              </div>
+  
+            </ion-radio-group>
+          </ion-list>
+        </div>
+        
+        </form>
+      </div>
+  
+    </div>
+  </ion-content>

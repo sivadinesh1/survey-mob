@@ -40,10 +40,11 @@
             align-items: center;
             font-size: 0.8rem;
         }
+       
 
     }
 
-    .main {
+    .main-su {
         display: grid;
         background-color: #ffffff;
         border-top-left-radius: 10px;
@@ -54,7 +55,8 @@
 
         .row1,
         .row2,
-        .row3
+        .row3,
+        .pass-block
             {
             justify-content: center;
             align-self: center;
@@ -81,7 +83,15 @@
         .row3 {
            
         }
-
+        .row4 {
+            display: grid;
+            justify-content: center;
+            justify-self: center;
+            align-items: center;
+            font-size: 0.8rem;
+            color: blue;
+            padding: 1rem;
+        }
 
     }
 
@@ -120,3 +130,35 @@
     }
 
 }
+
+
+.medium-title {
+    font-size: 1.2rem;
+    justify-self: center;
+  }
+
+
+input{
+    padding: 10px;
+    margin: 4px;
+    border: 1px solid #ddd;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.small-font {
+  font-size: 0.8rem !important;
+}
+
+.result {
+    display: grid;
+    font-size: 1rem;
+    color: red;
+    padding: 1rem;
+    text-align: center;
+}
+
+
+

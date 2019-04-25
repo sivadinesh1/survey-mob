@@ -1,0 +1,45 @@
+<ion-content>
+
+  <div class="wrapper">
+    <div class="header">
+
+      <div class="row1">Suvai</div>
+      <div class="row2">Suvai - Guest Survey app</div>
+      <div class="row3">for food caterers</div>
+    </div>
+    <div class="main fill">
+      <div class="row1">
+        <span class="label">
+          SURVEY MODE
+        </span>
+        
+      </div>
+
+      <form [formGroup]="submitForm">
+      <div class="row2">
+        <ion-input placeholder="Enter your Survey Code" formControlName="surveycode" class="input-text-align"></ion-input>
+      </div>
+      <div class="row3">
+        <ion-row center >
+          <ion-col text-center class="test">
+            <ion-button expand="block" fill="solid" shape="round" class="button-align"
+            (click)="onSubmit()"  type="button" name="action" color="primary">START SURVEY</ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+      </form>
+     
+      <div class="has-error msg">
+          {{this.responsemsg}}
+      </div>
+      <div class="row4">
+          <div class="sign-in" (click)="signin()"> Sign in </div>
+        </div>
+ 
+    </div>
+  
+  </div>
+
+</ion-content>
+
+

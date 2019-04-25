@@ -14,19 +14,27 @@
         </span>
         
       </div>
+      <form [formGroup]="submitForm">
       <div class="row2">
-        <ion-input placeholder="Enter Mobile Number"  class="input-text-align"></ion-input>
+        <ion-input placeholder="Enter Mobile Number" formControlName="phonenumber" class="input-text-align"></ion-input>&nbsp;&nbsp;&nbsp;
+      </div>
+      <div class="row2">
+        <ion-input placeholder="Password" [type]="passwordType" formControlName="password" class="input-text-align"></ion-input>
+        <ion-icon name="eye" slot="end" [color]="passwordShown === true ? 'grey' : 'dark' "
+        (click)="togglePassword()"></ion-icon>
       </div>
       <div class="row3">
         <ion-row center >
           <ion-col text-center class="test">
             <ion-button expand="block" fill="solid" shape="round" class="button-align"
-            (click)="onSubmit()"  type="button" name="action" color="primary">SIGN IN</ion-button>
+            (click)="signIn()"  type="button" name="action" color="primary">SIGN IN</ion-button>
           </ion-col>
         </ion-row>
       </div>
+    </form>
       <div class="row4">New to Suvai?</div>
       <div class="row5">
+        <span>New to Suvai?</span>
           <ion-row center >
               <ion-col text-center class="test">
                 <ion-button expand="block" fill="solid" shape="round" class="button-align"

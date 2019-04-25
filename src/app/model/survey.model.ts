@@ -1,8 +1,11 @@
 interface ISurvey {
-    custname: string;
-    venue: string;
-    eventdate: string;
-    eventtime: string;
+    id: string;
+    surveyname: string;
+    surveycode: string;
+    surveyvenue: string;
+    surveydate: string;
+    servicetype: string;
+    loggedinuser: string;
     questions: IQuestions[];
 }
 

@@ -1,0 +1,44 @@
+<ion-content>
+
+  <div class="wrapper">
+    <div class="header">
+
+      <div class="row1">Suvai</div>
+      <div class="row2">Suvai - Guest Survey app</div>
+      <div class="row3">for food caterers</div>
+    </div>
+    <div class="main fill">
+      <div class="row1">
+        <br><br>
+
+        <div class="medium-title">OTP Sent to phone number ending with XXXXXXXX-{{this.lastdigits}}. Please verify.
+        </div>
+        <br>
+        <form [formGroup]="submitForm">
+
+          <input type="number" formControlName="p1" maxlength=1 #p1 (input)="moveOnMax('p2')" />
+          <input type="number" formControlName="p2" maxlength=1 #p2 (input)="moveOnMax('p3')" />
+          <input type="number" formControlName="p3" maxlength=1 #p3 (input)="moveOnMax('p4')" />
+          <input type="number" formControlName="p4" maxlength=1 #p4 (input)="moveOnMax('p5')" />
+          <input type="number" formControlName="p5" maxlength=1 #p5 (input)="moveOnMax('p6')" />
+          <input type="number" formControlName="p6" maxlength=1 #p6 />
+         
+    <br>
+
+       
+                  <ion-button (click)="onVerifyOTP()" type="button" shape="round" name="action" >Verify OTP
+                    </ion-button>
+    
+
+
+        </form>
+
+        <div class="resendotp" (click)="resendotp()">Resend OTP</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

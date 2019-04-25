@@ -1,11 +1,13 @@
+import { AuthService } from '../../services/auth.service';
 import { SurveyService } from './../../services/survey.service';
 
 
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { CommonApiService } from 'src/app/services/common-api.service';
+import { CommonApiService } from '../../services/common-api.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { allSettled } from 'q';
+
 import { Router } from '@angular/router';
+import { SharedService } from '../../services/shared.service';
 
 
 @Component({
@@ -20,17 +22,28 @@ export class StartSurveyPage implements OnInit {
 
   
   survey: ISurvey;
+  surveyon = false;
+  apiresponsedata: any;
+  surveyid: any;
+  loggedinUserId: any;
+  servicetypes: any;
+  validateAllFormFields = SharedService.validateAllFormFields;
+  isFieldInvalidTouched = SharedService.isFieldInvalidTouched;
+  responsemsg: any;
 
   constructor(private _router: Router, private _cdr: ChangeDetectorRef,
     private _fb: FormBuilder, private _surveyService: SurveyService,
+    private _authservice: AuthService,
     private _commonApiService: CommonApiService) { }
 
   ngOnInit() {
     this.submitForm = this._fb.group({
-      custname: new FormControl(null, Validators.required),
-      venue: new FormControl(null, Validators.required),
-      eventdate: new FormControl(null, Validators.required),
-      eventtime: new FormControl(null, Validators.required)
+      surveyname: new FormControl(null, Validators.required),
+      
+      surveyvenue: new FormControl(null, Validators.required),
+      surveydate: new FormControl(null, Validators.required),
+      servicetype: new FormControl(null, Validators.required),
+      loggedinuser: new FormControl(null, Validators.required),
     });
 
     this.getAsyncData();
@@ -45,6 +58,21 @@ export class StartSurveyPage implements OnInit {
     });
 
     
+    this.loggedinUserId = await <any>this._authservice.getItems('USER_ID');
+
+    this.submitForm.patchValue({
+      loggedinuser: this.loggedinUserId.toString(),
+    });
+
+   
+
+    this._commonApiService.getServiceTypes('tamil', 'food', 'functions')
+    .subscribe(
+      data => {
+      
+        this.servicetypes = data;
+        console.log('object' + JSON.stringify(this.servicetypes));
+      });
 
     this._cdr.markForCheck();
 
@@ -53,27 +81,47 @@ export class StartSurveyPage implements OnInit {
 
   addQuestions() {
 
-  //   public  survey: ISurvey = {'custname': '', 'venue': '', 'date': '', 'time': '',
-  //   questions: [{'description': '', 'options': ''}]
-  //  };
+ 
 
-    
+    this._router.navigateByUrl(`/add-questions/${this.surveyid}`);
+  }
 
-    const custname = this.submitForm.value.custname;
-    const venue = this.submitForm.value.venue;
-    const eventdate = this.submitForm.value.eventdate;
-    const eventtime = this.submitForm.value.eventtime;
+  registerSurvey() {
 
-    this.survey.custname = custname;
-    this.survey.venue = venue;
-    this.survey.eventdate = eventdate;
-    this.survey.eventtime = eventtime;
-    console.log('object' + JSON.stringify(this.survey));
+    if (!this.submitForm.valid) {
+      this.validateAllFormFields(this.submitForm);
+      this.responsemsg = 'Wrong or Missing information. Please check the form.';
+    } else {
+    this.survey.surveyname =  this.submitForm.value.surveyname;
+   
+    this.survey.surveyvenue = this.submitForm.value.surveyvenue;
+    this.survey.surveydate = this.submitForm.value.surveydate;
+    this.survey.servicetype = this.submitForm.value.servicetype;
+    this.survey.loggedinuser = this.loggedinUserId;
+
+    console.log('object 123' + JSON.stringify(this.survey));
 
     this._surveyService.setSurveyConfig(this.survey);
     this._cdr.markForCheck();
 
-    this._router.navigateByUrl('add-questions');
+    this._commonApiService.addSurvey(this.submitForm.value).subscribe(data => {
+      this.apiresponsedata = data;
+      console.log('object<<<<< ' + JSON.stringify(this.apiresponsedata));
+
+      if (this.apiresponsedata.result === 'OK') {
+        this.surveyon = true;
+        this.survey.id = this.apiresponsedata.newsurvey;
+        this.surveyid = this.apiresponsedata.newsurvey;
+
+        this._cdr.markForCheck();
+      }
+
+      });
   }
+}
+
+goDashboard() {
+  this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
+}
  
 }

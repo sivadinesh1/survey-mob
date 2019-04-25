@@ -1,36 +1,96 @@
 <ion-content>
 
-    <div class="wrapper">
-      <div class="header">
-  
-        <div class="row1">Suvai</div>
-        <div class="row2">Suvai - Guest Survey app</div>
-        <div class="row3">for food caterers</div>
+  <div class="wrapper">
+    <div class="header">
+
+      <div class="row1">Suvai</div>
+      <div class="row2">Suvai - Guest Survey app</div>
+      <div class="row3">for food caterers</div>
+    </div>
+    <div class="main-su fill">
+      <div class="row1">
+        <span class="label">
+          SIGN UP
+        </span>
+
       </div>
-      <div class="main fill">
-        <div class="row1">
-          <span class="label">
-            SIGN UP
-          </span>
-          
-        </div>
+
+      <form [formGroup]="submitForm">
+          <div class="row2">
+              <ion-input placeholder="Your Name"  type="text" formControlName="firstname" class="input-text-align">
+              </ion-input>
+              <div *ngIf="(submitForm.get('firstname').hasError('required') || submitForm.get('firstname').hasError('pattern')) && submitForm.get('firstname').touched">
+                 <span class="has-error">Mobile Number missing or wrong format</span> 
+              </div>
+              
+            </div>
+
+            <div class="row2">
+                <ion-input placeholder="Company Name (optional)"  type="text" formControlName="companyname" class="input-text-align">
+                </ion-input>
+                <div *ngIf="( submitForm.get('companyname').hasError('pattern')) && submitForm.get('companyname').touched">
+                   <span class="has-error">Please give a shorter company name</span> 
+                </div>
+             
+              </div>
+
+              
         <div class="row2">
-          <ion-input placeholder="Enter your Mobile Number"  class="input-text-align"></ion-input>
+          <ion-input placeholder="Enter your Mobile Number"  type="text" formControlName="phonenumber" class="input-text-align">
+          </ion-input>
+          <div *ngIf="(submitForm.get('phonenumber').hasError('required') || submitForm.get('phonenumber').hasError('pattern')) && submitForm.get('phonenumber').touched">
+             <span class="has-error">Mobile Number missing or wrong format</span> 
+          </div>
+          <div *ngIf="duplicatephone">
+              <span class="has-error"> {{otpsendstatus}}</span> 
+            </div>
         </div>
+
+
+        <div class="pass-block">
+          <ion-input placeholder="Enter Password" type="text" formControlName="password" class="input-text-align"></ion-input>
+
+         
+            
+            <div  *ngIf="(submitForm.get('password').hasError('required') && submitForm.get('password').touched)"
+            class="has-error">Password missing or not in valid format</div><br>
+            <div  *ngIf="( !submitForm.get('password').hasError('required') && submitForm.get('password').hasError('patternInvalid')) && submitForm.get('password').touched"class="has-error">
+              Minimum 6 characters with a mix of letters, numbers</div>
+        
+          <ion-input formControlName="confirmPassword" [type]="passwordType" placeholder="Confirm Password"
+            errorStateMatcher="matcher" 
+            class="input-text-align"></ion-input>
+          <ion-icon name="eye" slot="end" [color]="passwordShown === true ? 'grey' : 'dark' "
+            (click)="togglePassword()"></ion-icon>
+
+
+          <div position="floating" class="validator-error"
+            *ngIf="submitForm.hasError('notSame') && submitForm.get('confirmPassword').touched">
+            
+            <span class="has-error">Passwords do not match</span>
+          </div>
+
+        
+        </div>
+
+
         <div class="row3">
-          <ion-row center >
+          <ion-row center>
             <ion-col text-center class="test">
-              <ion-button expand="block" fill="solid" shape="round" class="button-align"
-              (click)="setPassword()"  type="button" name="action" color="primary">PROCEED</ion-button>
+              <ion-button expand="block" fill="solid" shape="round" class="button-align" 
+              [disabled]=!submitForm.valid
+              (click)="onSubmit()"
+                type="button" name="action" color="primary">Send OTP</ion-button>
             </ion-col>
           </ion-row>
         </div>
-     
-  
-      </div>
-    
+        <div class="row4"  (click)="signin()">Already a member. Sign In</div>
+      </form>
+      <br>
+      <br>
+      
     </div>
-  
-  </ion-content>
-  
-  
+   
+  </div>
+
+</ion-content>

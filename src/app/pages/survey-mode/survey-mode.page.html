@@ -1,0 +1,80 @@
+
+<ion-content >
+
+  <div class="wrapper">
+    <div class="userinfo">
+        <div class="user-name">
+           
+            <div class="companyname">
+                {{userinfo?.companyname}}
+            </div>
+            <div class="close">
+                <ion-icon slot="end"  name="close" (click)="close()"
+                class="ion-icon-2x"></ion-icon>
+            </div>
+          </div>
+          <div class="phone">
+            {{userinfo?.mobilenumber}}
+          </div>
+    </div>
+   
+  
+
+  <div class="card" 
+  [@cardAnimator]="animationState" 
+  (@cardAnimator.done)="resetAnimationState()"
+  (swipeleft)="startAnimation('slideOutLeft')"
+  (swiperight)="startAnimation('zoomOutRight')"
+  (swipeup)="startAnimation('rotateOutUpRight')"
+  (swipedown)="startAnimation('flipOutY')">
+    <div class="question" *ngIf="!endsurvey">
+      <div class="num">
+          <span class="numberCircle"><span>{{addIndex + 1}}</span></span>
+      </div>
+       
+        <div class="quest">
+            {{keysArr[addIndex]}}
+        </div>
+        
+    </div>
+      <div *ngIf="result !== undefined">
+          <div *ngFor="let item1 of result[keysArr[addIndex]]" 
+          (click)="onClick(item1)">
+           <div class="style-btn">
+               {{item1.res_options}}
+           </div>  
+           </div>
+      </div> 
+    
+
+        <div *ngIf="endsurvey" class="end-survey">
+          <div class="thanks">
+              உங்கள் பதில்களை பதிவு செய்தமைக்கு நன்றி!
+          </div>
+            
+            <div class="new-guest" >
+                <ion-row center >
+                    <ion-col text-center >
+                      <ion-button expand="block" fill="solid" shape="round" class="button-align"
+                      (click)="newGuest()"  type="button" name="action" color="primary">Next Guest</ion-button>
+                    </ion-col>
+                  </ion-row>
+            </div>
+            <div class="stop" >
+                <ion-row center >
+                    <ion-col text-center >
+                      <ion-button expand="block" fill="solid" shape="round" class="button-align"
+                      (click)="stop()"  type="button" name="action" color="danger">Stop</ion-button>
+                    </ion-col>
+                  </ion-row>
+            </div>
+        </div>
+      
+    </div>
+
+  <!-- {{quiz[this.qnprogress].question}} -->
+
+
+
+</div>
+</ion-content>

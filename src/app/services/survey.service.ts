@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 import { Storage } from '@ionic/storage';
-import { BehaviorSubject, Observable, Subject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -12,12 +12,11 @@ import { HttpClient } from '@angular/common/http';
 })
 
 
-
 export class SurveyService {
 
 
-   public  survey: ISurvey = {'custname': '', 'venue': '', 'eventdate': '', 'eventtime': '',
-   questions: [{'description': '', 'options': ''}]
+   public  survey: ISurvey = {'id': '', 'surveyname': '', 'surveycode': '', 'surveyvenue': '', 'surveydate': '', 'servicetype': '', 'loggedinuser': '',
+   questions: []
   };
 
    public _surveys = new BehaviorSubject<ISurvey>(this.survey);

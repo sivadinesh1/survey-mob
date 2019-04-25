@@ -1,0 +1,112 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>survey-results</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+Total Responses : {{totalresponses}}
+
+
+<div *ngFor="let item of flatMap">
+ 
+<div> {{item.questions}}</div>
+
+
+<div *ngFor="let item1 of item.responsesummary | keyvalue">
+    
+    <div>{{item1.key}}  ({{item1.value / totalresponses | percent}}, {{item1.value}} votes)</div>
+    <div class="pollbar" [ngStyle]="{'width':getWidth(item1)}"  ></div>
+  </div> 
+  </div>
+
+  
+
+</ion-content> -->
+
+<!-- <ion-header style="background-color: #FBC02D">
+    <ion-toolbar>
+        <ion-icon name="arrow-round-back" class="ion-icon-2x"
+        (click)="goDashboard()"></ion-icon>
+      <ion-title>survey-results</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+<ion-content >
+
+    <div class="wrapper">
+    
+      <div class="top">
+          <div>
+              <ion-icon (click)="goDashboard()" class="ion-icon-2x"
+              name="arrow-back"></ion-icon>
+          </div>
+    
+        </div>
+
+        <div class="top-info">
+            <div class="side-left">
+              <div class="side-left-top">
+             
+               {{surveyinfo?.surveyname}}
+              </div>
+              <div class="side-left-bottom">
+                {{surveyinfo?.surveyvenue}}
+              </div>
+      
+            </div>
+      
+            <div class="side-right">
+      
+              <div class="side-right-top">
+                {{surveyinfo?.surveydate | date: 'dd/MMM/yyyy'}}
+              </div>
+              <div class="side-right-bottom">
+                {{surveyinfo?.servicetype}}
+              </div>
+      
+            </div>
+      
+          </div>
+
+    <div class="card">
+     
+      <div class="total-response">
+          <div class="heading">
+              சர்வேயில் கலந்து கொண்டவர்கள்
+          </div>
+          <div class="values">
+              {{totalresponses}}
+          </div>
+          <hr style="width:80%">
+      </div>
+      
+  <div class="responses">
+      <div *ngFor="let item of flatMap" class="top-box">
+ 
+          <div class="survey-questions"> {{item.questions}}</div>
+          
+          
+          <div *ngFor="let item1 of item.responsesummary | keyvalue" class="survey-responses">
+              
+              <div>{{item1.key}}  ({{item1.value / totalresponses | percent}}, {{item1.value}} votes)</div>
+              <div class="pollbar" [ngStyle]="{'width':getWidth(item1)}"  ></div>
+            </div> 
+          
+            </div>
+                    
+  </div>
+
+
+
+
+        
+      </div>
+  
+    <!-- {{quiz[this.qnprogress].question}} -->
+  
+  
+  
+  </div>
+  </ion-content>
+  

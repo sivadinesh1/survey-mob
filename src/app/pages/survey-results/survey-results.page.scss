@@ -1,0 +1,206 @@
+.pollbar {
+    height: 10px;
+    background: #ff8a00;
+}
+
+
+.style-btn {
+    padding: 0.5rem;
+    margin: 1rem;
+    background-color: blue;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 4px;
+
+  }
+
+  .card {
+    display: grid;
+    position: relative;
+    top: 5vh;
+    width: 90%;
+    height: auto;
+    justify-self: center;
+    text-align: left;
+    background-color: rgba(255, 251, 240, 1);
+    box-shadow: 0px 5px 10px 0px rgba(170, 170, 170, 1);
+    border: 1px solid rgba(255, 255, 255, 0);
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px auto;
+  }
+
+.wrapper {
+    display: grid;
+  grid-template-columns: 1fr;
+  height: 30vh;
+  
+  background-color: #FBC02D;
+
+}
+
+.userinfo{
+    padding: 1rem;
+}
+
+.user-name{
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    justify-items: stretch;
+}
+
+.close {
+text-align: right;
+justify-self: end;
+}
+
+.companyname {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+    padding: 0.3rem;
+    text-align: left;
+}
+.phone {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #000000;
+    padding: 0.3rem;
+    text-align: left;
+}
+
+.question{
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+.end-survey {
+    display: grid;
+    grid-template-columns: 1fr;
+
+}
+
+.button-align {
+    width: 60%;
+   margin: 0 auto;
+}
+
+.thanks {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+
+.total-response {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0.8rem;
+    border-bottom: 1px solid grey;
+
+.heading {
+    display:grid;
+    text-align: center;
+    font-size: 0.9rem;
+    color: black;
+    align-self: center;
+}
+
+.values {
+    display:grid;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    color: black;
+    align-self: center;
+}
+}
+
+.survey-questions{
+    display: grid;
+    padding-top: 0.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.survey-responses {
+    display: grid;
+   
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.8rem;
+}
+
+.top-box {
+    border-bottom: 1px solid grey;
+    padding-bottom: 0.2rem;
+    margin: 1rem;
+
+}
+
+h1 {
+    border-bottom: 1px solid #f00;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+.top {
+    display: grid;
+    background-color: #FBC02D;
+    color: black;
+    width: 100%;
+    grid-template-columns: 1fr;
+    justify-content: left;
+    align-content: left;
+    font-weight: 200;
+    padding: 0.5rem;
+  }
+  
+  .top-info {
+    display: grid;
+   
+    background-color: #FBC02D;
+   
+    grid-template-columns: 1fr 1fr;
+    
+    .side-right {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        font-size: 0.9rem;
+        color: black;
+        padding: 0.5rem;
+        .side-right-top {
+            padding: 0.3rem;
+        }
+        .side-right-bottom {
+            padding: 0.3rem;
+  
+        }
+    }
+  
+    .side-left{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        font-size: 0.9rem;
+        color: black;
+        padding: 0.5rem;
+        .side-left-top {
+            padding: 0.3rem;
+  
+        }
+        .side-left-bottom {
+            padding: 0.3rem;
+  
+        }
+  
+    }
+    
+   
+  }

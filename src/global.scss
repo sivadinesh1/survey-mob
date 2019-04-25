@@ -14,7 +14,7 @@
 html, body { margin: 0; padding: 0; height: 100%; width: 100%; position: relative; background: #282828; }
 
 .ion-icon-1point5x {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .ion-icon-2x {
@@ -24,3 +24,29 @@ html, body { margin: 0; padding: 0; height: 100%; width: 100%; position: relativ
   .ion-icon-3x {
     font-size: 3rem;
   }  
+
+  .has-error {
+    font-size: 0.9rem;
+    color:red;
+    padding-left: 16px;
+}
+
+.numberCircle {
+  display:inline-block;
+  line-height:0px;
+  
+  border-radius:50%;
+  border:2px solid rgb(165, 165, 165);
+  
+  font-size:1rem;
+}
+
+.numberCircle span {
+  display:inline-block;
+  
+  padding-top:50%;
+  padding-bottom:50%;
+  
+  margin-left:8px;
+  margin-right:8px;
+}
