@@ -1,0 +1,186 @@
+<ion-header>
+    <div class="toolbar">
+        <div (click)="goDashboard()">
+            <img src="/assets/images/back.svg" width="20px" height="20px">
+         </div>
+  
+      <div>
+             {{companyname}} 
+        </div>
+  
+  
+      
+  
+      </div>
+  </ion-header>
+<ion-content padding>
+    <div class="add-company">Add Company</div>
+  <div class="add-company-wrapper">
+
+    <form [formGroup]="submitForm">
+
+    <div class="name">
+      <ion-item>
+        <ion-label position="stacked" class="label-style">
+          Company Name
+        </ion-label>
+        <ion-input formControlName="company_name" clearInput placeholder="Enter company name"></ion-input>
+        
+      </ion-item>
+      <div [ngClass]="{'has-error' : (submitForm.get('company_name').hasError('required') || submitForm.get('company_name').hasError('pattern')) && submitForm.get('company_name').touched}"
+      *ngIf="(submitForm.get('company_name').hasError('required') || submitForm.get('company_name').hasError('pattern')) && submitForm.get('company_name').touched">
+      Missing  Company Name.
+      </div>
+    </div>
+
+    <div class="name">
+        <ion-item>
+          <ion-label position="stacked" class="label-style">
+            Company Short Code
+          </ion-label>
+          <ion-input formControlName="company_shortcode" clearInput placeholder="Enter company short code"></ion-input>
+          
+        </ion-item>
+        <div [ngClass]="{'has-error' : (submitForm.get('company_shortcode').hasError('required') || submitForm.get('company_shortcode').hasError('pattern')) && submitForm.get('company_shortcode').touched}"
+        *ngIf="(submitForm.get('company_shortcode').hasError('required') || submitForm.get('company_shortcode').hasError('pattern')) && submitForm.get('company_shortcode').touched">
+        Missing  Company Short Code.
+        </div>
+      </div>
+
+      <div class="name">
+          <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Company Tagline
+            </ion-label>
+            <ion-input formControlName="company_tagline" clearInput placeholder="Enter company Tagline"></ion-input>
+            
+          </ion-item>
+          <div [ngClass]="{'has-error' : (submitForm.get('company_tagline').hasError('required') || submitForm.get('company_tagline').hasError('pattern')) && submitForm.get('company_tagline').touched}"
+          *ngIf="(submitForm.get('company_tagline').hasError('required') || submitForm.get('company_tagline').hasError('pattern')) && submitForm.get('company_tagline').touched">
+          Missing  Company Tagline.
+          </div>
+        </div>
+
+    <div class="phone">
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Phone
+            </ion-label>
+            <ion-input formControlName="company_phone" clearInput placeholder="Enter company phone"></ion-input>
+            
+          </ion-item>
+          <div [ngClass]="{'has-error' : (submitForm.get('company_phone').hasError('required') || submitForm.get('company_phone').hasError('pattern')) && submitForm.get('company_phone').touched}"
+          *ngIf="(submitForm.get('company_phone').hasError('required') || submitForm.get('company_phone').hasError('pattern')) && submitForm.get('company_phone').touched">
+          Missing Company Phone.
+          </div>
+    </div>
+
+    <div class="email">
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Email (Optional)
+            </ion-label>
+            <ion-input formControlName="company_email" clearInput placeholder="Enter company email"></ion-input>
+            
+          </ion-item>
+          
+    </div>
+
+    <div class="website">
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Website (Optional)
+            </ion-label>
+            <ion-input formControlName="company_website" clearInput placeholder="Enter company website"></ion-input>
+            
+          </ion-item>
+          
+    </div>
+
+    
+
+    <div class="address">
+     
+         
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Address 
+            </ion-label>
+            
+            
+
+            <ion-input formControlName="addressline1" clearInput placeholder="Enter address line1"></ion-input>
+            <ion-input formControlName="addressline2" clearInput placeholder="Enter address line2"></ion-input>
+            <ion-input formControlName="city" clearInput placeholder="Enter city"></ion-input>
+            <ion-input formControlName="state" clearInput placeholder="Enter state"></ion-input>
+            <ion-input formControlName="pincode" clearInput placeholder="Enter pincode"></ion-input>
+            
+            
+          </ion-item>
+
+
+          
+        <div class="err">
+            <div [ngClass]="{'has-error' : (submitForm.get('addressline1').hasError('required') || submitForm.get('addressline1').hasError('pattern')) && submitForm.get('addressline1').touched}"
+            *ngIf="(submitForm.get('addressline1').hasError('required') || submitForm.get('addressline1').hasError('pattern')) && submitForm.get('addressline1').touched">
+            Missing addressline 1.
+            </div>
+
+            <div [ngClass]="{'has-error' : (submitForm.get('city').hasError('required') || submitForm.get('city').hasError('pattern')) && submitForm.get('city').touched}"
+            *ngIf="(submitForm.get('city').hasError('required') || submitForm.get('city').hasError('pattern')) && submitForm.get('city').touched">
+            Missing City.
+            </div>
+
+            <div [ngClass]="{'has-error' : (submitForm.get('state').hasError('required') || submitForm.get('state').hasError('pattern')) && submitForm.get('state').touched}"
+            *ngIf="(submitForm.get('state').hasError('required') || submitForm.get('state').hasError('pattern')) && submitForm.get('state').touched">
+            Missing State.
+            </div>
+
+            <div [ngClass]="{'has-error' : (submitForm.get('pincode').hasError('required') || submitForm.get('pincode').hasError('pattern')) && submitForm.get('pincode').touched}"
+            *ngIf="(submitForm.get('pincode').hasError('required') || submitForm.get('pincode').hasError('pattern')) && submitForm.get('pincode').touched">
+            Missing Pincode.
+            </div>
+          </div>
+          
+    </div>
+
+    <div class="col-md-6">
+      <div class="upload-btn-wrapper">
+        <p class="center-text-align">Upload Latest CV (Must) </p>
+        <p *ngIf="filesizeAlert" class="error">{{this.filesizeAlert}}</p>
+
+        <!-- <input type="file" name="file" id="file" accept="image/*" (change)="onFileChange($event)" class="inputfile" /> -->
+        <input type="file" name="file" id="file" accept="image/png, image/jpeg" (change)="onFileChange($event)" class="inputfile" />
+        <label for="file"><span>{{this.selectedFile}} </span></label>
+        <p class="small-opaque-text">Recommended file size < 2MB. Larger files takes longer to save.</p> 
+      
+        <div [ngClass]="{'has-error' : submitForm.get('file').invalid && submitForm.get('file').touched }" *ngIf="submitForm.get('file').errors?.required && submitForm.get('file').touched ">
+            CV is required.
+          </div>
+      </div> </div> 
+
+
+<div class="has-error">
+    {{responsemsg}}
+</div>
+
+    <div class="button">
+
+        <ion-row center >
+            <ion-col text-center>
+           
+              <ion-button (click)="addCompany()"  expand="block"
+              type="button" name="action" class="primary-color">
+                  <ion-ripple-effect></ion-ripple-effect>
+                Add Company</ion-button>
+            </ion-col>
+          </ion-row>
+
+    </div>
+
+  </form>
+  </div>
+
+</ion-content>
+
+

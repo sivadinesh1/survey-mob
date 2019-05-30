@@ -1,0 +1,43 @@
+.wrapper-c {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px calc(100vh - 180px) 50px;
+   
+    .search{
+        display: grid;
+        position: relative;
+        margin-bottom: 15px;
+    }
+
+  
+.fixed[scrollx=true], div[scrolly=true] {
+    display: grid;
+    position: relative;
+    overflow: hidden;
+     max-height: calc(100vh - 180px);
+  
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .fixed[scrollx=true] {
+    overflow-x: auto;
+  }
+  
+  .fixed[scrolly=true] {
+    overflow-y: auto;
+  }
+   
+
+    .footer {
+
+    }
+
+}
+
+
+
+//   #myFixZone {
+//     height: 400px;
+// }

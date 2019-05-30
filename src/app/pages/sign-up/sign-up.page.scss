@@ -15,14 +15,14 @@
         background-color: #f8c045;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
+        padding-bottom: 1rem;
 
         .row1 {
             display: grid;
-            justify-content: center;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            color: #ffffff;
+            background-image: url('/assets/suvai-70h.png');
+            background-repeat: no-repeat;
+           
+            background-position: center; 
         }
 
         .row2 {
@@ -50,7 +50,7 @@
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         grid-template-rows: auto 60px 60px 1fr auto;
-        background-image: url('/assets/food-bg.jpg');
+       // background-image: url('/assets/food-bg.jpg');
 
 
         .row1,

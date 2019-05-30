@@ -1,90 +1,215 @@
-
-  .style-btn {
-    padding: 0.5rem;
-    margin: 1rem;
-    background-color: blue;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-
-  }
-
-  .card {
-      display: inline-table;
-      position: relative;
-    
-    top: 5vh;
-      width: 90%;
-      height: 500px;
-      justify-self: center;
-
-      
-      text-align: left;
-      background-color: rgba(255, 251, 240, 1);
-      box-shadow: 0px 5px 10px 0px rgba(170, 170, 170, 1);
-      border: 1px solid rgba(255, 255, 255, 0);
-  }
-
 .wrapper {
-    display: grid;
+  display: grid;
   grid-template-columns: 1fr;
-  height: 30vh;
+  grid-template-rows: auto 1fr auto;
   
-  background-color: #FBC02D;
-
+  background-color: #ffffff;
 }
 
-.userinfo{
-    padding: 1rem;
+.userinfo {
+  padding: 1rem 1rem 0rem 1rem;
+  height: 30vh;
 }
 
-.user-name{
+.card {
+  position: relative;
+
+  width: 90%;
+  min-height: 500px;
+  background-color: rgba(255, 251, 240, 0.3);
+  box-shadow: 0px 5px 10px 0px rgba(170, 170, 170, 1);
+  border: 1px solid rgba(255, 255, 255, 0);
+  text-align: center;
+  margin: auto;
+
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("/assets/images/bride.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.squapl-footer {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-height: 300px;
+  background-color: #ffffff;
+
+  .logo {
+    max-height: 100px;
+  }
+  .copyrights{
     display: grid;
-    grid-template-columns: 1fr 30px;
-    justify-items: stretch;
+    padding: 1rem;
+    font-family: 'Robato';
+    font-size: 10px;
+    font-weight: 300;
+    color: #666666;
+    text-align: center;
+  }
+}
+
+.style-btn {
+  padding: 0.5rem;
+  margin: 1rem auto;
+
+  border: 3px solid var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  font-family: 'Robato';
+  font-size: 1.3rem;
+  font-weight: 500;
+
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  width: 80%;
+  text-transform: capitalize;
+}
+
+.highlighted {
+  -moz-box-shadow: 1px 2px 4px 4px #999999;
+  -webkit-box-shadow: 1px 2px 4px 4px #999999;
+  box-shadow: 1px 2px 4px 4px #999999;
+
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+
+  background-color: var(--ion-color-primary);
+  color: #ffffff;
+}
+
+
+
+.navigation {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1fr 1fr;
+
+  .left {
+    display: grid;
+    text-align: right;
+    justify-items: right;
+    margin-right: 10px;
+  }
+
+  .right {
+    display: grid;
+    text-align: left;
+    justify-items: left;
+    margin-left: 10px;
+  }
+}
+
+
+
+
+
+.user-name {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  justify-items: stretch;
 }
 
 .close {
-text-align: right;
-justify-self: end;
+  text-align: right;
+  justify-self: end;
 }
 
-.companyname {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000000;
-    padding: 0.3rem;
-    text-align: left;
-}
-.phone {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #000000;
-    padding: 0.3rem;
-    text-align: left;
+.surv-head {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  padding: 0.3rem;
+  text-align: center;
 }
 
-.question{
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    padding: 1rem;
-    font-size: 1.2rem;
+.logo {
+  text-align: center;
+  height: 100px;
+}
+
+.question {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0.5rem;
+  padding-bottom: 0px;
+  padding-top: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  z-index: 99;
+}
+
+.sub-caption {
+  font-size: 0.8rem;
+  font-family: 'Lato';
+  font-weight: 200;
+  color: #666666;
 }
 
 .end-survey {
-    display: grid;
-    grid-template-columns: 1fr;
+  display: grid;
+  grid-template-columns: 1fr;
 
 }
 
 .button-align {
-    width: 60%;
-   margin: 0 auto;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .thanks {
-    text-align: center;
-    padding: 1rem;
-    font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
 }
+
+.quest {
+  font-family: 'Robato';
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #333333;
+  padding: 0.5rem;
+  text-align: left;
+  text-transform: capitalize;
+  background-color: #ffffff;
+  opacity: 0.9;
+  border-radius: 10px;
+  line-height: 28px;
+}
+
+.num {
+  margin: auto;
+  font-family: 'Robato';
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #333333;
+  padding: 0.5rem;
+  text-align: left;
+  text-transform: capitalize;
+  background-color: #ffffff;
+  opacity: 0.9;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+
+
+ion-content {
+  --ion-background-color: #f2f2f2;
+}
+
+.textareacss {
+  border: 1px solid grey;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 8px;
+  background-color: white;
+  text-align: left;
+  padding: 0.5rem;
+}
+
+.row2 {
+  padding-bottom: 0.5rem;
+}
+

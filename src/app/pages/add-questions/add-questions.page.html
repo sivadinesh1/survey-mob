@@ -5,15 +5,11 @@
       <div class="item1 item">
         <ion-icon name="arrow-round-back" (click)="edit()"></ion-icon>
       </div>
-      <div class="item2 ">சர்வே தகவல்கள்</div>
-      <div class="item3 item">
-        <ion-icon name="eye"></ion-icon>
-      </div>
-      <div class="item4 item">
-        <ion-icon name="close"></ion-icon>
-      </div>
+      <div class="item2 ">Dashboard</div>
+      
       <div class="item5 item">
-        <ion-icon (click)="onSubmit()" name="checkmark"></ion-icon>
+        <div class = "save" (click)="onSubmit()"> SAVE </div>
+        <!-- <ion-icon  name="checkmark"></ion-icon> -->
       </div>
 
     </div>
@@ -44,7 +40,7 @@
     <div class="main">&nbsp;</div>
     <div class="question">
       <form [formGroup]="submitForm" accept-charset="UTF-8">
-        <div class="row1">விருந்தினருக்கு காட்ட வேண்டிய கேள்வி எண்</div>
+        <div class="row1"><span class="question-text"> QUESTION TEXT</span></div>
         <div class=row2>
           <ion-textarea rows="6" cols="20" formControlName="question" class="textareacss"
             placeholder="Enter Survey questions...">
@@ -66,12 +62,30 @@
         Response Choice missing or invalid format.
       </div>
 
-        <div class="row3">
-          விருந்தினர்களுக்கு காட்டக்கூடிய பதில்கள் கீழாய் கொடுக்கப்பட்டு உள்ளன. அவற்றில் இருந்து ஒன்றை தேர்ந்து
-          எடுக்கவும்
+        <div class="choices-block">
+            <div class="ans-head"><span >ANSWER CHOICES</span></div>
+          <div formArrayName="options">
+            <div *ngFor="let option of options.controls; let i = index">
+                <div [formGroupName]="i" class="choices">
+                      <ion-item >
+                          <ion-input formControlName="option" clearInput placeholder="Choice #{{ i+1}}"></ion-input>
+                        </ion-item>
+                        <ion-icon name="remove-circle-outline" *ngIf=" i > 1"
+                        class="ion-icon-1point5x remove" (click)="onRemoveOptions(i)"></ion-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="add-circle">
+              <ion-icon name="add-circle-outline"  *ngIf="morechoiceflag" 
+              style="font-size: 36px" color="primary" 
+              (click)="addResponses()"></ion-icon>
+          </div>
+          
+         
           
         </div>
-        <div class=row4>
+        <!-- <div class=row4>
         <ion-list >
           <ion-radio-group formControlName="optiongroupname">
             <ion-list-header>
@@ -88,7 +102,7 @@
 
           </ion-radio-group>
         </ion-list>
-      </div>
+      </div> -->
       
       </form>
     </div>

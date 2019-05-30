@@ -1,0 +1,26 @@
+.wraps{
+    display: grid;
+    
+    
+
+
+}
+
+
+.all-comp-header {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+}
+
+.lbl-head, .close {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  font-family: 'Lato';
+  font-size: 1.2rem;
+  color: #666666;
+  text-align: center;
+  padding: 1rem;
+  background-color: #f2f2f2;
+}
+

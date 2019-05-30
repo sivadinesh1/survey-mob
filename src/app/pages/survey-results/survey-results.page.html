@@ -1,36 +1,3 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>survey-results</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-Total Responses : {{totalresponses}}
-
-
-<div *ngFor="let item of flatMap">
- 
-<div> {{item.questions}}</div>
-
-
-<div *ngFor="let item1 of item.responsesummary | keyvalue">
-    
-    <div>{{item1.key}}  ({{item1.value / totalresponses | percent}}, {{item1.value}} votes)</div>
-    <div class="pollbar" [ngStyle]="{'width':getWidth(item1)}"  ></div>
-  </div> 
-  </div>
-
-  
-
-</ion-content> -->
-
-<!-- <ion-header style="background-color: #FBC02D">
-    <ion-toolbar>
-        <ion-icon name="arrow-round-back" class="ion-icon-2x"
-        (click)="goDashboard()"></ion-icon>
-      <ion-title>survey-results</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
 
 <ion-content >
 
@@ -44,7 +11,7 @@ Total Responses : {{totalresponses}}
     
         </div>
 
-        <div class="top-info">
+        <div class="top-info-survey-results">
             <div class="side-left">
               <div class="side-left-top">
              

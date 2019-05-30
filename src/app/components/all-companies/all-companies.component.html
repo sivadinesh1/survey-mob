@@ -1,0 +1,18 @@
+<div class=wraps>
+
+  <div class="all-comp-header">
+    <div class="close">
+      <ion-icon name="close" (click)="closeModal()" class="ion-icon-2x blue"></ion-icon>
+    </div>
+    <div class="lbl-head">
+      List of Clients
+    </div>
+  </div>
+
+  <ion-item *ngFor="let item of clientsdata">
+    <ion-label (click)="onClick(item)">
+      {{item?.name}}
+    </ion-label>
+  </ion-item>
+
+</div>

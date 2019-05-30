@@ -6,11 +6,13 @@
         display: grid;
         width: 100%;
         height: 50px;
-        grid-template-columns: 40px 1fr 40px 40px 40px;
-        background-color: #f8c045;
+        grid-template-columns: 1fr;
+        // background-color: #f8c045;
+        background-color: #f2f2f2;
         justify-content: center;
         align-content: center;
         font-weight: 200;
+        text-align: center;
 
         .item {
             justify-self: center;
@@ -27,12 +29,20 @@
         .row1 {
             background-color: #f0d497;
             padding: 1rem;
+            font-family: 'Lato';
+            font-size: 1.2rem;
+            color: #666666;
+            font-weight: 300;
         }
       
 
         .mid {
             padding: 1rem;
-            background-color: #f0d497;
+            background-color: var(--ion-color-primary);
+            color:white;
+            font-size: 1.2rem;
+            font-family: 'Lato';
+            font-weight: 400;
         }
 
         .add-question {
@@ -52,3 +62,54 @@
         display: grid;
     }
 }
+
+.label-style {
+    
+    font-family: 'Roboto';
+    font-size: 16px;
+    color: var(--ion-color-primary);
+    font-weight: 400;
+}
+
+.test2 {
+    margin-left: 16px;
+}
+
+
+
+.item2 {
+    text-align: center;
+    font-family: 'Lato';
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666666;
+}
+
+.primary-color {
+    color: var(--ion-color-primary);
+    color: #fff;
+}
+
+
+
+
+
+
+  .toolbar {
+      display: grid;
+      grid-template-columns: 30px 1fr 40px 40px;
+      padding: 1rem;
+
+  }
+ 
+  .view {
+      display: grid;
+      justify-self: center;
+    
+  }
+
+  .checked {
+    display: grid;
+    justify-self: center;
+   
+  }

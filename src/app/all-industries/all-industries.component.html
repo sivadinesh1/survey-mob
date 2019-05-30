@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="right-align padpt5em">
+            <ion-icon name="close"  (click)="closeModal()" class="ion-icon-2x blue"></ion-icon>
+        </div>
+      <ion-title>List of Clients </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<div class="wrapper-c">
+ 
+    <ion-item *ngFor="let item of clientsdata">
+        <ion-label (click)="onClick(item)">
+            {{item}}
+        </ion-label>
+      </ion-item>
+
+  <!-- <div class="fixed" scrollY="true" >
+      <ion-item *ngFor="let item of clientsdata">
+          <ion-label (click)="onClick(item)">
+              {{item.name}}
+          </ion-label>
+        </ion-item>
+
+
+
+  </div> -->
+
+  <div class="footer">
+&nbsp;
+  </div>
+   
+</div>

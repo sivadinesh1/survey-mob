@@ -97,7 +97,7 @@ console.log('object>>> ' + JSON.stringify(signupdata));
                   this.loading = false;
                    const newuserid = this.apiresponse.newuserid;
                    
-                   this._authservice.loginNotify(newuserid, signupdata.name);
+                   this._authservice.loginNotify(newuserid, signupdata.name, '', '');
         
                   this._router.navigateByUrl(`/new-survey`);
                 }

@@ -1,0 +1,27 @@
+<ion-header>
+  <div class="all-comp-header">
+    <div class="close">
+      <img src="/assets/images/back.svg" width="20px" height="20px" (click)="goDashboard()">
+    </div>
+    <div class="lbl-head">
+      List of Clients
+    </div>
+    <div class="add-company">
+      <ion-icon slot="start" name="person-add" (click)="addCompany()"></ion-icon>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class=wraps>
+
+
+
+    <ion-item detail *ngFor="let item of companieslist" (click)="edit(item)">
+      <ion-label>
+        {{item?.company_name}}
+      </ion-label>
+    </ion-item>
+
+  </div>
+</ion-content>

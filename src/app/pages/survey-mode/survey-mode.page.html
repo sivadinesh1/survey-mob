@@ -1,80 +1,102 @@
-
-<ion-content >
-
+<ion-content>
   <div class="wrapper">
     <div class="userinfo">
-        <div class="user-name">
-           
-            <div class="companyname">
-                {{userinfo?.companyname}}
-            </div>
-            <div class="close">
-                <ion-icon slot="end"  name="close" (click)="close()"
-                class="ion-icon-2x"></ion-icon>
-            </div>
-          </div>
-          <div class="phone">
-            {{userinfo?.mobilenumber}}
-          </div>
-    </div>
-   
-  
+      <div class="user-name">
 
-  <div class="card" 
-  [@cardAnimator]="animationState" 
-  (@cardAnimator.done)="resetAnimationState()"
-  (swipeleft)="startAnimation('slideOutLeft')"
-  (swiperight)="startAnimation('zoomOutRight')"
-  (swipeup)="startAnimation('rotateOutUpRight')"
-  (swipedown)="startAnimation('flipOutY')">
-    <div class="question" *ngIf="!endsurvey">
-      <div class="num">
-          <span class="numberCircle"><span>{{addIndex + 1}}</span></span>
-      </div>
-       
-        <div class="quest">
-            {{keysArr[addIndex]}}
+        <div class="surv-head">
+          &nbsp;
         </div>
-        
+        <div class="close">
+          <ion-icon slot="end" name="close" (click)="close()" class="ion-icon-2x"></ion-icon>
+         
+        </div>
+      </div>
+
+      <div class="logo">
+        <img src="/assets/images/Peacock-Cateres_Logo.svg" width="250px" height="100px">
+      </div>
+
+
     </div>
-      <div *ngIf="result !== undefined">
-          <div *ngFor="let item1 of result[keysArr[addIndex]]" 
-          (click)="onClick(item1)">
-           <div class="style-btn">
-               {{item1.res_options}}
-           </div>  
-           </div>
-      </div> 
-    
+    <form [formGroup]="submitForm">
+      <div class="card" [@cardAnimator]="animationState" (@cardAnimator.done)="resetAnimationState()"
+        (swipeleft)="startAnimation('slideOutLeft')" (swiperight)="startAnimation('zoomOutRight')"
+        (swipeup)="startAnimation('rotateOutUpRight')" (swipedown)="startAnimation('flipOutY')">
+        <div class="question" *ngIf="!endsurvey">
+
+
+          <div class="quest">
+            <div class="sub-caption"># {{addIndex + 1}}</div>
+            {{keysArr[addIndex]}}
+          </div>
+
+        </div>
+        <div *ngIf="(result !== undefined && !endsurvey)">
+          <div *ngFor="let item1 of result[keysArr[addIndex]]">
+            <div class="style-btn" [class.highlighted]="item1.optionid === this.selectedoptionArr[addIndex]"
+              (click)="onClick(item1, addIndex)">
+              {{item1.res_options}}
+            </div>
+          </div>
+
+          <div class=row2 *ngIf="showother">
+            <ion-textarea rows="4" cols="20" formControlName="otherresponse" class="textareacss"
+              placeholder="What do you like to say ...">
+            </ion-textarea>
+          </div>
+
+          <!-- <P *ngIf="responsemsg" class="has-error">{{this.responsemsg}}</P> -->
+
+          <div class="navigation">
+            <div class="left">
+              <img *ngIf="showprev" (click)="prev()" src="/assets/images/left-arrow.svg" width="60px" height="60px">
+            </div>
+            <div class="right">
+              <img *ngIf="!endsurvey && !showdone" (click)="next(addIndex)" src="/assets/images/right-arrow.svg" width="60px" height="60px">
+              <img *ngIf="showdone" (click)="done()" src="/assets/images/checked.svg" width="60px" height="60px">
+
+            </div>
+          </div>
+
+
+        </div>
 
         <div *ngIf="endsurvey" class="end-survey">
           <div class="thanks">
-              உங்கள் பதில்களை பதிவு செய்தமைக்கு நன்றி!
+            உங்கள் பதில்களை பதிவு செய்தமைக்கு நன்றி!
           </div>
-            
-            <div class="new-guest" >
-                <ion-row center >
-                    <ion-col text-center >
-                      <ion-button expand="block" fill="solid" shape="round" class="button-align"
-                      (click)="newGuest()"  type="button" name="action" color="primary">Next Guest</ion-button>
-                    </ion-col>
-                  </ion-row>
-            </div>
-            <div class="stop" >
-                <ion-row center >
-                    <ion-col text-center >
-                      <ion-button expand="block" fill="solid" shape="round" class="button-align"
-                      (click)="stop()"  type="button" name="action" color="danger">Stop</ion-button>
-                    </ion-col>
-                  </ion-row>
-            </div>
+
+          <div class="new-guest">
+            <ion-row center>
+              <ion-col text-center>
+                <ion-button expand="block" fill="solid" shape="round" class="button-align" (click)="newGuest()"
+                  type="button" name="action" color="primary">Next Guest</ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="stop">
+            <ion-row center>
+              <ion-col text-center>
+                <ion-button expand="block" fill="solid" shape="round" class="button-align" (click)="stop()"
+                  type="button" name="action" color="danger">Stop</ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
         </div>
-      
+      </div>
+    </form>
+
+    <div class="squapl-footer">
+     <div class="logo">
+        <img  src="/assets/images/survey-powered-logo.svg" width="100%" height="100%">
+     </div>
+       <div class="copyrights">
+          © copyright Squapl digital media technologies
+       </div>
     </div>
+    
 
-  <!-- {{quiz[this.qnprogress].question}} -->
+  </div>
+</ion-content> 
 
 
-
-</div>
-</ion-content>

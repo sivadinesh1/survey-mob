@@ -3,8 +3,8 @@
     <div class="wrapper">
   
       <div class="top">
-        <div>
-            <ion-icon (click)="goDashboard()" name="arrow-back"></ion-icon>
+        <div class="arrow-dash">
+            <ion-icon (click)="goDashboard()" name="arrow-back" class="ion-icon-1point5x"></ion-icon>
         </div>
         <div>
             &nbsp;சர்வே முன்னோட்டம்
@@ -12,8 +12,8 @@
         <div class="golive" >
             &nbsp;
           </div>
-         <div class="edit" (click)="edit()" >
-           Edit
+         <div class="edit"  >
+           &nbsp;
          </div>
   
       </div>
@@ -52,9 +52,15 @@
                 <span *ngFor="let item of result | keyvalue let i = index;" >
                   <span class="item">
                       
-                    <div class="question-keys">
-                        <span class="numberCircle"><span>{{i + 1}}</span></span>
-                        {{item.key}}
+                    <div class="question-keys" >
+                      <div>
+                          <span class="numberCircle"><span>{{i + 1}}</span></span>
+                      </div>
+                      <div class="ques-size">
+                          {{item.key}}
+                      </div>
+                       
+                     
                     </div>
                     
                     <div *ngFor="let item1 of item.value" class="res-options">

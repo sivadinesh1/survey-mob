@@ -14,13 +14,14 @@
 
 .top {
     grid-area: top;
-    background-color: #AB7F2C;
-    color: white;
+    background-color: rgb(114, 109, 100);
+    background-color: #ffffff;
+    color: var(--ion-color-primary);
 
     display: grid;
     width: 100%;
   
-    grid-template-columns: 40px 1fr 40px 40px 40px;
+    grid-template-columns: 40px 1fr 60px;
     
     justify-content: center;
     align-content: center;
@@ -39,7 +40,7 @@
 .top-info {
     display: grid;
     grid-area: top-info;
-    background-color: #FCEABE;
+    background-color: #f2f2f2;
    
     grid-template-columns: 1fr 1fr;
     
@@ -80,7 +81,7 @@
 
 .main {
     grid-area: main;
-    background-color: #FCEABE;
+    background-color: #f2f2f2;
 }
 
 .question {
@@ -88,7 +89,7 @@
     grid-row: 3/-1;
     z-index: 999;
     box-shadow: 0px 5px 10px 0px;
-    background-color: #FFFBF0;
+    background-color: #ffffff;
     color: black;
 
     .row1 {
@@ -102,7 +103,7 @@
     .row3, 
     .row4 {
         display: grid;
-        padding: 1rem;
+        padding: 0.3rem;
         
         text-align: left;
     }
@@ -122,3 +123,63 @@
     background-color: #FFFBF0;
 }
 
+.question-text {
+    font-size: 0.9rem;
+    font-family: 'Lato';
+    font-weight: 300;
+    color: var(--ion-color-primary);
+    text-transform: uppercase;
+}
+
+
+
+.choices {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    
+    // justify-items: center;
+    // align-items: center;
+}
+
+.choices-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 1rem;
+}
+
+.ans-head {
+    display: grid;
+    grid-column: 1/-1;
+    padding-left: 1rem;
+    font-family: 'Lato';
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ion-color-primary);
+    text-align: left;
+}
+
+.add-circle {
+    display: grid;
+    grid-column: 1/-1;
+    padding-left: 1rem;
+    padding-top: 0.3rem;
+    
+}
+
+.remove {
+    display: grid;
+    justify-self: center;
+    align-self: center; 
+    color: red;
+}
+
+.save {
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    font-size: 0.8rem;
+    font-family: 'Lato';
+    font-weight: 300;
+    color: var(--ion-color-primary);
+    text-transform: uppercase;
+}

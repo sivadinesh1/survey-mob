@@ -1,0 +1,100 @@
+<ion-header>
+    <div class="toolbar">
+        <div (click)="goDashboard()">
+            <img src="/assets/images/back.svg" width="20px" height="20px">
+         </div>
+  
+      <div>
+             {{companyname}} 
+        </div>
+  
+  
+      
+  
+      </div>
+  </ion-header>
+<ion-content padding>
+    <div class="add-member">Add Member</div>
+  <div class="add-member-wrapper">
+
+    <form [formGroup]="submitForm">
+    <div class="name">
+      <ion-item>
+        <ion-label position="stacked" class="label-style">
+          Name
+        </ion-label>
+        <ion-input formControlName="name" clearInput placeholder="Enter name"></ion-input>
+        
+      </ion-item>
+      <div [ngClass]="{'has-error' : (submitForm.get('name').hasError('required') || submitForm.get('name').hasError('pattern')) && submitForm.get('name').touched}"
+      *ngIf="(submitForm.get('name').hasError('required') || submitForm.get('name').hasError('pattern')) && submitForm.get('name').touched">
+      Missing member name.
+      </div>
+    </div>
+    <div class="phone">
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Phone
+            </ion-label>
+            <ion-input formControlName="phone" clearInput placeholder="Enter phone"></ion-input>
+            
+          </ion-item>
+          <div [ngClass]="{'has-error' : (submitForm.get('phone').hasError('required') || submitForm.get('phone').hasError('pattern')) && submitForm.get('phone').touched}"
+          *ngIf="(submitForm.get('phone').hasError('required') || submitForm.get('phone').hasError('pattern')) && submitForm.get('phone').touched">
+          Missing member phone.
+          </div>
+    </div>
+    <div class="roles">
+
+        <ion-item>
+            <ion-label class="label-style"> Roles</ion-label>
+          
+           
+                <ion-select placeholder="Select" formControlName="role"  >
+                    <ion-select-option value="{{item.id}}"  
+                    *ngFor="let item of roleslist; " [value]="item.id">
+                      {{ item.role }}
+                    </ion-select-option>
+                  </ion-select>
+  
+            
+      
+          </ion-item>
+
+
+          <div [ngClass]="{'has-error' : (submitForm.get('role').hasError('required') || submitForm.get('role').hasError('pattern')) && submitForm.get('role').touched}"
+          *ngIf="(submitForm.get('role').hasError('required') || submitForm.get('role').hasError('pattern')) && submitForm.get('role').touched">
+          Choose member Role.
+          </div> 
+    </div>
+    <div class="email">
+        <ion-item>
+            <ion-label position="stacked" class="label-style">
+              Email (Optional)
+            </ion-label>
+            <ion-input formControlName="email" clearInput placeholder="Enter email"></ion-input>
+            
+          </ion-item>
+          
+    </div>
+
+    <div class="button">
+
+        <ion-row center >
+            <ion-col text-center>
+           
+              <ion-button (click)="addMember()"  expand="block"
+              type="button" name="action" class="primary-color">
+                  <ion-ripple-effect></ion-ripple-effect>
+                Add Member</ion-button>
+            </ion-col>
+          </ion-row>
+
+    </div>
+
+  </form>
+  </div>
+
+</ion-content>
+
+

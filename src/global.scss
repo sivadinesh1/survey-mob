@@ -26,9 +26,12 @@ html, body { margin: 0; padding: 0; height: 100%; width: 100%; position: relativ
   }  
 
   .has-error {
+    display: grid;
     font-size: 0.9rem;
     color:red;
     padding-left: 16px;
+    text-align: left;
+    justify-self: left;
 }
 
 .numberCircle {
@@ -49,4 +52,12 @@ html, body { margin: 0; padding: 0; height: 100%; width: 100%; position: relativ
   
   margin-left:8px;
   margin-right:8px;
+}
+
+.labl-head {
+  font-size: 0.9rem;
+  font-family: 'Lato';
+  font-weight: 200;
+  color: #666666;
+  
 }

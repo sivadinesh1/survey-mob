@@ -3,7 +3,7 @@
   <div class="wrapper">
     <div class="header">
 
-      <div class="row1">Suvai</div>
+      <div class="row1"></div>
       <div class="row2">Suvai - Guest Survey app</div>
       <div class="row3">for food caterers</div>
     </div>
@@ -24,19 +24,27 @@
         (click)="togglePassword()"></ion-icon>
       </div>
       <div class="row3">
+        <div *ngIf="responsemsg" class="has-error">
+          {{this.responsemsg}}
+        </div> 
         <ion-row center >
-          <ion-col text-center class="test">
+          <ion-col text-center class="button-top-gap">
             <ion-button expand="block" fill="solid" shape="round" class="button-align"
             (click)="signIn()"  type="button" name="action" color="primary">SIGN IN</ion-button>
           </ion-col>
         </ion-row>
+        <ion-row center >
+            <ion-col text-center class="forgot-pass">
+             Forgot password?
+            </ion-col>
+          </ion-row>
       </div>
     </form>
-      <div class="row4">New to Suvai?</div>
+      <div class="row4">&nbsp;</div>
       <div class="row5">
         <span>New to Suvai?</span>
           <ion-row center >
-              <ion-col text-center class="test">
+              <ion-col text-center class="button-top-gap">
                 <ion-button expand="block" fill="solid" shape="round" class="button-align"
                 (click)="signUp()"  type="button" name="action" color="vibrant">SIGN UP FOR FREE</ion-button>
               </ion-col>
@@ -45,17 +53,13 @@
 
     </div>
     <div class="survey">
-      <div class="survey-mode">
-        SURVEY MODE
-      </div>
+      
       <div class="enter-survey-mode">
-        <ion-button (click)="onClick()">
+        <ion-button (click)="onClick()" fill="solid" shape="round">
         ENTER SURVEY MODE
         </ion-button>
       </div>
-      <div class="why-survey-mode">
-        What is survey mode?
-      </div>
+      
 
     </div>
   </div>

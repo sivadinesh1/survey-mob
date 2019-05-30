@@ -1,8 +1,11 @@
-import { AlertController } from '@ionic/angular';
+import { LoadingService } from 'src/app/services/loading.service';
+import { AllCompaniesComponent } from './../../components/all-companies/all-companies.component';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AuthService } from './../../services/auth.service';
 import { CommonApiService } from '../../services/common-api.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,14 +28,25 @@ export class DashboardPage implements OnInit {
   draftData: any;
   updateResponse: any;
 
+  companieslist: any;
+
   upcomingDataLength = 0;
   closeDataLength = 0;
   liveDataLength = 0;
   draftDataLength = 0;
+  companyId: any;
+  selectedCompanyData: any;
+
+  activecompany: any;
+
+
+  companyselected: any;
 
   constructor(private _commonApiService: CommonApiService,
     private alertController: AlertController,
     private _authservice: AuthService,
+    private _modalcontroller: ModalController,
+    private storage: Storage, private _loadingservice: LoadingService,
     private _router: Router, private _cdr: ChangeDetectorRef,
     private _route: ActivatedRoute) {
     this._route.data.subscribe(data => {
@@ -40,7 +54,14 @@ export class DashboardPage implements OnInit {
       this.upcomingData = data['surveydata'];
       this.upcomingDataLength = this.upcomingData.length;
     });
+    
+    this.companieslist = this._authservice.companylist;
 
+    if(this.companieslist[0] !== undefined) {
+      this.activecompany = this.companieslist[0].name;
+    }
+    this._loadingservice.present();
+    this._cdr.markForCheck();
 
   }
 
@@ -55,8 +76,15 @@ export class DashboardPage implements OnInit {
   }
 
   async getAsyncData() {
+
+    
+
+    
+
     this.loggedinUserId = await <any>this._authservice.getItems('USER_ID');
-    this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, 'U').subscribe(id1 => {
+    this.companyId = await <any>this._authservice.getItems('COMPANY_ID');
+console.log('dinesh >> ' + this.companyId);
+    this._commonApiService.getDashboardUserSurvey(this.companyId, 'U').subscribe(id1 => {
       this.upcomingData = id1;
       this.upcomingDataLength = this.upcomingData.length;
      
@@ -65,7 +93,7 @@ export class DashboardPage implements OnInit {
     });
 
  
-    this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, 'L').subscribe(id2 => {
+    this._commonApiService.getDashboardUserSurvey(this.companyId, 'L').subscribe(id2 => {
       this.liveData = id2;
       this.liveDataLength = this.liveData.length;
      
@@ -73,13 +101,14 @@ export class DashboardPage implements OnInit {
       this._cdr.markForCheck();
     });
   
-    this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, 'C').subscribe(id3 => {
+    this._commonApiService.getDashboardUserSurvey(this.companyId, 'C').subscribe(id3 => {
       this.closeData = id3;
       this.closeDataLength = this.closeData.length;
      
       this.items[2].size = this.closeDataLength;
       this._cdr.markForCheck();
     });
+    this._loadingservice.dismiss();
   }
 
   addSurvey() {
@@ -88,6 +117,7 @@ export class DashboardPage implements OnInit {
 
 
   toggleClick(clickedItem: any): void {
+    this._loadingservice.present();
 
     for (const item of this.items) {
       item.isClicked = false;
@@ -97,25 +127,28 @@ export class DashboardPage implements OnInit {
 
     if (clickedItem.id === 1) {
 
-      this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, clickedItem.status).subscribe(id1 => {
+      this._commonApiService.getDashboardUserSurvey(this.companyId, clickedItem.status).subscribe(id1 => {
         this.upcomingData = id1;
         this.upcomingDataLength = this.upcomingData.length;
         this.items[0].isClicked = true;
+        this._loadingservice.dismiss();
         this._cdr.markForCheck();
       });
 
     } else if (clickedItem.id === 2) {
-      this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, clickedItem.status).subscribe(id2 => {
+      this._commonApiService.getDashboardUserSurvey(this.companyId, clickedItem.status).subscribe(id2 => {
         this.liveData = id2;
         this.liveDataLength = this.liveData.length;
         this.items[1].isClicked = true;
+        this._loadingservice.dismiss();
         this._cdr.markForCheck();
       });
     } else if (clickedItem.id === 3) {
-      this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, clickedItem.status).subscribe(id3 => {
+      this._commonApiService.getDashboardUserSurvey(this.companyId, clickedItem.status).subscribe(id3 => {
         this.closeData = id3;
         this.closeDataLength = this.closeData.length;
         this.items[2].isClicked = true;
+        this._loadingservice.dismiss();
         this._cdr.markForCheck();
       });
     }
@@ -126,17 +159,17 @@ export class DashboardPage implements OnInit {
 
   goPreview(item: any) {
     console.log('object KAKAK' + JSON.stringify(item));
-    this._router.navigateByUrl(`/preview/${item.id}`);
+    this._router.navigateByUrl(`/preview/${item.survey_id}`);
   }
 
   edit(item: any) {
-    this._router.navigateByUrl(`/compile-survey-questions/${item.id}`);
+    this._router.navigateByUrl(`/compile-survey-questions/${item.survey_id}`);
   }
 
 
   stopSurvey(item) {
  
-    this.presentAlertConfirm(item.id);
+    this.presentAlertConfirm(item.survey_id);
   }
   async presentAlertConfirm(surveyid) {
     const alert = await this.alertController.create({
@@ -159,7 +192,7 @@ export class DashboardPage implements OnInit {
               
               if(this.updateResponse.result === 'OK') {
               //  this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
-              this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, 'C').subscribe(id3 => {
+              this._commonApiService.getDashboardUserSurvey(this.companyId, 'C').subscribe(id3 => {
                 this.closeData = id3;
                 this.closeDataLength = this.closeData.length;
                 this.items[0].isClicked = false;
@@ -168,6 +201,13 @@ export class DashboardPage implements OnInit {
 
                 this.items[2].size = this.closeDataLength;
                 this.items[1].size = this.liveDataLength - 1;
+
+                this._commonApiService.getDashboardUserSurvey(this.companyId, 'L').subscribe(id2 => {
+                  this.liveData = id2;
+                  this.liveDataLength = this.liveData.length;
+                  this.items[1].isClicked = true;
+                  this._cdr.markForCheck();
+                });
 
                 this._cdr.markForCheck();
               });
@@ -184,12 +224,13 @@ export class DashboardPage implements OnInit {
 
   results(item: any) {
     console.log('object ' + JSON.stringify(item));
-    this._router.navigateByUrl(`survey-results/${item.id}`);
+    this._router.navigateByUrl(`survey-results/${item.survey_id}`);
   }
 
 
   goLive(item) {
-    this.presentGoLiveAlertConfirm(item.id);
+    
+    this.presentGoLiveAlertConfirm(item.survey_id);
   }
   async presentGoLiveAlertConfirm(id) {
     const alert = await this.alertController.create({
@@ -210,15 +251,20 @@ export class DashboardPage implements OnInit {
             this._commonApiService.updateSurveyStatus(id, 'L').subscribe(res => {
               this.updateResponse = res;
               if(this.updateResponse.result === 'OK') {
-                this._commonApiService.getUserSurveysByStatus(this.loggedinUserId, 'L').subscribe(id4 => {
+                this._commonApiService.getDashboardUserSurvey(this.companyId, 'L').subscribe(id4 => {
                this.liveData = id4;
                this.liveDataLength = this.liveData.length;
-               this.items[0].isClicked = false;
                this.items[1].isClicked = true;
-               this.items[2].isClicked = false;
 
                this.items[1].size = this.liveDataLength;
                this.items[0].size = this.upcomingDataLength - 1;
+
+               this._commonApiService.getDashboardUserSurvey(this.companyId, 'U').subscribe(id1 => {
+                this.upcomingData = id1;
+                this.upcomingDataLength = this.upcomingData.length;
+                this.items[0].isClicked = true;
+                this._cdr.markForCheck();
+              });
 
                this._cdr.markForCheck();
                 });
@@ -232,5 +278,41 @@ export class DashboardPage implements OnInit {
 
     await alert.present();
   }
+
+
+
+  async chooseCompany() {
+
+
+
+    const modal = await this._modalcontroller.create({
+      component: AllCompaniesComponent,
+      componentProps: {
+        data: this.companieslist
+      }
+    });
+  
+    modal.onDidDismiss().then((result) => {
+      console.log('The result:', result);
+      console.log('The json result:', JSON.stringify(result));
+  
+      this.selectedCompanyData = result.data;
+
+      this.storage.set('COMPANY_ID', this.selectedCompanyData.item.id);
+      this.storage.set('COMPANY_NAME', this.selectedCompanyData.item.name);
+
+      this.activecompany = this.selectedCompanyData.item.name;
+      this._cdr.markForCheck();
+      this._loadingservice.present();
+      this.getAsyncData();
+      this.companyselected = true;
+    
+      this._cdr.markForCheck();
+  });
+  
+    return await modal.present();
+  }
+
+  // {"data":{"item":{"id":2,"name":"Hero Moters"}}}
 
 }

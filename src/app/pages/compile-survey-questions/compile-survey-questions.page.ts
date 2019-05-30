@@ -1,3 +1,5 @@
+import { AllIndustriesComponent } from './../../all-industries/all-industries.component';
+import { ModalController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { SurveyService } from './../../services/survey.service';
 
@@ -7,6 +9,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 
 import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-compile-survey-questions',
@@ -33,9 +36,15 @@ export class CompileSurveyQuestionsPage implements OnInit {
 
   serviceinfo: any;
   servicetypes: any;
+  companyId: any;
+  selectedIndustryData: any;
+
+  languages = ['English', 'Tamil'];
+  industrieslist = ['Automobiles', 'Catering'];
 
   constructor(private _router: Router, private _cdr: ChangeDetectorRef, private _fb: FormBuilder,
     private _surveyService: SurveyService, private _authservice: AuthService, private _route: ActivatedRoute,
+    private storage: Storage, private _modalcontroller: ModalController,
     private _commonApiService: CommonApiService
   ) { }
 
@@ -47,6 +56,8 @@ export class CompileSurveyQuestionsPage implements OnInit {
       surveyvenue: new FormControl(null, Validators.required),
       surveydate: new FormControl(null, Validators.required),
       servicetype: new FormControl(null, Validators.required),
+      language: new FormControl('English', Validators.required),
+      industry: new FormControl(null, Validators.required),
       loggedinuser: new FormControl(null, Validators.required)
     });
   }
@@ -62,11 +73,13 @@ export class CompileSurveyQuestionsPage implements OnInit {
         surveyname: this.serviceinfo.surveyname,
         surveyvenue: this.serviceinfo.surveyvenue,
         surveydate: this.serviceinfo.surveydate,
-        surveyid: this.serviceinfo.id
+        surveyid: this.serviceinfo.id,
+        language: this.serviceinfo.survey_language,
+        industry: this.serviceinfo.survey_industry,
 
       });
 
-
+      this._cdr.markForCheck();
       this._commonApiService.getSurveyInfoById(this.serviceinfo.id).subscribe(qdata => {
         this.tempsurvey = qdata;
 
@@ -126,6 +139,7 @@ export class CompileSurveyQuestionsPage implements OnInit {
 
   async getAsyncData() {
     this.loggedinUserId = await (<any>this._authservice.getItems('USER_ID'));
+    this.companyId = await <any>this._authservice.getItems('COMPANY_ID');
 
     this.submitForm.patchValue({
       loggedinuser: this.loggedinUserId.toString()
@@ -150,6 +164,7 @@ export class CompileSurveyQuestionsPage implements OnInit {
   }
 
   addQuestions() {
+    
     this._router.navigateByUrl(`add-questions/${this.serviceinfo.id}`);
   }
 
@@ -159,14 +174,14 @@ export class CompileSurveyQuestionsPage implements OnInit {
       console.log('object<<<<< ' + JSON.stringify(this.apiresponsedata));
 
       if (this.apiresponsedata.result === 'OK') {
-        this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
+        this._router.navigateByUrl(`/dashboard/${this.companyId}`);
       }
 
     });
   }
 
   dashboard() {
-    this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
+    this._router.navigateByUrl(`/dashboard/${this.companyId}`);
   }
 
   goPreview() {
@@ -179,5 +194,46 @@ export class CompileSurveyQuestionsPage implements OnInit {
 
     this._router.navigateByUrl(`/edit-questions/${this.serviceinfo.id}/${item.questid}`);
   }
+
+
+async chooseIndustry() {
+
+
+
+  const modal = await this._modalcontroller.create({
+    component: AllIndustriesComponent,
+    componentProps: {
+      data: this.industrieslist
+    }
+  });
+
+  modal.onDidDismiss().then((result) => {
+    console.log('The result:', result);
+    console.log('The json result:', JSON.stringify(result));
+
+    this.selectedIndustryData = result.data.item;
+
+    this.submitForm.patchValue({
+      industry: this.selectedIndustryData,
+    });
+
+     this.storage.set('INDUSTRY', this.selectedIndustryData);
+     
+
+  
+    this._cdr.markForCheck();
+    
+
+});
+
+  return await modal.present();
+}
+
+selectLanguage() {
+
+
+  this.storage.set('LANGUAGE', this.submitForm.value.language);
+  this._cdr.markForCheck();
+}
 
 }

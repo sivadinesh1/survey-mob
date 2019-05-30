@@ -28,12 +28,23 @@ const routes: Routes = [
   { path: 'survey-mode/:surveycode', loadChildren: './pages/survey-mode/survey-mode.module#SurveyModePageModule' },
   { path: 'survey-results/:survid', loadChildren: './pages/survey-results/survey-results.module#SurveyResultsPageModule' },
   { path: 'dashboard/:userid', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
+  { path: 'dashboard/:companyid', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule' },
   { path: 'verify-otp/:phonenumber', loadChildren: './pages/verify-otp/verify-otp.module#VerifyOtpPageModule' },
   { path: 'preview/:previewsurveyid', loadChildren: './pages/preview/preview.module#PreviewPageModule' },
   { path: 'signout', loadChildren: './pages/signout/signout.module#SignoutPageModule' },
   { path: 'edit-questions/:surveyid/:surveyquestionid',
     loadChildren: './pages/edit-questions/edit-questions.module#EditQuestionsPageModule' },
-  
+  { path: 'forgot-password', loadChildren: './pages/forgot-password/forgot-password.module#ForgotPasswordPageModule' },
+  { path: 'reset-temp-password/:userid',
+    loadChildren: './pages/reset-temp-password/reset-temp-password.module#ResetTempPasswordPageModule' },
+  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
+  { path: 'add-member', loadChildren: './pages/add-member/add-member.module#AddMemberPageModule' },
+  { path: 'add-company', loadChildren: './pages/add-company/add-company.module#AddCompanyPageModule' },
+  { path: 'list-company/:companylistinfo', loadChildren: './pages/list-company/list-company.module#ListCompanyPageModule' },
+  { path: 'edit-company/:edit-companyid', loadChildren: './pages/edit-company/edit-company.module#EditCompanyPageModule' },
+  { path: 'edit-member', loadChildren: './pages/edit-member/edit-member.module#EditMemberPageModule' },
+  { path: 'list-member/:memberlistinfo', loadChildren: './pages/list-member/list-member.module#ListMemberPageModule' },
+
 ];
 
 @NgModule({

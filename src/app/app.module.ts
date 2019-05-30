@@ -1,3 +1,4 @@
+import { AllIndustriesComponent } from './all-industries/all-industries.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,11 +14,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { SharedModule } from './shared.module';
+import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
 
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 
 @NgModule({
-  declarations: [AppComponent, ],
-  entryComponents: [],
+  declarations: [AppComponent, AllCompaniesComponent, AllIndustriesComponent],
+  entryComponents: [AllCompaniesComponent, AllIndustriesComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -25,6 +29,7 @@ import { SharedModule } from './shared.module';
     SharedModule,
     IonicModule.forRoot(),
      IonicStorageModule.forRoot(),
+    //  SocketIoModule.forRoot(config),
     AppRoutingModule
   ],
   providers: [

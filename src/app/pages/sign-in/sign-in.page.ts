@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class SignInPage implements OnInit {
   submitForm: FormGroup;
   apiresponse: any;
+  responsemsg: any;
 
   userid: any;
   role: any;
@@ -47,13 +48,42 @@ export class SignInPage implements OnInit {
     this._commonApiService.signIn(this.submitForm.value).subscribe(data => {
       this.apiresponse = data;
 
-      if (this.apiresponse.result === 'OK') {
-        this.userid = this.apiresponse.userid;
-        this.role = this.apiresponse.role;
-        this.username = this.apiresponse.username;
+
+
+      if (this.apiresponse.result === 'OK' && this.apiresponse.data.length > 1) {
+
+        this.userid = this.apiresponse.data[0].userid;
+
+        this.username = this.apiresponse.data[0].username;
+        this.responsemsg = '';
+
+        const companyArr = this.apiresponse.data;
+        this._authservice.companylist = [];
+
+        companyArr.forEach(element => {
+          
+          this._authservice.companylist.push({'id': element.company_id, 'name': element.company_name});
+        });
+        this._cdr.markForCheck();
+
+        this._authservice.loginNotify(this.userid, this.username,
+          this.apiresponse.data[0].company_id, this.apiresponse.data[0].company_name);
+        // this._router.navigateByUrl(`/dashboard/${this.userid}`);
+        this._router.navigateByUrl(`/dashboard/${this.apiresponse.data[0].company_id}`);
+        this._cdr.markForCheck();
+
+
+      // if (this.apiresponse.result === 'OK') {
+        // this.userid = this.apiresponse.userid;
+        // this.role = this.apiresponse.role;
+        // this.username = this.apiresponse.username;
+        // this.responsemsg = '';
    
-        this._authservice.loginNotify(this.userid, this.username);
-        this._router.navigateByUrl(`/dashboard/${this.userid}`);
+        // this._authservice.loginNotify(this.userid, this.username);
+        // this._router.navigateByUrl(`/dashboard/${this.userid}`);
+        // this._cdr.markForCheck();
+      } else if (this.apiresponse.result === 'NOTOK') {
+        this.responsemsg = 'Wrong User / Password (or) not found';
         this._cdr.markForCheck();
       }
 

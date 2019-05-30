@@ -84,5 +84,37 @@
     --ion-color-tint: #f8c045;
   }
 
-  --ion-toolbar-background: rgba(251, 192, 45, 1);
+  .ion-color-fontcolor {
+    --ion-color-base: #ffffff;
+    --ion-color-base-rgb: 255,255,0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0,0,0;
+    --ion-color-shade: #fafafa;
+    --ion-color-tint: #f8f4f4;
+  }
+
+  .ion-color-lightfontcolor {
+    --ion-color-base: #ffffff;
+    --ion-color-base-rgb: 255,255,0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0,0,0;
+    --ion-color-shade: #fafafa;
+    --ion-color-tint: #f8f4f4;
+  }
+
+  .ion-color-darkfontcolor {
+    --ion-color-base: #000000;
+    --ion-color-base-rgb: 255,255,0;
+    --ion-color-contrast: #000000;
+    --ion-color-contrast-rgb: 0,0,0;
+    --ion-color-shade: #3d3d3c;
+    --ion-color-tint: #585858;
+  }
+
+  // --ion-toolbar-background: rgba(251, 192, 45, 1);
+
+  --ion-toolbar-background: #ffffff;
+  
+
 }
+

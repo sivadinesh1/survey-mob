@@ -15,7 +15,10 @@ import { HttpClient } from '@angular/common/http';
 export class SurveyService {
 
 
-   public  survey: ISurvey = {'id': '', 'surveyname': '', 'surveycode': '', 'surveyvenue': '', 'surveydate': '', 'servicetype': '', 'loggedinuser': '',
+   public  survey: ISurvey = {'id': '', 'surveyname': '', 'surveycode': '', 'surveyvenue': '', 
+   'surveydate': '', 'servicetype': '', 'survey_lang': '',
+   'survey_industry': '', 
+    'loggedinuser': '',
    questions: []
   };
 

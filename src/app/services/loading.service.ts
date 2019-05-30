@@ -38,14 +38,25 @@ export class LoadingService {
     toast.present();
   }
 
+  async presentToastWithPos(msg, pos) {
+    const toast = await this.toastController.create({
+      message: msg,
+      position: pos,
+      duration: 2000,
+      color: 'dark',
+    });
+    toast.present();
+  }
+
   async presentToastWithOptions(msg, pos, isclose, btncaption) {
     const toast = await this.toastController.create({
       message: msg,
       showCloseButton: isclose,
       position: pos,
-      duration: 2000,
-      color: 'primary',
-      closeButtonText: btncaption
+      duration: 3000,
+      color: 'dark',
+      closeButtonText: btncaption,
+      
     });
     toast.present();
   }

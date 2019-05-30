@@ -15,23 +15,14 @@ export class AppComponent {
 
   loggedinUserId: any;
   username: any;
+  companyId: any;
+  companyname: any;
 
   public appPages = [
-    // {
-    //   title: 'Home',
-    //   url: '/home',
-    //   icon: 'home'
-    // },
-    // {
-    //   title: 'List',
-    //   url: '/list',
-    //   icon: 'list'
-    // },
-    {
-      title: 'Signout',
-      url: '/',
-      icon: 'log-out'
-    }
+    {title: 'Settings', url: '/', icon: 'settings'},
+    {title: 'View Members', url: '', icon: 'add'},
+    {title: 'View Companies', url: '', icon: 'add'},
+    {title: 'Signout', url: '/', icon: 'log-out'}
   ];
 
   constructor(
@@ -40,9 +31,7 @@ export class AppComponent {
     private statusBar: StatusBar, private _authService: AuthService,
   ) {
     this.initializeApp();
-  //   this._router.routeReuseStrategy.shouldReuseRoute = function() {
-  //     return false;
-  // };
+
   }
 
   initializeApp() {
@@ -57,6 +46,15 @@ export class AppComponent {
         this._cdr.markForCheck();
       });
 
+      this._authService.companyName.subscribe(companydata => {
+        this.companyname = companydata;
+        console.log('object....' + this.companyname);
+       
+        this._cdr.markForCheck();
+      });
+
+      this.getAsyncData();
+
     });
   }
   ionViewDidEnter() {
@@ -67,10 +65,17 @@ export class AppComponent {
 
     this.loggedinUserId = await <any>this._authService.getItems('USER_ID');
     this.username = await <any>this._authService.getItems('USER_NAME');
+    this.companyId = await <any>this._authService.getItems('COMPANY_ID');
+
     console.log('usernameobject' + this.username);
     console.log('loggedinUserId' + this.loggedinUserId);
 
-  
+    console.log('companyId' + this.companyId);
+
+    this.appPages[1].url = `/list-member/${this.companyId}`;
+    this.appPages[2].url = `/list-company/${this.loggedinUserId}`;
+
+   
     this._cdr.markForCheck();
     
   }

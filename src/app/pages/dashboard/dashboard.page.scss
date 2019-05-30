@@ -1,8 +1,27 @@
 
 
+// div.scrollmenu {
+//     background-color: rgba(251, 192, 45, 0.31);
+//     overflow: auto;
+//     white-space: nowrap;
+//   }
+  
+//   div.scrollmenu div {
+//     display: inline-block;
+//     color: black;
+//     text-align: center;
+//     padding: 14px;
+//     text-decoration: none;
+//   }
+  
+//   div.scrollmenu a:hover {
+//     background-color: #777;
+//   }
+
+
 div.scrollmenu {
     background-color: rgba(251, 192, 45, 0.31);
-    overflow: auto;
+   
     white-space: nowrap;
   }
   
@@ -29,7 +48,9 @@ div.scrollmenu {
 
 
 .clicked {
-    border-bottom: 3px solid rgb(86, 119, 252) !important;
+    // border-bottom: 3px solid rgb(86, 119, 252) !important;
+
+    border-bottom: 3px solid #000000 !important;
 }
 
 
@@ -47,23 +68,24 @@ div.scrollmenu {
 
 .survey-name {
     font-size: 0.9rem;
+    font-weight: 600;
     color: blue;
     padding-left: 0.5rem;
     margin: 0.3rem;
 }
 
 .survey-venue {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: rgb(83, 83, 83);
-    font-weight: 500;
+    font-weight: 400;
     padding-left: 0.5rem;
     margin: 0.3rem;
 }
 
 .survey-date {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: rgb(83, 83, 83);
-    font-weight: 500;
+    font-weight: 400;
     padding-left: 0.5rem;
     margin-top: 0.3rem;
     margin-left: 0.3rem;
@@ -106,4 +128,97 @@ div.scrollmenu {
 
 .stop-survey {
     padding-left: 1rem;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+}
+
+.sub-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    // background-color: rgba(251, 192, 45, 0.31);
+    background-color: var(--ion-color-primary);
+
+   
+}
+
+.sub1{
+    display: grid;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ffffff;
+    font-family: 'lato';
+}
+
+.sub2{
+    display: grid;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ffffff;
+    font-family: 'lato';
+}
+
+.live-sec {
+    max-height: 60vh;
+    overflow: auto;
+    
+}
+
+.example-1
+{
+  float: left;
+  margin: 3px;
+  width: 20px;
+  height: 20px;
+  font: 13px/130px 'Barlow Semi Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  text-align: center;
+  background: rgba(30, 144, 255, 0.6);
+  border-radius: 50%;
+  animation: shadow-pulse 1s infinite;
+}
+
+
+@keyframes shadow-pulse
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes shadow-pulse-big
+{
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 0 70px rgba(0, 0, 0, 0);
+  }
+}
+
+
+.arrow {
+  display: inline-table;
+  line-height: 20px;
+}
+
+.company-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  text-align: left;
+  font-family: 'Lato';
+  font-size: 1.2rem;
+  color: #666666;
+  padding: 1rem;
+}
+
+.hamburger-color {
+  color: var(--ion-color-dark);
 }

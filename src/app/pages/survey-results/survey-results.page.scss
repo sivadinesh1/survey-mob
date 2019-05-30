@@ -34,7 +34,7 @@
 .wrapper {
     display: grid;
   grid-template-columns: 1fr;
-  height: 30vh;
+  height: 250px;
   
   background-color: #FBC02D;
 
@@ -104,7 +104,8 @@ justify-self: end;
 .heading {
     display:grid;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 600;
     color: black;
     align-self: center;
 }
@@ -125,6 +126,8 @@ justify-self: end;
     padding-bottom: 1.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .survey-responses {
@@ -163,7 +166,7 @@ h1 {
     padding: 0.5rem;
   }
   
-  .top-info {
+  .top-info-survey-results {
     display: grid;
    
     background-color: #FBC02D;
@@ -178,9 +181,13 @@ h1 {
         padding: 0.5rem;
         .side-right-top {
             padding: 0.3rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
         .side-right-bottom {
             padding: 0.3rem;
+            font-size: 1rem;
+            font-weight: 600;
   
         }
     }
@@ -193,11 +200,14 @@ h1 {
         padding: 0.5rem;
         .side-left-top {
             padding: 0.3rem;
+            font-size: 1rem;
+            font-weight: 500;
   
         }
         .side-left-bottom {
             padding: 0.3rem;
-  
+            font-size: 1rem;
+            font-weight: 500;
         }
   
     }

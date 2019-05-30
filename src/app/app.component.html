@@ -3,13 +3,13 @@
     <ion-menu>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Hi, {{username}}</ion-title>
+          <ion-title class="labl-head">{{companyname}}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" (click)="onClick(p)">
+            <ion-item detail [routerDirection]="'root'" [routerLink]="[p.url]" (click)="onClick(p)">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

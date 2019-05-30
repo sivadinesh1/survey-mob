@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment.prod';
+import { environment, restApiUrl } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CommonApiService {
 
-  restApiUrl = environment.restApiUrl;
+  restApiUrl = restApiUrl;
   constructor(private _httpclient: HttpClient) { }
 
   verifyOTP(otpsessionid: any, enteredotp: any) {
@@ -26,6 +26,20 @@ addUser(submitForm: any) {
 addSurvey(submitForm: any) {
   return this._httpclient.post(`${this.restApiUrl}/api/add-survey`, submitForm);
 }
+
+
+addMember(submitForm: any) {
+  return this._httpclient.post(`${this.restApiUrl}/api/add-member`, submitForm);
+}
+
+addCompany(submitForm: any) {
+  return this._httpclient.post(`${this.restApiUrl}/api/add-company`, submitForm);
+}
+
+editCompany(submitForm: any) {
+  return this._httpclient.post(`${this.restApiUrl}/api/edit-company`, submitForm);
+}
+
 
 addQuestions(submitForm: any) {
   return this._httpclient.post(`${this.restApiUrl}/api/add-survey-question`, submitForm);
@@ -77,6 +91,10 @@ getUserSurveysByStatus(userid: any, status: any) {
   return this._httpclient.get(`${this.restApiUrl}/api/user-surveys-status/${userid}/${status}`);
 }
 
+getDashboardUserSurvey(companyid: any, status: any) {
+  return this._httpclient.get(`${this.restApiUrl}/api/dashboard-user-survey/${companyid}/${status}`);
+}
+
 getSurveyQuestionResponses(surveyquestionid: any) {
   return this._httpclient.get(`${this.restApiUrl}/api/get-survey-question-responses/${surveyquestionid}`);
 }
@@ -106,6 +124,24 @@ updateQuestion(submitForm: any) {
 
 updateSurvey(submitForm: any) {
   return this._httpclient.post(`${this.restApiUrl}/api/update-survey`, submitForm);
+}
+
+
+
+getUser(phonenumber: any) {
+  return this._httpclient.get(`${this.restApiUrl}/api/get-user/${phonenumber}`);
+}
+
+
+
+getCompaniesList(userid: any) {
+  return this._httpclient.get(`${this.restApiUrl}/api/companies-list/${userid}`);
+}
+
+
+getCompanyDetail(companyid: any) {
+ console.log('object >>. ' + companyid);
+  return this._httpclient.get(`${this.restApiUrl}/api/company-details/${companyid}`);
 }
 
 }

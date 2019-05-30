@@ -1,11 +1,15 @@
+
+import { DataService } from './../../services/data.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonApiService } from 'src/app/services/common-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 
 import { groupBy } from 'lodash';
 
+import * as socketIo from 'socket.io-client';
+import { socketApiUrl } from '../../../environments/environment';
 
 @Component({
   selector: 'app-survey-results',
@@ -13,7 +17,7 @@ import { groupBy } from 'lodash';
   styleUrls: ['./survey-results.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SurveyResultsPage implements OnInit {
+export class SurveyResultsPage implements OnInit, OnDestroy {
   paramSubscriptions: Subscription;
   surveydata: any;
   surveyinfo: any;
@@ -26,22 +30,27 @@ export class SurveyResultsPage implements OnInit {
   flatMap = [];
   loggedinUserId: any;
   surveyid: any;
+  companyId: any;
+
+  socketApiUrl = socketApiUrl;
 
   constructor(private _route: ActivatedRoute, private _cdr: ChangeDetectorRef,
     private _router: Router, private _authService: AuthService,
+    private dataservice: DataService,
     private _commonApiService: CommonApiService) {
-      this.surveyid = this._route.snapshot.params['survid'];
-     
-      
-    }
+    this.surveyid = this._route.snapshot.params['survid'];
+
+
+  }
 
   ngOnInit() {
+
+
+
+
     this._route.data.subscribe(data => {
       this.surveydata = data['surveydata'];
-    //  console.log('>>>>>>>>>>>>>>>>>>> ' + JSON.stringify(this.surveydata));
-
       const array = this.surveydata;
-   //   this.surveyid = array[0].surveyid;
 
       this.totalresponsesArr = array.reduce(function (list, el) {
         if (!list[el.guestname]) {
@@ -53,101 +62,154 @@ export class SurveyResultsPage implements OnInit {
 
       this.totalresponses = Object.entries(this.totalresponsesArr).length;
 
-      let groupedData = groupBy(array, function(d) {return d.questionid; });
+      let groupedData = groupBy(array, function (d) { return d.questionid; });
 
       Object.values(groupedData).map(e => {
 
-        console.log('object' + JSON.stringify(e));
-
         var result1 = Object.values(e).reduce(function (list, el) {
           list[el.res_options] = ++list[el.res_options] || 1;
-        
+
           return list;
         }, {});
-
-console.log('object....' + JSON.stringify(result1));
-console.log('object...KEY.' + Object.values(result1));
 
         let k = e[0].question;
         let j = result1;
 
 
- this._commonApiService.getSurveyQuestionResponses(e[0].questionid).subscribe(dat => {
-    let tmp = dat;
+        this._commonApiService.getSurveyQuestionResponses(e[0].questionid).subscribe(dat => {
+          let tmp = dat;
 
-    Object.keys(tmp).forEach(key=> {
-      console.log(tmp[key]);
-      let tmpkey = tmp[key].res_options;
+          Object.keys(tmp).forEach(key => {
+       //     console.log(tmp[key]);
+            let tmpkey = tmp[key].res_options;
 
-      console.log('object@@..' + tmpkey);
-      console.log('object##..' + Object.keys(j).indexOf(tmpkey));
+            if (Object.keys(j).indexOf(tmpkey) === -1) {
 
-      if(Object.keys(j).indexOf(tmpkey) === -1) {
-             console.log('object ... not in array ' + tmpkey);
-      console.log('object ... nwhat >>>  ' + JSON.stringify(j));
+              j[tmpkey] = 0;
 
-      console.log('is this an array ' + Array.isArray(j));
-       // let x = eval(tmpkey);
+            }
 
-      j[tmpkey] = 0;
-      
-      
-      }
-
-  //  if(Object.values(j).indexOf(tmpkey) === -1) {
-  //     console.log('object ... not in array ' + tmpkey);
-  //     console.log('object ... nwhat >>>  ' + JSON.stringify(j));
-  //  }
-
-
-  });
-
+          });
 
         });
 
 
-        this.flatMap.push({questions: k, responsesummary: j});
-        // debugger;
+        this.flatMap.push({ questions: k, responsesummary: j });
 
-        // this.flatMap.push( {surveyid: survid, id: reducedArr.substring(0, reducedArr.indexOf(',')),
-        // name: reducedArr.substring(reducedArr.indexOf(',') + 1, reducedArr.length)});
-
-
-        // this._commonApiService.getSurveyQuestionResponses(e.questionid).subscribe(dat => {
-        //   console.log('object>>' + JSON.stringify(dat));
-        // });
 
       });
 
-    
+
 
     });
     this.getAsyncData();
+
+
+    // const socket = socketIo('http://localhost:4444/');
+    const socket = socketIo(`${this.socketApiUrl}`);
+    socket.on('hello', (data) => {
+    //  console.log(data);
+
+
+       this.surveydata = data;
+       const array = this.surveydata;
+
+    //   console.log('>>>>>>>>> ' + JSON.stringify(array));
+
+     //  console.log("is array " + Array.isArray(array1));
+
+       if(Array.isArray(array)) {
+        this.flatMap = [];
+        this.totalresponsesArr = array.reduce(function (list, el) {
+          if (!list[el.guestname]) {
+            list[el.guestname] = [];
+          }
+          list[el.guestname].push(el);
+          return list;
+        }, {});
+
+
+      this.totalresponses = Object.entries(this.totalresponsesArr).length;
+
+      let groupedData = groupBy(array, function (d) { return d.questionid; });
+
+      Object.values(groupedData).map(e => {
+
+        var result1 = Object.values(e).reduce(function (list, el) {
+          list[el.res_options] = ++list[el.res_options] || 1;
+
+          return list;
+        }, {});
+
+        let k = e[0].question;
+        let j = result1;
+
+
+        this._commonApiService.getSurveyQuestionResponses(e[0].questionid).subscribe(dat => {
+          let tmp = dat;
+
+          Object.keys(tmp).forEach(key => {
+       //     console.log(tmp[key]);
+            let tmpkey = tmp[key].res_options;
+
+            if (Object.keys(j).indexOf(tmpkey) === -1) {
+
+              j[tmpkey] = 0;
+
+            }
+
+          });
+
+        });
+
+
+        this.flatMap.push({ questions: k, responsesummary: j });
+
+
+      });
+
+
+       }
+
+    
+
+
+      this._cdr.markForCheck();
+
+    });
+
   }
+  ngOnDestroy() {
+
+  }
+
 
   async getAsyncData() {
 
     this.loggedinUserId = await <any>this._authService.getItems('USER_ID');
+    this.companyId = await <any>this._authService.getItems('COMPANY_ID');
+
     this._commonApiService.getSurveyBasicInfoById(this.surveyid).subscribe(sdata => {
       this.surveyinfo = sdata[0];
 
       this._cdr.markForCheck();
     });
     this._cdr.markForCheck();
-    
+
   }
 
   goDashboard() {
-    this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
+    this._router.navigateByUrl(`/dashboard/${this.companyId}`);
   }
 
   getWidth(item) {
+  
     const v = (item.value / this.totalresponses) * 100;
     return `${v}%`;
   }
 
-   getFilteredCodes(array, key, value) {
-    return array.filter(function(e) {
+  getFilteredCodes(array, key, value) {
+    return array.filter(function (e) {
       return e[key] === value;
     });
   }

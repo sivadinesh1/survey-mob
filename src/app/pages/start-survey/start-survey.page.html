@@ -1,76 +1,97 @@
-<ion-content class="wrapper">
+<ion-content class="wrapper" >
+
+  <ion-header>
+  <div class="toolbar">
+      <div>
+          <img src="/assets/images/back.svg" width="20px" height="20px">
+       </div>
+
+    <div>
+           {{companyname}} 
+      </div>
+
+
+      <div class="view"><img *ngIf="surveyon" src="/assets/images/view.svg" width="20px" height="20px"></div>
+      <div class="checked"><img *ngIf="surveyon" src="/assets/images/checked.svg" width="20px" height="20px"></div>
+
+    </div>
+</ion-header>
 
   <div class="top">
-    <div class="item1 item">
-      <ion-icon name="arrow-round-back" (click)="goDashboard()"></ion-icon>
-    </div>
-    <div class="item2 ">சர்வே கேள்விகள்</div>
-    <div class="item3 item">
-        &nbsp;
-    </div>
-    <div class="item4 item">
-  
-     <ion-icon name="eye"></ion-icon>
-    </div>
-    <div class="item5 item">
-      <ion-icon name="checkmark"></ion-icon>
-    </div>
+    Create Survey
   </div>
   <div class="main">
-    <div class="row1">சர்வே </div>
+    <!-- <div class="row1">New Survey </div> -->
     <div>
       <form [formGroup]="submitForm" >
-      <ion-item>
-          <ion-input formControlName="surveyname" type="text"  placeholder="கஸ்டமர் பெயர்"  ></ion-input>
-          <ion-icon name="person" slot="start"></ion-icon>
-      </ion-item>
-      <div [ngClass]="{'has-error' : (submitForm.get('surveyname').hasError('required') || submitForm.get('surveyname').hasError('pattern')) && submitForm.get('surveyname').touched}"
+
+          <ion-item >
+              <ion-label position="stacked" class="label-style"> Survey name</ion-label>
+              <ion-input formControlName="surveyname" clearInput placeholder="Give your survey a title"></ion-input>
+            </ion-item>
+              <div [ngClass]="{'has-error' : (submitForm.get('surveyname').hasError('required') || submitForm.get('surveyname').hasError('pattern')) && submitForm.get('surveyname').touched}"
       *ngIf="(submitForm.get('surveyname').hasError('required') || submitForm.get('surveyname').hasError('pattern')) && submitForm.get('surveyname').touched">
-      Enter Customer Name.
+      Enter survey name.
       </div>
-     
-    
-      <ion-item>
-          <ion-input formControlName="surveyvenue" type="text"  placeholder="விருந்து / சமையல் நடக்கும் இடம்"  ></ion-input>
-          <ion-icon name="pin" slot="start"></ion-icon>
+
+
+        <ion-item>
+            <ion-label position="stacked" class="label-style"> Survey venue</ion-label>
+          <ion-input formControlName="surveyvenue" clearInput placeholder="Enter survey venue" ></ion-input>
+          
       </ion-item>
       <div [ngClass]="{'has-error' : (submitForm.get('surveyvenue').hasError('required') || submitForm.get('surveyvenue').hasError('pattern')) && submitForm.get('surveyvenue').touched}"
       *ngIf="(submitForm.get('surveyvenue').hasError('required') || submitForm.get('surveyvenue').hasError('pattern')) && submitForm.get('surveyvenue').touched">
       Enter venue details.
       </div>
-   
-          <!-- <ion-input formControlName="surveydate" type="text"  placeholder="தேதி"  ></ion-input> -->
 
-          <ion-item>
-              <ion-label>தேதி</ion-label>
-              <ion-datetime displayFormat="D MMM YYYY h:mm A" minuteValues="0,15,30,45"
-              formControlName="surveydate" ></ion-datetime>
-              <ion-icon name="calendar" slot="start"></ion-icon>
-            </ion-item>
-
-
-      <div [ngClass]="{'has-error' : (submitForm.get('surveydate').hasError('required') || submitForm.get('surveydate').hasError('pattern')) && submitForm.get('surveydate').touched}"
-      *ngIf="(submitForm.get('surveydate').hasError('required') || submitForm.get('surveydate').hasError('pattern')) && submitForm.get('surveydate').touched">
-      Enter Date of function.
-      </div>
-     
-      <ion-item>
-          <ion-label> நேரம்</ion-label>
-          <ion-select formControlName="servicetype" placeholder="தேர்வு செய்க">
-
-              <ion-select placeholder="தேர்வு செய்க" formControlName="servicetype" >
-                  <ion-select-option value="{{item.servicetype}}" *ngFor="let item of servicetypes; " >
-                    {{ item.servicetype }}
-                  </ion-select-option>
-                </ion-select>
-
-          
-          </ion-select>
-        </ion-item>
-        <div [ngClass]="{'has-error' : (submitForm.get('servicetype').hasError('required') || submitForm.get('servicetype').hasError('pattern')) && submitForm.get('servicetype').touched}"
-        *ngIf="(submitForm.get('servicetype').hasError('required') || submitForm.get('servicetype').hasError('pattern')) && submitForm.get('servicetype').touched">
-        Enter Time of function.
+            <ion-item>
+                <ion-label  class="label-style">Date & Time</ion-label>
+                <ion-datetime displayFormat="D MMM YYYY h:mm A" minuteValues="0,15,30,45" placeholder="Select"
+                formControlName="surveydate" ></ion-datetime>
+                <!-- <ion-icon name="calendar" slot="start"></ion-icon> -->
+              </ion-item>
+  
+  
+        <div [ngClass]="{'has-error' : (submitForm.get('surveydate').hasError('required') || submitForm.get('surveydate').hasError('pattern')) && submitForm.get('surveydate').touched}"
+        *ngIf="(submitForm.get('surveydate').hasError('required') || submitForm.get('surveydate').hasError('pattern')) && submitForm.get('surveydate').touched">
+        Enter survey date.
         </div>
+
+
+        <ion-item>
+            <ion-label class="label-style"> Language</ion-label>
+          
+           
+                <ion-select placeholder="Select" formControlName="language"  (ionChange)="selectLanguage()">
+                    <ion-select-option value="{{item}}"  
+                    *ngFor="let item of languages; " [value]="item">
+                      {{ item }}
+                    </ion-select-option>
+                  </ion-select>
+  
+            
+      
+          </ion-item>
+          <div [ngClass]="{'has-error' : (submitForm.get('language').hasError('required') || submitForm.get('language').hasError('pattern')) && submitForm.get('language').touched}"
+          *ngIf="(submitForm.get('language').hasError('required') || submitForm.get('language').hasError('pattern')) && submitForm.get('language').touched">
+          Choose survey language.
+          </div> 
+
+          <ion-item detail (click)="chooseIndustry()">
+              <ion-label class="label-style">
+                Choose Industry&nbsp;&nbsp;&nbsp;&nbsp;
+              </ion-label>
+              
+              <ion-input formControlName="industry" ></ion-input>
+            </ion-item>
+            
+            <div [ngClass]="{'has-error' : (submitForm.get('industry').hasError('required') || submitForm.get('industry').hasError('pattern')) && submitForm.get('industry').touched}"
+            *ngIf="(submitForm.get('industry').hasError('required') || submitForm.get('industry').hasError('pattern')) && submitForm.get('industry').touched">
+            Choose survey Industry.
+            </div> 
+
+       
 
       </form>
 
@@ -82,16 +103,19 @@
   <ion-row center *ngIf="!surveyon">
       <ion-col text-center>
      
-        <ion-button (click)="registerSurvey()"  type="button" name="action">Register Survey</ion-button>
+        <ion-button (click)="registerSurvey()"  expand="block"
+        type="button" name="action" class="primary-color">
+            <ion-ripple-effect></ion-ripple-effect>
+          Create Survey</ion-button>
       </ion-col>
     </ion-row>
 </div>
-
+<br>
     <ng-container *ngIf="surveyon">
-        <div class="mid">கேள்வி - பதில்கள்</div>
-        <div  class="label-1">முதல் கேள்வியையும் அதற்கான தோடு பதில்களையும் உருவாக்குங்கள்</div>
+        <div class="mid">Questions - Answers</div>
+        <div  class="label-1">Add your first question and possible answer choices</div>
         <div class="add-question">
-            <ion-icon *ngIf="!addquestions" name="add-circle-outline" class="ion-icon-3x" color="dark" (click)="addQuestions()"></ion-icon>
+            <ion-icon *ngIf="!addquestions" name="add-circle-outline" style="font-size: 72px" color="primary" (click)="addQuestions()"></ion-icon>
         </div>
     </ng-container>
     

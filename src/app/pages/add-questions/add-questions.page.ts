@@ -1,5 +1,5 @@
 import { SharedService } from './../../services/shared.service';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonApiService } from './../../services/common-api.service';
@@ -28,11 +28,19 @@ export class AddQuestionsPage implements OnInit {
   apiresponsedata: any;
   newquestionid: any;
 
+  currentcount: any;
+  maxadditionalchoices = 3;
+  defaultresponses = 2;
+  morechoiceflag = true;
+
   submitForm: FormGroup;
   validateAllFormFields = SharedService.validateAllFormFields;
   isFieldInvalidTouched = SharedService.isFieldInvalidTouched;
 
   flatMap = [];
+
+  language: any;
+  industry: any;
 
   constructor(private _surveyService: SurveyService, private _route: ActivatedRoute,
     private _cdr: ChangeDetectorRef, private _fb: FormBuilder,
@@ -48,10 +56,28 @@ export class AddQuestionsPage implements OnInit {
     this.submitForm = this._fb.group({
       surveyid: new FormControl(this.surveyid, [Validators.required]),
       question: new FormControl(null, [Validators.required]),
-      optiongroupname: new FormControl(null, [Validators.required]),
+      optiongroupname: new FormControl(0, null),
       question_sequence: new FormControl('1', [Validators.required]),
       loggedinuser: new FormControl(null, [Validators.required]),
+      lang: new FormControl(null, [Validators.required]),
+      industry: new FormControl(null, [Validators.required]),
+      options: this._fb.array([
+        new FormGroup({
+          option: new FormControl(null, Validators.required),
+        
+
+        })
+      ])
     });
+
+
+    while (--this.defaultresponses) {
+     
+      this.addResponseOptions();
+    
+    }
+
+
   }
 
   ionViewDidEnter() {
@@ -62,7 +88,9 @@ export class AddQuestionsPage implements OnInit {
 
   }
 
-
+  get options(): FormGroup {
+    return this.submitForm.get('options') as FormGroup;
+}
 
   async getAsyncData() {
     this.flatMap = [];
@@ -76,9 +104,13 @@ export class AddQuestionsPage implements OnInit {
     });
 
     this.loggedinUserId = await <any>this._authservice.getItems('USER_ID');
+    this.language = await <any>this._authservice.getItems('LANGUAGE');
+    this.industry = await <any>this._authservice.getItems('INDUSTRY');
 
     this.submitForm.patchValue({
       loggedinuser: this.loggedinUserId.toString(),
+      lang: this.language,
+      industry: this.industry,
     });
 
 
@@ -185,6 +217,57 @@ export class AddQuestionsPage implements OnInit {
     this._router.navigateByUrl(`/compile-survey-questions/${this.surveyid}`);
 
   }
+
+
+
+  onRemoveOptions(i) {
+    (<FormArray>this.submitForm.get('options')).removeAt(i);
+
+    console.log('current max add choice values ' + this.maxadditionalchoices);
+
+    this.maxadditionalchoices++;
+
+    this.morechoiceflag = true;
+    console.log('current max add AFTE choice values ' + this.maxadditionalchoices);
+    this._cdr.markForCheck();
+
+  }
+
+  addResponseOptions() {
+
+   // this.currentcount = this.currentcount++;
+
+        const control =    new FormGroup({
+          option: new FormControl(null, Validators.required),
+        
+        });
+
+        (<FormArray>this.submitForm.get('options')).push(control);
+        this._cdr.markForCheck();
+      }
+
+
+      addResponses() {
+
+      
+        
+
+        if (this.maxadditionalchoices !== 0) {
+          this.addResponseOptions();
+        }
+        
+        this.maxadditionalchoices--;
+        if (this.maxadditionalchoices === 0) {
+          console.log('no more choices');
+          this.morechoiceflag = false;
+
+        }
+       
+        
+        this._cdr.markForCheck();
+        }
+      
+     
 
 }
 

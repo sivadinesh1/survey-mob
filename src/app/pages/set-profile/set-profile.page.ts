@@ -55,7 +55,7 @@ export class SetProfilePage implements OnInit {
         if (this.apiresponse.result === 'OK') {
           this.loading = false;
           this.userid = this.apiresponse.newuserid;
-          this._authservice.loginNotify(this.userid, this.submitForm.value.firstname);
+          this._authservice.loginNotify(this.userid, this.submitForm.value.firstname, '', '');
 
           this._router.navigateByUrl(`/new-survey`);
         }

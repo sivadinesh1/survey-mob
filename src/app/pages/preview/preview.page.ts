@@ -24,6 +24,7 @@ export class PreviewPage implements OnInit {
   surveyid: any;
 
   tempdata: any;
+  companyId: any;
 
   constructor(private _router: Router, private _commonApiService: CommonApiService,
     private _route: ActivatedRoute, private alertController: AlertController,
@@ -78,6 +79,7 @@ export class PreviewPage implements OnInit {
 
   async getAsyncData() {
     this.loggedinUserId = await <any>this._authService.getItems('USER_ID');
+    this.companyId = await <any>this._authService.getItems('COMPANY_ID');
     
     this._commonApiService.getSurveyBasicInfoById(this.surveyid).subscribe(sdata => {
       this.surveydata = sdata[0];
@@ -89,7 +91,7 @@ export class PreviewPage implements OnInit {
   }
 
   goDashboard() {
-    this._router.navigateByUrl(`/dashboard/${this.loggedinUserId}`);
+    this._router.navigateByUrl(`/dashboard/${this.companyId}`);
   }
 
   // <div *ngFor="let item of result | keyvalue:descOrder">
