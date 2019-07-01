@@ -18,8 +18,8 @@ export class AllCompaniesComponent implements OnInit {
   ngOnInit() {
     this.clientsdata = this.data;
     this.origClientdata = this.data;
-    console.log('object>>>>>> ' + JSON.stringify(this.data));
-    console.log('object>>clientsdata>>>> ' + JSON.stringify(this.clientsdata));
+  //  console.log('object>>>>>> ' + JSON.stringify(this.data));
+  //  console.log('object>>clientsdata>>>> ' + JSON.stringify(this.clientsdata));
     this._cdr.markForCheck();
   }
 

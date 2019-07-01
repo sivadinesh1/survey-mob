@@ -9,6 +9,8 @@ export const environment = {
 
 export const restApiUrl = 'http://localhost:5070';
 export const socketApiUrl = 'http://localhost:4444/';
+export const imageUrl = 'http://surveyteam.in';
+
 
 /*
  * For easier debugging in development mode, you can import the following file

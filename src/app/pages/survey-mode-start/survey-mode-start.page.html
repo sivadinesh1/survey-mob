@@ -1,52 +1,30 @@
 <ion-content>
 
   <div class="wrapper">
-    <div class="header">
-
-      <div class="row1"></div>
-      <div class="row2">Suvai - Guest Survey app</div>
-      <div class="row3">for food caterers</div>
-    </div>
+    <div class="header"></div>
     <div class="main">
-      <div class="row1">
-        <span class="label">
-          &nbsp;
-        </span>
-        
-      </div>
+
 
       <form [formGroup]="submitForm">
-      <div class="row2">
-        <ion-input placeholder="Enter your Survey Code" formControlName="surveycode" class="input-text-align"></ion-input>
-      </div>
-      <div class="row3">
-        <ion-row center >
-          <ion-col text-center class="test">
-            <ion-button expand="block" fill="solid" shape="round" class="button-align"
-            (click)="onSubmit()"  type="button" name="action" color="primary">START SURVEY</ion-button>
-          </ion-col>
-        </ion-row>
-      </div>
-      <div class="has-error msg">
-          {{this.responsemsg}}
-      </div>
+        <div class="row2">
+          <ion-input placeholder="Enter Survey Code" formControlName="surveycode" class="input-text-align"></ion-input>
+        </div>
+        <div class="row3">
+          <ion-row center>
+            <ion-col text-center>
+              <ion-button expand="block" fill="solid" shape="round" class="button-align" (click)="onSubmit()"
+                type="button" name="action" color="primary">START SURVEY</ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+
       </form>
-     
-  <div class="row4">
-    &nbsp; 
-  </div>
-  <div class="row5">
-    &nbsp;
-  </div>
- 
+
     </div>
     <div class="footer">
-        <ion-icon slot="end"  name="home" (click)="signin()" color="medium"
-                class="ion-icon-2x"></ion-icon>
-      </div>
-  
+      <img (click)="signin()" src="/assets/images/home.svg" width="36px" height="36px">
+    </div>
+
   </div>
 
 </ion-content>
-
-

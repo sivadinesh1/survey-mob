@@ -1,125 +1,120 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar >
     <ion-buttons slot="start">
-      <ion-menu-button class="hamburger-color" ></ion-menu-button>
-    </ion-buttons> 
-    <div class="company-row" (click)="chooseCompany()">
-        <div>
-           {{activecompany}} <span>  
-             <img src="/assets/images/arrow-down.svg" width="14px" height="14px"> 
-           </span>
-        </div>
-     
-       
-         
-     
+      <ion-menu-button class="hamburger-color"></ion-menu-button>
+    </ion-buttons>
+    <div class="company-row" >
+      <div (click)="chooseCompany()">
+        {{activecompany}} <span>
+          <img src="/assets/images/arrow-down.svg" (click)="chooseCompany()" width="14px" height="14px">
+        </span>
       </div>
+      <div>
+          <img src="/assets/images/add.svg" (click)="addSurvey()" width="20px" height="20px">
+      </div>
+    </div>
 
-     
+ 
     
-    <ion-icon name="add" slot="end" (click)="addSurvey()"
-    class="ion-icon-2x"></ion-icon>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-   <!-- <div class="company-row" (click)="chooseCompany()">
-     <div>
-        {{activecompany}} <span>  
-          <img src="/assets/images/arrow-down.svg" width="14px" height="14px"> 
-        </span>
-     </div>
-  
-    
-      
-  
-   </div> -->
-     
-     
-          <div *ngIf="this.items[1].size > 0;" class="live-sec">
-              
-                <div *ngFor="let item of liveData" >
-    
-    
-                    <ion-item >
-                        <ion-label>
-                          <h2 class="survey-name">{{item.survey_name}}</h2>
-                          <p class="survey-venue">{{item.survey_venue}}</p>
-                          <p class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}} - {{item.service_type}}</p>
-                          <div class="survey-code">CODE - {{item.survey_code}}</div>
-                         <div class="stop-survey">
-                            <div class="example-1">Live</div>
-                          <div>
-                              <ion-button color="danger" (click)="stopSurvey(item)"> Stop Survey</ion-button>
-                          </div>
-                           
-                          </div> 
-    
-                        </ion-label>
-                        <ion-icon name="arrow-forward" item-right (click)="results(item)"></ion-icon>
-                      </ion-item>
-    
-                  </div>
-                </div>  
-  
-<div class="sub-head">
-  <div class="sub1" [ngClass]="{'clicked' :items[0].isClicked}" (click)="toggleClick(items[0])">
-    Upcoming Surveys
-  </div>
-  <div class="sub2" [ngClass]="{'clicked' :items[2].isClicked}" (click)="toggleClick(items[2])">
-    Completed Surveys
-  </div>
-</div>
 
-  <div *ngIf="items[0].isClicked" >
-      <div *ngIf="upcomingDataLength === 0;then upcoming_content else other_upcoming_content">here is ignored</div>    
-      <ng-template #upcoming_content>
-        <div class="no-rows">No upcoming surveys</div>
-      </ng-template>
-      <ng-template #other_upcoming_content>
-          <div *ngFor="let item of upcomingData" class="survey-data">
-              <div class="survey-name">{{item.survey_name}}</div>
-              <div class="survey-venue">{{item.survey_venue}}</div>
-              <div class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}} - {{item.service_type}}</div>
-              <div class="survey-code">CODE - {{item.survey_code}}</div>
-              &nbsp;&nbsp;<span class="action-button" (click)="goLive(item)"> GO LIVE</span>&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;<span class="action-button" (click)="goPreview(item)"> PREVIEW</span>&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;
-              <span class="action-button" (click)="edit(item)">EDIT</span>
+
+  <div *ngIf="this.items[1].size > 0;" class="live-sec">
+
+    <div *ngFor="let item of liveData">
+
+
+      <ion-item>
+        <ion-label>
+          <h2 class="survey-name">{{item.survey_name}}</h2>
+          <p class="survey-venue">{{item.survey_venue}}</p>
+          <p class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}} </p>
+          <div class="survey-code">CODE - {{item.survey_code}}</div>
+          <div class="stop-survey">
+            <div class="example-1">Live</div>
+            <div>
+              <ion-button color="danger" (click)="stopSurvey(item)"> Stop Survey</ion-button>
             </div>
-      </ng-template>
+            <div>
+                <ion-button color="danger" (click)="viewSummary(item)"> View Summary</ion-button>
+              </div>
 
-      
-  </div>
-  
-  <div *ngIf="items[2].isClicked" >
-      <div *ngIf="closeDataLength === 0;then close_content else other_close_content">here is ignored</div>    
-      <ng-template #close_content>
-          <div class="no-rows">No completed surveys</div>
-      </ng-template>
-      <ng-template #other_close_content>
-          <div *ngFor="let item of closeData" >
-            <ion-item (click)="results(item)">
-                <ion-label>
-                  <h2 class="survey-name">{{item.survey_name}}</h2>
-                  <p class="survey-venue">{{item.survey_venue}}</p>
-                  <p class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}} - {{item.service_type}}</p>
-                </ion-label>
-                <ion-icon name="arrow-forward" item-right ></ion-icon>
-              </ion-item>
-
-            </div>
-      </ng-template>
+          </div>
+ 
+        </ion-label>
 
 
-
-
-   
-
-
-
+        <img src="/assets/images/keyboard-right-arrow.svg" (click)="results(item)" width="18px" height="18px">
+      </ion-item>
 
     </div>
-  
-  </ion-content>
+  </div>
+
+  <div class="sub-head">
+    <div class="sub1" [ngClass]="{'clicked' :items[0].isClicked}" (click)="toggleClick(items[0])">
+      Upcoming Surveys
+    </div>
+    <div class="sub2" [ngClass]="{'clicked' :items[2].isClicked}" (click)="toggleClick(items[2])">
+      Completed Surveys
+    </div>
+  </div>
+
+  <div *ngIf="items[0].isClicked">
+    <div *ngIf="upcomingDataLength === 0;then upcoming_content else other_upcoming_content">here is ignored</div>
+    <ng-template #upcoming_content>
+      <div class="no-rows">No upcoming surveys</div>
+    </ng-template>
+    <ng-template #other_upcoming_content>
+      <div *ngFor="let item of upcomingData" class="survey-data">
+        <div class="survey-name">{{item.survey_name}}</div>
+        <div class="survey-venue">{{item.survey_venue}}</div>
+        <div class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}}</div>
+        <div class="survey-code">CODE - {{item.survey_code}}</div>
+        &nbsp;&nbsp;<span class="action-button" (click)="goLive(item)"> GO LIVE</span>&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;<span class="action-button" (click)="goPreview(item)"> PREVIEW</span>&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;
+        <span class="action-button" (click)="edit(item)">EDIT</span>
+      </div>
+    </ng-template>
+
+
+  </div>
+
+  <div *ngIf="items[2].isClicked">
+    <div *ngIf="closeDataLength === 0;then close_content else other_close_content">here is ignored</div>
+    <ng-template #close_content>
+      <div class="no-rows">No completed surveys</div>
+    </ng-template>
+    <ng-template #other_close_content>
+      <div *ngFor="let item of closeData">
+        <ion-item (click)="results(item)">
+          <ion-label>
+            <h2 class="survey-name">{{item.survey_name}}</h2>
+            <p class="survey-venue">{{item.survey_venue}}</p>
+            <p class="survey-date">{{item.survey_date | date: 'dd/MMM/yyyy'}} </p>
+          </ion-label>
+
+
+          <img src="/assets/images/keyboard-right-arrow.svg" (click)="results(item)" width="18px" height="18px">
+
+        </ion-item>
+
+      </div>
+    </ng-template>
+
+
+
+
+
+
+
+
+
+  </div>
+
+</ion-content>

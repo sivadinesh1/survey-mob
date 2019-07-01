@@ -3,40 +3,32 @@
 
     <div class="top">
       <div class="item1 item">
-        <ion-icon name="arrow-round-back" (click)="edit()"></ion-icon>
+       
+        <img src="/assets/images/back.svg"  (click)="edit()" width="20px" height="20px"> 
       </div>
-      <div class="item2 ">Dashboard</div>
+      <div class="item2 ">&nbsp;</div>
       
       <div class="item5 item">
         <div class = "save" (click)="onSubmit()"> SAVE </div>
-        <!-- <ion-icon  name="checkmark"></ion-icon> -->
-      </div>
-
-    </div>
-    <div class="top-info">
-      <div class="side-left">
-        <div class="side-left-top">
        
-         {{surveydata?.surveyname}}
-        </div>
-        <div class="side-left-bottom">
-          {{surveydata?.surveyvenue}}
-        </div>
-
-      </div>
-
-      <div class="side-right">
-
-        <div class="side-right-top">
-          {{surveydata?.surveydate | date: 'dd/MMM/yyyy'}}
-        </div>
-        <div class="side-right-bottom">
-          {{surveydata?.servicetype}}
-        </div>
-
       </div>
 
     </div>
+
+    <div class="top-info">
+        <div class="row1">
+           {{surveydata?.surveyname}}
+        </div>
+  
+        <div class="row2">
+            {{surveydata?.surveyvenue}}
+        </div>
+        <div class="row3">
+            {{surveydata?.surveydate | date: 'dd/MMM/yyyy'}}
+        </div>
+  
+      </div>
+
     <div class="main">&nbsp;</div>
     <div class="question">
       <form [formGroup]="submitForm" accept-charset="UTF-8">
@@ -53,9 +45,7 @@
           Questions missing or invalid questions format.
         </div>
 
-        <!-- <div class="has-error">
-            {{responsemsg}}
-        </div> -->
+       
         <div
         [ngClass]="{'has-error' : (submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched}"
         *ngIf="(submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched">
@@ -70,39 +60,27 @@
                       <ion-item >
                           <ion-input formControlName="option" clearInput placeholder="Choice #{{ i+1}}"></ion-input>
                         </ion-item>
-                        <ion-icon name="remove-circle-outline" *ngIf=" i > 1"
-                        class="ion-icon-1point5x remove" (click)="onRemoveOptions(i)"></ion-icon>
+                       
+
+                        <img src="/assets/images/minus.svg" *ngIf=" i > 1" class="remove"
+                        width="24px" height="24px" (click)="onRemoveOptions(i)">
+
+
               </div>
             </div>
           </div>
 
           <div class="add-circle">
-              <ion-icon name="add-circle-outline"  *ngIf="morechoiceflag" 
-              style="font-size: 36px" color="primary" 
-              (click)="addResponses()"></ion-icon>
+            
+
+              <img src="/assets/images/plus.svg"  *ngIf="morechoiceflag" 
+              width="36px" height="36px" (click)="addResponses()">
+
           </div>
           
          
           
         </div>
-        <!-- <div class=row4>
-        <ion-list >
-          <ion-radio-group formControlName="optiongroupname">
-            <ion-list-header>
-              விருந்தினருக்கு காட்ட வேண்டிய பதில்கள்
-            </ion-list-header>
-            <div *ngFor="let item of flatMap; let i = index;">
-              <ion-item>
-                <ion-label text-wrap>{{item.name}}</ion-label>
-                <ion-radio slot="start" (click)="onClick(item)" value="{{item.id}}">
-                </ion-radio>
-
-              </ion-item>
-            </div>
-
-          </ion-radio-group>
-        </ion-list>
-      </div> -->
       
       </form>
     </div>
@@ -110,84 +88,3 @@
   </div>
 </ion-content>
 
-<!-- <ion-content class="wrapper">
-
-  <div class="top">
-    <div class="item1 item">
-      <ion-icon name="arrow-round-back"></ion-icon>
-    </div>
-    <div class="item2 ">சர்வே தகவல்கள்</div>
-    <div class="item3 item">
-      <ion-icon name="eye"></ion-icon>
-    </div>
-    <div class="item4 item">
-      <ion-icon name="close"></ion-icon>
-    </div>
-    <div class="item5 item">
-      <ion-icon (click)="onSubmit()" name="checkmark"></ion-icon>
-    </div>
-  </div>
-  <div class="main">
-    <form [formGroup]="submitForm" accept-charset="UTF-8">
-      <div class="row1">
-        <div class="left">
-          <div>சர்வே தகவல்கள் left 1</div>
-          <div>சர்வே தகவல்கள் left 2</div>
-          
-        </div>
-        <div class="right">
-            <div>சர்வே தகவல்கள் right 1</div>
-            <div>சர்வே தகவல்கள் right 2</div>
-
-        </div>
-        
-
-
-      </div>
-      <div class="row2"> </div>
-      <div class="row3">
-        <div>விருந்தினருக்கு காட்ட வேண்டிய கேள்வி</div>
-        <ion-textarea rows="6" cols="20" formControlName="question"
-          class="textareacss"
-          placeholder="விருந்தினருக்கு காட்ட வேண்டிய கேள்வி...">
-        </ion-textarea>
-
-   
-
-      </div>
-
-<div [ngClass]="{'has-error' : (submitForm.get('question').hasError('required') || submitForm.get('question').hasError('pattern')) && submitForm.get('question').touched}"
-*ngIf="(submitForm.get('question').hasError('required') || submitForm.get('question').hasError('pattern')) && submitForm.get('question').touched">
-Questions missing or invalid questions format.
-</div>
-      <ion-list >
-        <ion-radio-group formControlName="optiongroupname">
-          <ion-list-header>
-            விருந்தினருக்கு காட்ட வேண்டிய பதில்கள்
-          </ion-list-header>
-          <div *ngFor="let item of flatMap; let i = index;">
-            <ion-item >
-              <ion-label text-wrap>{{item.name}}</ion-label>
-              <ion-radio slot="start"  (click)="onClick(item)" 
-                 value="{{item.id}}" >
-              </ion-radio>
-
-            </ion-item>
-          </div>
-
-        </ion-radio-group>
-      </ion-list>
-
-      <div [ngClass]="{'has-error' : (submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched}"
-*ngIf="(submitForm.get('optiongroupname').hasError('required') || submitForm.get('optiongroupname').hasError('pattern')) && submitForm.get('optiongroupname').touched">
-Response Choice missing or invalid format.
-</div>
-
-    </form>
-
-  </div>
-  <div class="bottom">
-    &nbsp;
-  </div>
-
-</ion-content> -->

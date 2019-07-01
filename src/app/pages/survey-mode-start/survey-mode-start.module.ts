@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { SurveyModeStartPage } from './survey-mode-start.page';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 const routes: Routes = [
   {
     path: '',
@@ -20,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule.forChild() 
   ],
   declarations: [SurveyModeStartPage]
 })

@@ -8,11 +8,15 @@
       </ion-header>
       <ion-content>
         <ion-list>
+            <ion-avatar>
+                <img src="../assets/img/avatar1.png">
+              </ion-avatar>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item detail [routerDirection]="'root'" [routerLink]="[p.url]" (click)="onClick(p)">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <img src="{{p.icon}}" width="20px" height="20px"> 
+
               <ion-label>
-                {{p.title}}
+                &nbsp;&nbsp;{{p.title}}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

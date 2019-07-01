@@ -60,7 +60,6 @@ export class DashboardPage implements OnInit {
     if(this.companieslist[0] !== undefined) {
       this.activecompany = this.companieslist[0].name;
     }
-    this._loadingservice.present();
     this._cdr.markForCheck();
 
   }
@@ -70,18 +69,10 @@ export class DashboardPage implements OnInit {
   }
   ionViewDidEnter() {
     this.getAsyncData();
-
-  
-
   }
 
   async getAsyncData() {
-
-    
-
-    
-
-    this.loggedinUserId = await <any>this._authservice.getItems('USER_ID');
+    this._loadingservice.present();
     this.companyId = await <any>this._authservice.getItems('COMPANY_ID');
 console.log('dinesh >> ' + this.companyId);
     this._commonApiService.getDashboardUserSurvey(this.companyId, 'U').subscribe(id1 => {
@@ -227,6 +218,10 @@ console.log('dinesh >> ' + this.companyId);
     this._router.navigateByUrl(`survey-results/${item.survey_id}`);
   }
 
+  viewSummary(item: any) {
+    // this._router.navigateByUrl(`daily-reports/${item.survey_id}`);
+    this._router.navigateByUrl(`reports/${item.survey_id}`);
+  }
 
   goLive(item) {
     

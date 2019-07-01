@@ -165,7 +165,7 @@ export class CompileSurveyQuestionsPage implements OnInit {
 
   addQuestions() {
     
-    this._router.navigateByUrl(`add-questions/${this.serviceinfo.id}`);
+    this._router.navigateByUrl(`add-questions/${this.serviceinfo.id}/${this.flatMap.length}`);
   }
 
   submit() {

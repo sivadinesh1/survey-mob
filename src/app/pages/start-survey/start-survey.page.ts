@@ -23,7 +23,7 @@ export class StartSurveyPage implements OnInit {
   addquestions = false;
 
   submitForm: FormGroup;
-
+  needcontact = false;
 
   survey: ISurvey;
   surveyon = false;
@@ -37,12 +37,17 @@ export class StartSurveyPage implements OnInit {
   companyId: any;
   companyname: any;
 
-  languages = ['English', 'Tamil'];
+  // languages = ['English', 'Tamil'];
+  languages = [{'code': 'en', 'text': 'English'}, {'code': 'tm', 'text': 'Tamil'}];
+
   industrieslist = ['Automobiles', 'Catering'];
-  
+
 
   selectedIndustryData: any;
-  
+
+  date = new Date();
+
+  myDate: any;
 
   constructor(private _router: Router, private _cdr: ChangeDetectorRef,
     private _fb: FormBuilder, private _surveyService: SurveyService,
@@ -51,7 +56,10 @@ export class StartSurveyPage implements OnInit {
     private _loadingservice: LoadingService, private _modalcontroller: ModalController,
     private _commonApiService: CommonApiService) {
 
- 
+
+      this.myDate = new Date(this.date.getTime() -
+                       this.date.getTimezoneOffset() * 60000).toISOString();
+
 
      }
 
@@ -61,11 +69,13 @@ export class StartSurveyPage implements OnInit {
       surveyname: new FormControl(null, Validators.required),
 
       surveyvenue: new FormControl(null, Validators.required),
-      surveydate: new FormControl(null, Validators.required),
+      surveydate: new FormControl(this.myDate, Validators.required),
       servicetype: new FormControl(null),
       language: new FormControl(null, Validators.required),
       industry: new FormControl(null, Validators.required),
       companyid: new FormControl(null, Validators.required),
+      
+      needcontactflag: new FormControl('N', Validators.required),
       loggedinuser: new FormControl(null, Validators.required),
     });
 
@@ -119,7 +129,7 @@ export class StartSurveyPage implements OnInit {
 
 
 
-    this._router.navigateByUrl(`/add-questions/${this.surveyid}`);
+    this._router.navigateByUrl(`/add-questions/${this.surveyid}/0`);
   }
 
   registerSurvey() {
@@ -143,8 +153,8 @@ export class StartSurveyPage implements OnInit {
 
     this._surveyService.setSurveyConfig(this.survey);
     this._cdr.markForCheck();
-      
-      
+
+
     this._commonApiService.addSurvey(this.submitForm.value).subscribe(data => {
       this.apiresponsedata = data;
       console.log('object<<<<< ' + JSON.stringify(this.apiresponsedata));
@@ -189,11 +199,11 @@ async chooseIndustry() {
     });
 
      this.storage.set('INDUSTRY', this.selectedIndustryData);
-     
 
-  
+
+
     this._cdr.markForCheck();
-    
+
 
 });
 
@@ -205,6 +215,25 @@ selectLanguage() {
 
   this.storage.set('LANGUAGE', this.submitForm.value.language);
   this._cdr.markForCheck();
+}
+
+
+
+onClick(event) {
+  console.log('object.....' + event.target.checked );
+
+  if(event.target.checked) {
+    this.submitForm.patchValue({
+      needcontactflag: 'Y',
+    });
+
+  } else {
+    this.submitForm.patchValue({
+     needcontactflag: 'N',
+    });
+
+  }
+
 }
 
 }

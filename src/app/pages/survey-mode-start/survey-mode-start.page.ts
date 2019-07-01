@@ -1,3 +1,4 @@
+import { TranslateConfigService } from './../../services/translate-config.service';
 
 import { AuthService } from './../../services/auth.service';
 import { LoadingService } from './../../services/loading.service';
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 
+
+
 @Component({
   selector: 'app-survey-mode-start',
   templateUrl: './survey-mode-start.page.html',
@@ -15,7 +18,7 @@ import { Storage } from '@ionic/storage';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SurveyModeStartPage implements OnInit {
-  verifyForm: FormGroup;
+  
   submitForm: FormGroup;
 
   apiresponse: any;
@@ -27,12 +30,17 @@ export class SurveyModeStartPage implements OnInit {
   responsemsg: any;
 
   duplicatephone = false;
+  selectedLanguage: string;
 
   constructor(private _router: Router, private _cdr: ChangeDetectorRef,
     private storage: Storage,
     private _authservice: AuthService,
     private _fb: FormBuilder, private _loadingservice: LoadingService,
-    private _commonApiService: CommonApiService) { }
+    private _commonApiService: CommonApiService,
+    private translateConfigService: TranslateConfigService,
+  ) {
+    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+  }
 
   ngOnInit() {
 
@@ -41,21 +49,33 @@ export class SurveyModeStartPage implements OnInit {
 
     });
 
-
   }
 
 
+  languageChanged() {
+    this.translateConfigService.setLanguage(this.selectedLanguage);
+  }
 
-  onSubmit() {
+  ionViewDidEnter() {
+
+    this.submitForm.patchValue({
+      surveycode: null
+    });
+
+  }
+
+  async onSubmit() {
 
     const surveycode = this.submitForm.value.surveycode;
-   
-    this._commonApiService.checkValidSurveyCode(surveycode).subscribe(data => {
-      this.apiresponse = data;
+
+    this.apiresponse = await this._commonApiService.checkValidSurveyCode(surveycode).toPromise();
+   // this.apiresponse = data;
       console.log('object' + JSON.stringify(this.apiresponse));
 
       if (this.apiresponse[0].count === 0) {
-        this.responsemsg = 'Is this a Valid Live survey code?.';
+        this.responsemsg = 'Survey Code not valid. Contact administrator.';
+        this._loadingservice.presentToastWithPos(this.responsemsg, 'middle');
+        this._cdr.markForCheck();
       } else if (this.apiresponse[0].count === 1) {
         this._router.navigateByUrl(`/survey-mode/${surveycode}`);
       } else {
@@ -64,7 +84,23 @@ export class SurveyModeStartPage implements OnInit {
 
 
       this._cdr.markForCheck();
-    });
+    // this._commonApiService.checkValidSurveyCode(surveycode).subscribe(data => {
+    //   this.apiresponse = data;
+    //   console.log('object' + JSON.stringify(this.apiresponse));
+
+    //   if (this.apiresponse[0].count === 0) {
+    //     this.responsemsg = 'Survey Code not valid. Contact administrator.';
+    //     this._loadingservice.presentToastWithPos(this.responsemsg, 'middle');
+    //     this._cdr.markForCheck();
+    //   } else if (this.apiresponse[0].count === 1) {
+    //     this._router.navigateByUrl(`/survey-mode/${surveycode}`);
+    //   } else {
+    //     this.responsemsg = 'duplicaet survey codes. Contact Admin.';
+    //   }
+
+
+    //   this._cdr.markForCheck();
+    // });
   }
 
   signin() {

@@ -1,79 +1,52 @@
+<ion-content>
+  <div class="wrapper">
+    <div class="top">
+      <div>
+        <img src="/assets/images/back.svg" width="24px" height="24px" (click)="goDashboard()">
+      </div>
+      <div class="share">
+        <img src="/assets/images/paper-plane.svg" width="24px" height="24px" (click)="share()">
+      </div>
+    </div>
 
-<ion-content >
+    <div class="top-info-survey-results">
+      <div class="row1">
+        {{surveyinfo?.surveyname}}
+      </div>
 
-    <div class="wrapper">
-    
-      <div class="top">
-          <div>
-              <ion-icon (click)="goDashboard()" class="ion-icon-2x"
-              name="arrow-back"></ion-icon>
-          </div>
-    
-        </div>
-
-        <div class="top-info-survey-results">
-            <div class="side-left">
-              <div class="side-left-top">
-             
-               {{surveyinfo?.surveyname}}
-              </div>
-              <div class="side-left-bottom">
-                {{surveyinfo?.surveyvenue}}
-              </div>
-      
-            </div>
-      
-            <div class="side-right">
-      
-              <div class="side-right-top">
-                {{surveyinfo?.surveydate | date: 'dd/MMM/yyyy'}}
-              </div>
-              <div class="side-right-bottom">
-                {{surveyinfo?.servicetype}}
-              </div>
-      
-            </div>
-      
-          </div>
+      <div class="row2">
+        {{surveyinfo?.surveyvenue}}
+      </div>
+      <div class="row3">
+        {{surveyinfo?.surveydate | date: 'dd/MMM/yyyy'}}
+      </div>
+    </div>
 
     <div class="card">
-     
       <div class="total-response">
-          <div class="heading">
-              சர்வேயில் கலந்து கொண்டவர்கள்
-          </div>
-          <div class="values">
-              {{totalresponses}}
-          </div>
-          <hr style="width:80%">
+        <div class="heading">
+          சர்வேயில் கலந்து கொண்டவர்கள்
+        </div>
+        <div class="values">
+          {{totalresponses}}
+        </div>
+        <hr style="width:80%">
       </div>
-      
-  <div class="responses">
-      <div *ngFor="let item of flatMap" class="top-box">
- 
-          <div class="survey-questions"> {{item.questions}}</div>
-          
-          
+
+      <div class="responses">
+        <div *ngFor="let item of flatMap let i = index" class="top-box">
+          <div class="survey-questions"> {{i+1}}. {{item.questions}}</div>
+          <!-- {{item | json}} -->
           <div *ngFor="let item1 of item.responsesummary | keyvalue" class="survey-responses">
-              
-              <div>{{item1.key}}  ({{item1.value / totalresponses | percent}}, {{item1.value}} votes)</div>
-              <div class="pollbar" [ngStyle]="{'width':getWidth(item1)}"  ></div>
-            </div> 
-          
+             <!-- what -  {{item1.key}} - what valu - {{item1.value[0]}} AND {{item1.value[1]}} -->
+            <div class="poll-result">{{item1.key}} ({{item1.value[0] / totalresponses | percent}}, {{item1.value[0]}} votes)
             </div>
-                    
-  </div>
-
-
-
-
-        
+            <div class="pollbar" [ngStyle]="{'width':getWidth(item1)}"></div>
+          </div>
+        </div>
       </div>
-  
-    <!-- {{quiz[this.qnprogress].question}} -->
-  
-  
-  
+
+    </div>
+
   </div>
-  </ion-content>
-  
+</ion-content>

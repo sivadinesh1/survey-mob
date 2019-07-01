@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>reports</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-segment padding type="ios">
+      <ion-segment-button (ionSelect)="viewClick('daily')" [checked]=this.view value="daily">
+        <ion-label>Daily</ion-label>
+      </ion-segment-button>
+      <ion-segment-button (ionSelect)="viewClick('monthly')" [checked]=this.view value="monthly">
+        <ion-label>Monthly</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+  <div class="results-daily" *ngIf="view === 'daily'" >
+    <div class="results" *ngFor="let item of surveyResults" (click)="getDetailView(item)">
+      <div class="left">{{ item.date | date: "dd MMM yyyy" }}</div>
+      <div class="middle">
+        <div class="top">{{ item.cnt }}</div>
+        <div class="bottom">Responses</div>
+      </div>
+      <div class="right">
+          <ion-img src="../../../../assets/images/next.svg" class="img"></ion-img>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-monthly" *ngIf="view === 'monthly'"  >
+      <div class="results-mon" *ngFor="let item of surveyResults">
+          <div class="top">{{ item.date | date: "dd" }}</div>
+          <div class="bottom">
+            <span class="res-cnt">
+                {{ item.cnt }}
+            </span>
+            </div>
+        </div>
+    </div>
+
+</ion-content>

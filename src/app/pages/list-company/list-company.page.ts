@@ -26,7 +26,7 @@ export class ListCompanyPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.getAsyncData();
     console.log('COMPANIES LIST ' + JSON.stringify(this.companieslist));
     
   }

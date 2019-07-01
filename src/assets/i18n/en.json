@@ -1,0 +1,27 @@
+{
+    "SURVEY_MODE": {
+        "thanks": "Thanks for giving your valuable feedback.",
+        "text": "This is random text to show translation in application",
+        "enter_name": "Please enter name",
+        "made_by": " This survey was made with",
+        "enter_feedback": "Enter your feedback",
+        "enter_feedback_missing": "Enter your feedback to proceed.",
+        "choose_answer": "please select an answer to proceed",
+        "next_guest": "Next Guest",
+        "next_customer": "Next Customer",
+        "contact_details": "Your Contact Details",
+        "name": "Name",
+        "phone": "Phone",
+        "enter_phone_num": "Enter Phone number",
+        "close_survey": "Survey not completed. Do you want to <strong>End</strong> now!!!",
+        "other_comments": "Other Comments"
+    },
+    "ALERT": {
+        "header": "Error",
+        "confirm": "Confirm!",
+        "cancel": "Cancel",
+        "okay": "Okay",
+        "msg": "There was a problem with your operation",
+        "no_phone": "Enter 10 digit phone number" 
+    }
+}

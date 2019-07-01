@@ -1,31 +1,28 @@
 .pollbar {
     height: 10px;
     background: #ff8a00;
+    margin: 0.1rem;
+    border-radius: 10px;
+    
+}
+
+.poll-result {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0.1rem;
 }
 
 
-.style-btn {
-    padding: 0.5rem;
-    margin: 1rem;
-    background-color: blue;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-
-  }
-
   .card {
     display: grid;
-    position: relative;
-    top: 5vh;
+   
     width: 90%;
     height: auto;
     justify-self: center;
     text-align: left;
-    background-color: rgba(255, 251, 240, 1);
-    box-shadow: 0px 5px 10px 0px rgba(170, 170, 170, 1);
-    border: 1px solid rgba(255, 255, 255, 0);
+    background-color:#ffffff;
+    
 
     grid-template-columns: 1fr;
     grid-template-rows: 100px auto;
@@ -36,7 +33,7 @@
   grid-template-columns: 1fr;
   height: 250px;
   
-  background-color: #FBC02D;
+  background-color: #ffffff;
 
 }
 
@@ -104,8 +101,9 @@ justify-self: end;
 .heading {
     display:grid;
     text-align: center;
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     color: black;
     align-self: center;
 }
@@ -113,12 +111,13 @@ justify-self: end;
 .values {
     display:grid;
     text-align: center;
+    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     font-weight: 500;
     color: black;
     align-self: center;
 }
-}
+} 
 
 .survey-questions{
     display: grid;
@@ -126,8 +125,9 @@ justify-self: end;
     padding-bottom: 1.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .survey-responses {
@@ -156,60 +156,106 @@ h1 {
 
 .top {
     display: grid;
-    background-color: #FBC02D;
+    background-color: #ffffff;
     color: black;
     width: 100%;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 40px;
     justify-content: left;
     align-content: left;
     font-weight: 200;
     padding: 0.5rem;
   }
+
+  .share {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+  }
   
-  .top-info-survey-results {
-    display: grid;
+//   .top-info-survey-results {
+//     display: grid;
    
-    background-color: #FBC02D;
+//     background-color: #ffffff;
    
-    grid-template-columns: 1fr 1fr;
+//     grid-template-columns: 1fr 1fr;
     
-    .side-right {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-        font-size: 0.9rem;
-        color: black;
-        padding: 0.5rem;
-        .side-right-top {
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        .side-right-bottom {
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 600;
+//     .side-right {
+//         grid-template-columns: 1fr;
+//         grid-template-rows: 1fr 1fr;
+//         font-size: 0.9rem;
+//         color: black;
+//         padding: 0.5rem;
+//         .side-right-top {
+//             padding: 0.3rem;
+//             font-size: 1rem;
+//             font-weight: 600;
+//         }
+//         .side-right-bottom {
+//             padding: 0.3rem;
+//             font-size: 1rem;
+//             font-weight: 600;
   
-        }
+//         }
+//     }
+  
+//     .side-left{
+//         grid-template-columns: 1fr;
+//         grid-template-rows: 1fr 1fr;
+//         font-size: 0.9rem;
+//         color: black;
+//         padding: 0.5rem;
+//         .side-left-top {
+//             padding: 0.3rem;
+//             font-size: 1rem;
+//             font-weight: 500;
+  
+//         }
+//         .side-left-bottom {
+//             padding: 0.3rem;
+//             font-size: 1rem;
+//             font-weight: 500;
+//         }
+  
+//     }
+    
+   
+//   }
+
+
+
+
+.top-info-survey-results {
+    display: grid;
+    background-color: #ffffff;
+    grid-template-columns: 1fr;
+    border-top: 1px solid rgba(82, 80, 80, 0.5);
+    
+    .row1 {
+        font-size: 1.4rem;
+        font-weight: 400;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+
     }
   
-    .side-left{
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-        font-size: 0.9rem;
-        color: black;
+    .row2 {
+        font-size: 1.2rem;
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
         padding: 0.5rem;
-        .side-left-top {
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 500;
-  
-        }
-        .side-left-bottom {
-            padding: 0.3rem;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-  
+    }
+
+    .row3{
+        font-size: 1rem;
+        font-weight: 300;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+        padding: 0.5rem;
+        padding-bottom: 0rem;
+        color: #999999;
     }
     
    

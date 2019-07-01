@@ -211,7 +211,7 @@ div.scrollmenu {
 
 .company-row {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 30px;
   text-align: left;
   font-family: 'Lato';
   font-size: 1.2rem;
@@ -220,5 +220,5 @@ div.scrollmenu {
 }
 
 .hamburger-color {
-  color: var(--ion-color-dark);
+  color: var(--ion-color-dark) !important;
 }

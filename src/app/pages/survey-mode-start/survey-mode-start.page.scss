@@ -1,76 +1,43 @@
 .wrapper {
 
-
-
     min-height: 100%;
     display: grid;
     grid-template-rows: auto 1fr;
     grid-template-columns: 100%;
+    background-image: url('/assets/images/water.jpeg');
+    background-repeat: no-repeat;
 
+    background-size: cover;
 
     .header {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 70px 1fr 1fr;
-        background-color: #f8c045;
+        grid-template-rows: 150px 1fr;
+        //  background-color: #ffffff;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         padding-bottom: 1rem;
+        background-image: url('/assets/images/survey-team-logo.png');
+        background-repeat: no-repeat;
 
-        .row1 {
-            display: grid;
-         
-          
-            background-image: url('/assets/suvai-70h.png');
-            background-repeat: no-repeat;
-           
-            background-position: center; 
-        }
-
-        .row2 {
-            display: grid;
-            justify-content: center;
-            justify-self: center;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
-        .row3 {
-            display: grid;
-            justify-content: center;
-            justify-self: center;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-       
-
+        background-position: center;
+        height: 48px;
+        margin: 48px 1rem 48px 1rem;
     }
 
     .main {
         display: grid;
-        background-color: #ffffff;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        grid-template-rows:  60px 60px 1fr auto 60px;
-        // background-image: url('/assets/food-bg.jpg');
-
-
-        .row1,
-        .row2,
-        .row3
-            {
+        grid-template-rows: 60px 60px 1fr auto 60px;
+    
+        .row3 {
             justify-content: center;
             align-self: center;
             text-align: center;
+            margin-top: 24px;
         }
-        .row4 {
-            display: grid;
-            justify-content: right;
-            justify-self: right;
-            align-items: right;
-            font-size: 0.8rem;
-            color: blue;
-        }
+
         .error {
             display: grid;
             justify-content: center;
@@ -82,7 +49,7 @@
 
 
         .row1 {
-            .label { 
+            .label {
                 width: 100%;
                 text-align: right;
 
@@ -96,29 +63,15 @@
 
         }
 
-        .row3 {
-           
-        }
 
 
     }
 
-
-
-    .input-text-align {
-        width: 60%;
-
-        display: inline-block;
-        border-bottom: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        text-align: left;
-        padding-left: 10px !important;
-    }
 
     .button-align {
-        width: 60%;
+        width: 240px;
         margin: 0 auto;
+        height: 40px;
     }
 
     .small-textbox {
@@ -137,10 +90,10 @@
 .medium-title {
     font-size: 1.2rem;
     justify-self: center;
-  }
+}
 
 
-input{
+input {
     padding: 10px;
     margin: 4px;
     border: 1px solid #ddd;
@@ -151,7 +104,7 @@ input{
 }
 
 .small-font {
-  font-size: 0.8rem !important;
+    font-size: 0.8rem !important;
 }
 
 .result {
@@ -167,14 +120,14 @@ input{
     text-align: center;
 }
 
-.sign-in{
+.sign-in {
     padding: 0.3rem;
     border: 1px solid grey;
     font-size: 0.9rem;
     color: blue;
     border-radius: 3px;
     margin-right: 1rem;
-}  
+}
 
 .footer {
     display: grid;
@@ -183,3 +136,31 @@ input{
     align-self: center;
     padding: 0.2rem;
 }
+
+
+
+.input-text-align {
+    border-radius: 25px;
+    border: 2px solid #fff;
+
+    width: 260px;
+    height: 45px;
+
+
+    margin: auto;
+    text-align: left;
+
+
+}
+
+ion-input {
+
+    --placeholder-color: #ffffff;
+    padding-left: 10px !important;
+    color: #ffffff !important;
+    text-transform: capitalize;
+
+}
+
+
+

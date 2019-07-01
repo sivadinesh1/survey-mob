@@ -1,3 +1,4 @@
+import { LoadingService } from './../../services/loading.service';
 import { AuthService } from '../..//services/auth.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { CommonApiService } from '../..//services/common-api.service';
@@ -22,7 +23,7 @@ export class SignInPage implements OnInit {
   passwordType = 'password';
   passwordShown = false;
 
-  constructor(private _router: Router, private _fb: FormBuilder,
+  constructor(private _router: Router, private _fb: FormBuilder, private _loadingservice: LoadingService,
     private _authservice: AuthService, private _cdr: ChangeDetectorRef,
     private _commonApiService: CommonApiService,
     ) { }
@@ -47,10 +48,10 @@ export class SignInPage implements OnInit {
 
     this._commonApiService.signIn(this.submitForm.value).subscribe(data => {
       this.apiresponse = data;
+// debugger;
 
 
-
-      if (this.apiresponse.result === 'OK' && this.apiresponse.data.length > 1) {
+      if (this.apiresponse.result === 'OK' && this.apiresponse.data.length >= 1) {
 
         this.userid = this.apiresponse.data[0].userid;
 
@@ -83,7 +84,8 @@ export class SignInPage implements OnInit {
         // this._router.navigateByUrl(`/dashboard/${this.userid}`);
         // this._cdr.markForCheck();
       } else if (this.apiresponse.result === 'NOTOK') {
-        this.responsemsg = 'Wrong User / Password (or) not found';
+ //`       this.responsemsg = 'Wrong User / Password (or) not found';
+        this._loadingservice.presentToastWithOptions('Wrong User / Password (or) not found', 'middle', false, '');
         this._cdr.markForCheck();
       }
 

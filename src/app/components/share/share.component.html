@@ -1,0 +1,22 @@
+
+
+  <div class=wraps>
+
+      <div class="all-comp-header">
+        <div class="close">
+          
+              <img  (click)="closeModal()" src="/assets/images/cancel.svg" width="32px" height="32px">
+        </div>
+        <div class="lbl-head">
+          Share Survey Results
+        </div>
+      </div>
+    
+      <ion-item *ngFor="let item of sharelist" (click)="onClick(item)">
+          <img src={{item?.icon}} width="20px" height="20px"> &nbsp;&nbsp;
+        <ion-label (click)="share(item)">
+          {{item?.medium}}
+        </ion-label>
+      </ion-item>
+    
+    </div>

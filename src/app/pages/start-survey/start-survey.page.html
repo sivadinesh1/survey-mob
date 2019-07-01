@@ -3,7 +3,7 @@
   <ion-header>
   <div class="toolbar">
       <div>
-          <img src="/assets/images/back.svg" width="20px" height="20px">
+          <img (click)="goDashboard()" src="/assets/images/back.svg" width="20px" height="20px">
        </div>
 
     <div>
@@ -21,7 +21,7 @@
     Create Survey
   </div>
   <div class="main">
-    <!-- <div class="row1">New Survey </div> -->
+   
     <div>
       <form [formGroup]="submitForm" >
 
@@ -49,7 +49,7 @@
                 <ion-label  class="label-style">Date & Time</ion-label>
                 <ion-datetime displayFormat="D MMM YYYY h:mm A" minuteValues="0,15,30,45" placeholder="Select"
                 formControlName="surveydate" ></ion-datetime>
-                <!-- <ion-icon name="calendar" slot="start"></ion-icon> -->
+                
               </ion-item>
   
   
@@ -64,9 +64,9 @@
           
            
                 <ion-select placeholder="Select" formControlName="language"  (ionChange)="selectLanguage()">
-                    <ion-select-option value="{{item}}"  
-                    *ngFor="let item of languages; " [value]="item">
-                      {{ item }}
+                    <ion-select-option value="{{item.code}}"  
+                    *ngFor="let item of languages; " [value]="item.code">
+                      {{ item.text }}
                     </ion-select-option>
                   </ion-select>
   
@@ -89,9 +89,16 @@
             <div [ngClass]="{'has-error' : (submitForm.get('industry').hasError('required') || submitForm.get('industry').hasError('pattern')) && submitForm.get('industry').touched}"
             *ngIf="(submitForm.get('industry').hasError('required') || submitForm.get('industry').hasError('pattern')) && submitForm.get('industry').touched">
             Choose survey Industry.
-            </div> 
+            </div>
+            
+            <ion-item>
+              <ion-label class="label-style">
+                Collect Contact
+              </ion-label>
+              <ion-toggle color="primary" mode="ios"
+            (ionChange)="onClick($event)"></ion-toggle> 
+            </ion-item>
 
-       
 
       </form>
 
@@ -115,7 +122,9 @@
         <div class="mid">Questions - Answers</div>
         <div  class="label-1">Add your first question and possible answer choices</div>
         <div class="add-question">
-            <ion-icon *ngIf="!addquestions" name="add-circle-outline" style="font-size: 72px" color="primary" (click)="addQuestions()"></ion-icon>
+            <img *ngIf="!addquestions" src="/assets/images/plus.svg" (click)="addQuestions()" 
+            width="72px" height="72px">
+
         </div>
     </ng-container>
     
@@ -124,4 +133,5 @@
     &nbsp;
   </div>
 
+  
 </ion-content>

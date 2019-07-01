@@ -77,13 +77,17 @@ checkValidSurveyCode(surveycode: any, ) {
 }
 
 addResponse(submitForm: any) {
-  return this._httpclient.post(`${this.restApiUrl}/api/add-response`, submitForm);
+ return this._httpclient.post(`${this.restApiUrl}/api/add-response`, submitForm);
 }
 
+addSurveyResponse(submitForm: any) {
+  return this._httpclient.post(`${this.restApiUrl}/api/add-survey-response`, submitForm);
+ }
 
-getSurveyShortSummary(surveyid: any) {
-  return this._httpclient.get(`${this.restApiUrl}/api/survey-short-summary/${surveyid}`);
+getSurveyShortSummary(surveyid: any, selecteddate: any) {
+  return this._httpclient.get(`${this.restApiUrl}/api/survey-short-summary/${surveyid}/${selecteddate}`);
 }
+
 
 
 
@@ -97,6 +101,10 @@ getDashboardUserSurvey(companyid: any, status: any) {
 
 getSurveyQuestionResponses(surveyquestionid: any) {
   return this._httpclient.get(`${this.restApiUrl}/api/get-survey-question-responses/${surveyquestionid}`);
+}
+
+getSurveyResponsesCount(surveyid: any, selecteddate: any) {
+  return this._httpclient.get(`${this.restApiUrl}/api/get-survey-response-count/${surveyid}/${selecteddate}`);
 }
 
 signIn(submitForm: any) {

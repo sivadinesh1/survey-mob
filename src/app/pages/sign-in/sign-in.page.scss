@@ -1,139 +1,54 @@
 .wrapper {
+    display: grid;
+    grid-template-rows: 1fr 3fr / auto;
    
-
-
-    min-height: 100%;
-	display: grid;
-	grid-template-rows: auto 1fr auto;
-	grid-template-columns: 100%;
-
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    grid-template-columns: 100%;
 
     .header {
         display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 70px 1fr 1fr;
-        background-color: #f8c045;
-        padding-bottom: 1rem;
-        // border-bottom-left-radius: 10px;
-        // border-bottom-right-radius: 10px;
-
-        .row1 {
-            display: grid;
-           
-            background-image: url('/assets/suvai-70h.png');
-            background-repeat: no-repeat;
-           
-            background-position: center; 
-        }
-
-        .row2 {
-            display: grid;
-            justify-content: center;
-            justify-self: center;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
-        .row3 {
-            display: grid;
-            justify-content: center;
-            justify-self: center;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
+        background-color: #ffffff;
+        background-image: url('/assets/images/survey-team-logo.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 60px;
+        margin: 36px;
     }
 
     .main {
         display: grid;
         background-color: #ffffff;
-        // border-top-left-radius: 10px;
-        // border-top-right-radius: 10px;
-        grid-template-rows: auto 60px 60px 1fr auto;
+        place-items: center;
 
-
-        .row1, .row2, .row3, .row4, .row5{
+        .row5 {
             justify-content: center;
             align-self: center;
             text-align: center;
         }
 
-        .row4 {
-            text-align: center;
-            align-self: flex-end;
-            font-size: 1.2rem;
-
-        }
-
-        .row1 {
-            .label {
-                width: 100%;
-                text-align: right;
-               
-                display: grid;
-                padding-right: 65%;
-                padding-top: 1rem;
-
-                color: #000000;
-                font-weight: 400;
-                font-size: 1.5rem;
-            }
-          
-        }
-
-       
-     
-        
     }
 
-    .survey {
+    .enter-survey-mode {
         display: grid;
-        background-color: #ffffff;
-
-        .survey-mode {
-           display: grid;
-            // border-top-left-radius: 10px;
-            // border-top-right-radius: 10px;
-            background-color: rgb(221, 221, 221);
-
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-
-            color: #000000;
-            font-weight: 400;
-        }
-
-        .enter-survey-mode {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background-color: rgb(221, 221, 221);
-            padding: 2rem;
-            color: #000000;
-            font-weight: 500;
-
-        }
-
-        .why-survey-mode {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background-color: rgb(221, 221, 221);
-            padding: 1rem;
-            color: blue;
-            font-size: 1rem;
-        }
-
+        margin-top: auto;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: rgb(221, 221, 221);
+        padding: 2rem;
+        color: #000000;
+        font-weight: 500;
 
     }
+
 
 }
 
 .input-text-align {
     width: 60%;
-  
+
     display: inline-block;
     border-bottom: 1px solid #ccc;
     border-radius: 4px;
@@ -142,27 +57,106 @@
     padding-left: 10px !important;
 }
 
+
 .button-align {
-    width: 60%;
-   margin: 0 auto;
+    width: 90%;
+    margin: 0 auto;
+
 }
 
-  .small-textbox {
-  width: 50px !important;
-   
-  }
+.small-textbox {
+    width: 50px !important;
 
-  .text {
-      padding-left: 30px;
-      padding-right: 30px;
-  }
+}
 
-  .button-top-gap {
-      padding-top: 1rem;
-  }
+.text {
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
-  .forgot-pass {
-      font-size: 0.9rem;
-      color: blue;
+.button-top-gap {
+    padding-top: 1rem;
+}
 
-  }
+.forgot-pass {
+    font-size: 0.9rem;
+    color: blue;
+
+}
+
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    overflow: hidden;
+    width: 80%;
+    max-width: 300px;
+    margin: 1rem;
+    
+}
+
+
+
+.form-input,
+.form-button {
+    letter-spacing: 1.1px;
+    border: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+
+
+
+.form-input:focus::placeholder {
+    color: var(--ion-color-vibrant);
+    opacity: 0.85;
+    outline-style: none;
+}
+
+.form-button, .form-input:focus {
+    outline-style: none;
+}
+
+
+
+.form-item:first-of-type {
+    position: relative;
+
+}
+
+.form-item:first-of-type::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+
+.form-button {
+
+    background: var(--ion-color-vibrant);
+    // color: white;
+    padding: 1.25rem 2.5rem;
+}
+
+.round {
+    border-radius: 30px;
+}
+
+
+

@@ -1,3 +1,4 @@
+import { ShareComponent } from './components/share/share.component';
 import { AllIndustriesComponent } from './all-industries/all-industries.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,17 +12,24 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { SharedModule } from './shared.module';
 import { AllCompaniesComponent } from './components/all-companies/all-companies.component';
 
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-// const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { DatePipe } from '@angular/common';
+
+
+
 
 @NgModule({
-  declarations: [AppComponent, AllCompaniesComponent, AllIndustriesComponent],
-  entryComponents: [AllCompaniesComponent, AllIndustriesComponent],
+  declarations: [AppComponent, AllCompaniesComponent, AllIndustriesComponent, ShareComponent],
+  entryComponents: [AllCompaniesComponent, AllIndustriesComponent, ShareComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,12 +37,21 @@ import { AllCompaniesComponent } from './components/all-companies/all-companies.
     SharedModule,
     IonicModule.forRoot(),
      IonicStorageModule.forRoot(),
-    //  SocketIoModule.forRoot(config),
-    AppRoutingModule
+    AppRoutingModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    File,
+    SocialSharing,
+    DatePipe,
     // { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // Storage
     
@@ -43,3 +60,6 @@ import { AllCompaniesComponent } from './components/all-companies/all-companies.
 })
 export class AppModule {}
 
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}

@@ -40,10 +40,14 @@ export class LoadingService {
 
   async presentToastWithPos(msg, pos) {
     const toast = await this.toastController.create({
+      
       message: msg,
       position: pos,
-      duration: 2000,
-      color: 'dark',
+      duration: 1600,
+       
+      animated: true,
+      
+      cssClass: 'my-custom-class'
     });
     toast.present();
   }

@@ -1,68 +1,51 @@
-<ion-content>
-
-  <div class="wrapper">
-    <div class="header">
-
-      <div class="row1"></div>
-      <div class="row2">Suvai - Guest Survey app</div>
-      <div class="row3">for food caterers</div>
-    </div>
-    <div class="main">
-      <div class="row1">
-        <span class="label">
-          SIGNIN
-        </span>
-        
-      </div>
-      <form [formGroup]="submitForm">
-      <div class="row2">
-        <ion-input placeholder="Enter Mobile Number" formControlName="phonenumber" class="input-text-align"></ion-input>&nbsp;&nbsp;&nbsp;
-      </div>
-      <div class="row2">
-        <ion-input placeholder="Password" [type]="passwordType" formControlName="password" class="input-text-align"></ion-input>
-        <ion-icon name="eye" slot="end" [color]="passwordShown === true ? 'grey' : 'dark' "
-        (click)="togglePassword()"></ion-icon>
-      </div>
-      <div class="row3">
-        <div *ngIf="responsemsg" class="has-error">
-          {{this.responsemsg}}
-        </div> 
-        <ion-row center >
-          <ion-col text-center class="button-top-gap">
-            <ion-button expand="block" fill="solid" shape="round" class="button-align"
-            (click)="signIn()"  type="button" name="action" color="primary">SIGN IN</ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row center >
-            <ion-col text-center class="forgot-pass">
-             Forgot password?
-            </ion-col>
-          </ion-row>
-      </div>
-    </form>
-      <div class="row4">&nbsp;</div>
-      <div class="row5">
-        <span>New to Suvai?</span>
-          <ion-row center >
-              <ion-col text-center class="button-top-gap">
-                <ion-button expand="block" fill="solid" shape="round" class="button-align"
-                (click)="signUp()"  type="button" name="action" color="vibrant">SIGN UP FOR FREE</ion-button>
-              </ion-col>
-            </ion-row>
-      </div>
-
-    </div>
-    <div class="survey">
-      
-      <div class="enter-survey-mode">
-        <ion-button (click)="onClick()" fill="solid" shape="round">
-        ENTER SURVEY MODE
-        </ion-button>
-      </div>
-      
-
-    </div>
+ <ion-content>
+<div class="wrapper">
+  <div class="header">
+  
   </div>
 
-</ion-content>
+  <div class="main">
+
+    <form [formGroup]="submitForm" class="form">
+      <div class="form-item">
+          <ion-item lines="none">
+        <ion-input type="text" class="form-input" formControlName="phonenumber" placeholder="Mobile number">
+        </ion-input>
+      </ion-item>
+      </div>
+
+      <div class="form-item">
+        <ion-item lines="none">
+        <ion-input [type]="passwordType" class="form-input" formControlName="password" placeholder="Password"></ion-input>
+        <ion-icon name="eye" slot="end"></ion-icon>
+      </ion-item>  
+      </div>
+    
+      <button class="form-button" type="button" (click)="signIn()">
+        singin
+      </button>
+
+    </form>
+
+
+    <div class="row5">
+      <span>New to Survey Team?</span>
+      <ion-row center>
+        <button class="form-button round" type="button" (click)="signUp()">
+          Create Account
+        </button>
+      </ion-row>
+    </div>
+
+  </div>
+  
+    <div class="enter-survey-mode">
+      <ion-button (click)="onClick()" fill="solid" shape="round">
+        START SURVEY
+      </ion-button>
+    </div>
+  
+</div>
+</ion-content> 
+
 

@@ -1,7 +1,8 @@
+
+import { imageUrl } from './../../../environments/environment';
+import { SharedService } from './../../services/shared.service';
 import { LoadingService } from './../../services/loading.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-
-
 import { AuthService } from '../../services/auth.service';
 
 import { AlertController, Platform } from '@ionic/angular';
@@ -11,24 +12,14 @@ import { Subscription } from 'rxjs';
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonApiService } from '../../services/common-api.service';
 
-import { trigger, keyframes, animate, transition } from '@angular/animations';
-import * as kf from '../../utils/keyframes';
+import { TranslateConfigService } from './../../services/translate-config.service';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-survey-mode',
   templateUrl: './survey-mode.page.html',
   styleUrls: ['./survey-mode.page.scss'],
-  animations: [
-    trigger('cardAnimator', [
-      transition('* => wobble', animate(600, keyframes(kf.wobble))),
-      transition('* => swing', animate(1000, keyframes(kf.swing))),
-      transition('* => jello', animate(1000, keyframes(kf.jello))),
-      transition('* => zoomOutRight', animate(1000, keyframes(kf.zoomOutRight))),
-      transition('* => slideOutLeft', animate(1000, keyframes(kf.slideOutLeft))),
-      transition('* => rotateOutUpRight', animate(1000, keyframes(kf.rotateOutUpRight))),
-      transition('* => flipOutY', animate(1000, keyframes(kf.flipOutY))),
-    ])
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SurveyModePage implements OnInit {
@@ -51,46 +42,68 @@ export class SurveyModePage implements OnInit {
 
   surveycode: any;
 
-  // feedback: IFeedback;
   feedback = {} as IFeedback;
+
+  feedbackArr = [];
 
   apiresponsedata: any;
   guestname: any;
   animationState: string;
   totalquestions = 0;
 
-   currentCompany: any;
-   showother = false;
-   submitForm: FormGroup;
-   showprev = false;
-   showdone = false;
+  currentCompany: any;
+  showother = false;
+  submitForm: FormGroup;
+  showprev = false;
+  showdone = false;
 
-   minoneoptionchosen = false;
-   responsemsg: any;
-   selectedoptionArr = [];
+  minoneoptionchosen = false;
+  responsemsg: any;
+  selectedoptionArr = [];
+  showcontactsection = false;
+  needcontactdetails: any;
+  company_logo: any;
+  survey_industry: any;
+  guestorcustomer: any;
+
+  PHONE_REGEX = /^[6-9]\d{9}$/;
+  validateAllFormFields = SharedService.validateAllFormFields;
+
+  surveyLanguage: any;
+
+  imageUrl = imageUrl;
+
+  surveyresponseid: any;
+
+  test: any;
 
   constructor(private _route: ActivatedRoute, private _router: Router, private _commonApiService: CommonApiService,
     private _authService: AuthService, private alertController: AlertController,
     private _fb: FormBuilder, private _loadingservice: LoadingService,
-    private platform: Platform,
+    private platform: Platform, private translateConfigService: TranslateConfigService,
+    private translate: TranslateService,
     private _cdr: ChangeDetectorRef) {
-      this.selectedoptionArr = [];
+    this.selectedoptionArr = [];
+    this.surveyLanguage = this.translateConfigService.getDefaultLanguage();
   }
-
-
 
   ngOnInit() {
 
     this.submitForm = this._fb.group({
-      guestname: new FormControl(null, Validators.required),
-      questionid: new FormControl(null, Validators.required),
-      optionid: new FormControl(null, Validators.required),
+      // guestname: new FormControl(null, Validators.required),
+      // questionid: new FormControl(null, Validators.required),
+      // optionid: new FormControl(null, Validators.required),
       surveyid: new FormControl(null, Validators.required),
       otherresponse: new FormControl(null),
+
+      name: new FormControl(null),
+      phone: new FormControl(null, Validators.pattern(this.PHONE_REGEX)),
+
 
     });
 
   }
+
 
   ionViewDidEnter() {
 
@@ -106,10 +119,11 @@ export class SurveyModePage implements OnInit {
       this.surveydata = data['surveydata'];
 
       const array = this.surveydata;
-      console.log('object ionViewDidEnter >> ' + JSON.stringify(array));
 
       this.surveyid = array[0].surveyid;
       this.surveycode = array[0].surveycode;
+
+      this.needcontactdetails = array[0].needcontactdetails;
 
       this.result = array.reduce(function (list, el) {
         if (!list[el.question]) {
@@ -121,8 +135,21 @@ export class SurveyModePage implements OnInit {
 
       this.keysArr = Object.keys(this.result);
       this.totalquestions = Object.keys(this.result).length;
-      console.log('object result >> ' + Object.keys(this.result));
-      console.log('object result TET >> ' + JSON.stringify(this.result));
+
+
+      this.surveyLanguage = array[0].survey_language;
+      this.company_logo = array[0].surveypicture;
+      this.survey_industry = array[0].survey_industry;
+
+
+
+      if (this.survey_industry === 'Catering') {
+        this.guestorcustomer = 'guest';
+      } else {
+        this.guestorcustomer = 'customer';
+      }
+
+      this.translateConfigService.setLanguage(this.surveyLanguage);
 
     });
     this.guestname = Math.random().toString(36).slice(2);
@@ -144,18 +171,14 @@ export class SurveyModePage implements OnInit {
 
 
   onClick(item, index) {
-    console.log('object >>>> ' + item);
-    console.log('object >>>> ' + item.questionid);
-    console.log('object >>>> ' + item.res_options);
-    console.log('object >>>> ' + item.surveyid);
-    console.log('object >>>> ' + item.optionid);
 
     this.responsemsg = '';
 
     this.feedback.optionid = item.optionid;
     this.feedback.surveyid = item.surveyid;
     this.feedback.questionid = item.questionid;
-    this.feedback.guestname = this.guestname;
+  //  this.feedback.guestname = this.guestname;
+    this.feedback.otherresponse = this.submitForm.value.otherresponse;
 
     this.currentCompany = item.optionid;
 
@@ -163,126 +186,301 @@ export class SurveyModePage implements OnInit {
     this.selectedoptionArr[index] = item.optionid;
 
 
+
+    const arr2 = Object.assign({}, this.feedback);
+    this.feedbackArr[index] = arr2;
+
+
+
     if (item.res_options === 'Other') {
       this.showother = true;
     } else {
       this.showother = false;
+      this.submitForm.patchValue({
+        otherresponse: null,
+      });
+
     }
-
-
-
-    this.submitForm.patchValue({
-      optionid: item.optionid,
-      surveyid: item.surveyid,
-      questionid: item.questionid,
-      guestname: this.guestname,
-
-    });
-
-
-
-
-    // this._commonApiService.addResponse(this.feedback).subscribe(data => {
-    //   this.apiresponsedata = data;
-    //   this._cdr.markForCheck();
-    // });
-
-    // this.addIndex = this.addIndex + 1;
-    // console.log('object' + this.addIndex);
-
-    // if (this.addIndex > (this.totalquestions - 1)) {
-    //   this.endsurvey = true;
-
-    //   this._cdr.markForCheck();
-    // }
-    // this.animate();
 
     this.minoneoptionchosen = true;
   }
 
-prev() {
-  this.addIndex = this.addIndex - 1;
+  prev() {
+    this.showother = false;
+    this.addIndex = this.addIndex - 1;
 
-  if (this.addIndex === 0) {
-    this.showprev = false;
+    if (this.addIndex === 0) {
+      this.showprev = false;
+    }
+    this.minoneoptionchosen = true;
+    this.showdone = false;
+// debugger;
+// item1.optionid === this.selectedoptionArr[addIndex]
+
+let id__ = this.selectedoptionArr[this.addIndex];
+
+let list = this.result[this.keysArr[this.addIndex]];
+
+let ss = this.feedbackArr[this.addIndex];
+
+list.forEach(element => {
+  if ((element.optionid === id__) && (element.res_options === 'Other')) {
+    this.showother = true;
+
+    this.submitForm.patchValue({
+      otherresponse: this.feedbackArr[this.addIndex].otherresponse,
+    });
+    return;
   }
-  this.minoneoptionchosen = true;
-  this.showdone = false;
-}
+});
+
+    // if (this.result[this.keysArr[this.addIndex]].res_options === 'Other') {
+    //   this.showother = true;
+    // } else {
+    //   this.showother = false;
+    // }
+
+  }
 
   next(nIndex) {
 
-    if(this.selectedoptionArr[nIndex].length() > 0) {
-      console.log('WHAT.. ');
+    console.log('object .... ' + JSON.stringify(this.selectedoptionArr[nIndex]));
+
+    if (this.selectedoptionArr[nIndex] !== undefined) {
+      this.minoneoptionchosen = true;
+
+      if (this.showother === true) {
+        if (this.submitForm.value.otherresponse === null) {
+
+          this._loadingservice.presentToastWithPos(this.translate.instant('SURVEY_MODE.enter_feedback_missing'), 'middle');
+          this._cdr.markForCheck();
+          return;
+        } else {
+          // debugger;
+   
+
+          this.feedbackArr[this.addIndex].otherresponse = this.submitForm.value.otherresponse;
+          
+          this.submitForm.patchValue({
+            otherresponse: null,
+          });
+
+          
+        }
+      } else {
+        this.feedbackArr[this.addIndex].otherresponse = null;
+      }
     }
 
     if (this.minoneoptionchosen === true) {
 
+      if (this.selectedoptionArr[nIndex].length > 0) {
+        console.log('WHAT.. ');
+      }
+
+
       this.responsemsg = '';
       this.showother = false;
-      this._commonApiService.addResponse(this.submitForm.value).subscribe(data => {
-        this.apiresponsedata = data;
-        this._cdr.markForCheck();
-      });
 
       this.addIndex = this.addIndex + 1;
-      console.log('object' + this.addIndex);
+
       this.showprev = true;
       this.minoneoptionchosen = false;
-      if (this.addIndex === (this.totalquestions - 1)) {
-        this.showdone = true;
-      //  this.showprev = false;
-    //    this.endsurvey = true;
-     //   this.submitForm.reset();
-        this.showother = false;
-     //   this.feedback = {};
-    //    this.currentCompany = '';
-     //   this.minoneoptionchosen = false;
-     //   this.selectedoptionArr = [];
-        this._cdr.markForCheck();
+
+      if (this.needcontactdetails === 'Y') {
+
+        if (this.addIndex === this.totalquestions) {
+
+          this.showdone = true;
+          this.showother = false;
+          this.minoneoptionchosen = false;
+
+          this.showcontactsection = true;
+          this._cdr.markForCheck();
+
+        }
+
+      } else {
+        if (this.addIndex === (this.totalquestions - 1)) {
+
+          this.showdone = true;
+          this.showother = false;
+          this.minoneoptionchosen = false;
+          this._cdr.markForCheck();
+        }
       }
-      this.animate();
+
+
     } else {
-      this.responsemsg = 'Please select an option and press Next';
-      this._loadingservice.presentToastWithPos(this.responsemsg, 'middle');
+
+      this._loadingservice.presentToastWithPos(this.translate.instant('SURVEY_MODE.choose_answer'), 'middle');
       this._cdr.markForCheck();
     }
   }
 
-  done() {
-    // debugger;
-    if (this.addIndex === (this.totalquestions - 1)) {
-      this.showdone = false;
-     this.showprev = false;
-     this.endsurvey = true;
-     this.submitForm.reset();
-      this.showother = false;
-     this.feedback = {};
-     this.currentCompany = '';
-     this.minoneoptionchosen = false;
-     this.selectedoptionArr = [];
+  async done(nIndex) {
+
+    if (this.selectedoptionArr[nIndex] !== undefined) {
+      this.minoneoptionchosen = true;
+    }
+
+    if (this.needcontactdetails === 'Y') {
+
+      if (this.submitForm.value.name === null) {
+
+        this._loadingservice.presentToastWithPos(this.translate.instant('SURVEY_MODE.enter_name'), 'middle');
+
+        this._cdr.markForCheck();
+        return;
+
+      } else if (this.submitForm.value.phone === null) {
+
+        this._loadingservice.presentToastWithPos(this.translate.instant('SURVEY_MODE.enter_phone'), 'middle');
+
+        this._cdr.markForCheck();
+        return;
+      }
+
+      if (this.submitForm.value.name !== null && this.submitForm.value.phone !== null) {
+
+        if (this.submitForm.get('phone').invalid === true) {
+
+          this._loadingservice.presentToastWithPos(this.translate.instant('ALERT.no_phone'), 'middle');
+          return;
+        }
+
+        this.minoneoptionchosen = true;
+// debugger;
+
+        // this.feedbackArr.forEach(element => {
+        //   element.guestname = this.submitForm.value.name;
+        //   element.guestphone = this.submitForm.value.phone;
+        // });
+        
+
+      }
+    }
+
+    if (this.minoneoptionchosen === true) {
+
+      if (this.needcontactdetails === 'N') {
+
+        // this.feedbackArr.forEach(element => {
+
+        //   element.guestphone = null;
+        // });
+      }
+
+      // this.httpClient.post(`${this.restApiUrl}/api/add-response`, this.feedbackArr).toPromise().then(data => {
+      //      this.apiresponsedata = data;
+      //      this._cdr.markForCheck();
+      //    });
+
+
+      this.submitForm.patchValue({
+        surveyid: this.surveyid,
+      });
+
+      console.log('KKJK ' + this.feedbackArr);
+
+      let surveyresponseid =  await this._commonApiService.addSurveyResponse(this.submitForm.value).toPromise();
+
+      this.test = surveyresponseid;
+
+        this.feedbackArr.forEach(element => {
+
+          element.surveyresponseid = this.test.newsurveyresponsesid;
+        });
+
+  
+debugger;
+
+        this._commonApiService.addResponse(this.feedbackArr).toPromise().then(data => {
+          this.apiresponsedata = data;
+          this._cdr.markForCheck();
+        });
+
+
+
+
+
+    
+
+      this._cdr.markForCheck();
+      if (this.needcontactdetails === 'Y') {
+
+        if (this.addIndex === (this.totalquestions)) {
+
+          this.showdone = false;
+          this.showprev = false;
+          this.endsurvey = true;
+          this.submitForm.reset();
+          this.showother = false;
+          this.feedback = {};
+          this.currentCompany = '';
+          this.minoneoptionchosen = false;
+          this.selectedoptionArr = [];
+          this.feedbackArr = [];
+
+          this.showcontactsection = false;
+          this._cdr.markForCheck();
+        }
+
+      } else {
+
+        if (this.addIndex === (this.totalquestions - 1)) {
+
+
+          this.showdone = false;
+          this.showprev = false;
+          this.endsurvey = true;
+          this.submitForm.reset();
+          this.showother = false;
+          this.feedback = {};
+          this.currentCompany = '';
+          this.minoneoptionchosen = false;
+          this.selectedoptionArr = [];
+          this.feedbackArr = [];
+
+          this._cdr.markForCheck();
+        }
+
+      }
+
+
+    } else {
+
+      this._loadingservice.presentToastWithPos(this.translate.instant('SURVEY_MODE.choose_answer'), 'middle');
       this._cdr.markForCheck();
     }
-    this.animate();
+
+  }
+
+  addRespondentsContact() {
+    this.endsurvey = true;
+
+
   }
 
   close() {
     this.presentAlertConfirm();
   }
   async presentAlertConfirm() {
+
     const alert = await this.alertController.create({
-      header: 'Confirm!',
-      message: 'Survey not completed. Do you want to <strong>End</strong> now!!! ',
+      header: this.translate.instant('ALERT.confirm'),
+
+      message: this.translate.instant('SURVEY_MODE.choose_answer'),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('ALERT.cancel'),
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
           }
         }, {
-          text: 'Okay',
+          text: this.translate.instant('ALERT.okay'),
           handler: () => {
             console.log('Confirm Okay');
             this._router.navigateByUrl(`/sign-in`);
@@ -294,22 +492,6 @@ prev() {
     await alert.present();
   }
 
-
-  startAnimation(state) {
-
-    if (!this.animationState) {
-      this.animationState = state;
-    }
-  }
-
-  resetAnimationState() {
-    this.animationState = '';
-  }
-
-  animate() {
-    console.log('object do what ever >>');
-    this.startAnimation('swing');
-  }
 
   stop() {
     this.qnprogress = 0;
@@ -328,7 +510,7 @@ prev() {
     this.endsurvey = false;
 
     const array = this.surveydata;
-    console.log('object >> nwe guest ' + JSON.stringify(array));
+
 
     this.surveyid = array[0].surveyid;
     this.surveycode = array[0].surveycode;
@@ -341,20 +523,16 @@ prev() {
       return list;
     }, {});
 
-   // this.keysArr = Object.keys(this.result);
+    this.keysArr = Reflect.ownKeys(this.result);
 
-   this.keysArr =  Reflect.ownKeys(this.result);
-
-    // this.totalquestions = Object.keys(this.result).length;
     this.totalquestions = Reflect.ownKeys(this.result).length;
-     console.log('object >> ' +  Reflect.ownKeys(this.result));
+
 
 
     this.guestname = Math.random().toString(36).slice(2);
 
-   this._router.navigateByUrl(`/survey-mode/${this.surveycode}`);
+    this._router.navigateByUrl(`/survey-mode/${this.surveycode}`);
   }
 
-
-
 }
+

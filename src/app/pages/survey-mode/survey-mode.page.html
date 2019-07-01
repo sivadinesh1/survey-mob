@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content overflow-scroll="true">
   <div class="wrapper">
     <div class="userinfo">
       <div class="user-name">
@@ -7,53 +7,65 @@
           &nbsp;
         </div>
         <div class="close">
-          <ion-icon slot="end" name="close" (click)="close()" class="ion-icon-2x"></ion-icon>
-         
+        
+          <img  (click)="close()" *ngIf="!endsurvey" src="/assets/images/cancel.svg" width="20px" height="20px">
+
+          <img  (click)="stop()" *ngIf="endsurvey" src="/assets/images/cancel.svg" width="20px" height="20px">
+
         </div>
       </div>
 
-      <div class="logo">
-        <img src="/assets/images/Peacock-Cateres_Logo.svg" width="250px" height="100px">
+      <div class="logo-head">
+        
+        <img src="{{imageUrl}}{{company_logo}}"  >
       </div>
 
 
     </div>
-    <form [formGroup]="submitForm">
-      <div class="card" [@cardAnimator]="animationState" (@cardAnimator.done)="resetAnimationState()"
-        (swipeleft)="startAnimation('slideOutLeft')" (swiperight)="startAnimation('zoomOutRight')"
-        (swipeup)="startAnimation('rotateOutUpRight')" (swipedown)="startAnimation('flipOutY')">
-        <div class="question" *ngIf="!endsurvey">
+
+
+
+    <div class="card" >
+      <form [formGroup]="submitForm">
+        <div class="question" *ngIf="!endsurvey && !showcontactsection">
 
 
           <div class="quest">
-            <div class="sub-caption"># {{addIndex + 1}}</div>
+            <div class="sub-caption"> {{addIndex + 1}} / {{totalquestions}} </div>
             {{keysArr[addIndex]}}
           </div>
 
         </div>
-        <div *ngIf="(result !== undefined && !endsurvey)">
+        <div *ngIf="(result !== undefined && (!endsurvey && !showcontactsection))">
           <div *ngFor="let item1 of result[keysArr[addIndex]]">
             <div class="style-btn" [class.highlighted]="item1.optionid === this.selectedoptionArr[addIndex]"
               (click)="onClick(item1, addIndex)">
-              {{item1.res_options}}
+
+              <span *ngIf="item1.res_options === 'Other'" >
+                  {{ 'SURVEY_MODE.other_comments' | translate }}
+              </span>
+              <span *ngIf="item1.res_options !== 'Other'" >
+                  {{item1.res_options}}
+              </span>
+
+            
             </div>
           </div>
 
           <div class=row2 *ngIf="showother">
             <ion-textarea rows="4" cols="20" formControlName="otherresponse" class="textareacss"
-              placeholder="What do you like to say ...">
+              placeholder="{{ 'SURVEY_MODE.enter_feedback' | translate }}">
             </ion-textarea>
           </div>
 
-          <!-- <P *ngIf="responsemsg" class="has-error">{{this.responsemsg}}</P> -->
-
           <div class="navigation">
             <div class="left">
-              <img *ngIf="showprev" (click)="prev()" src="/assets/images/left-arrow.svg" width="60px" height="60px">
+              <img *ngIf="showprev" (click)="prev()" src="/assets/images/left-arrow.svg" width="48px" height="48px">
             </div>
             <div class="right">
-              <img *ngIf="!endsurvey && !showdone" (click)="next(addIndex)" src="/assets/images/right-arrow.svg" width="60px" height="60px">
-              <img *ngIf="showdone" (click)="done()" src="/assets/images/checked.svg" width="60px" height="60px">
+              <img *ngIf="!endsurvey && !showdone" (click)="next(addIndex)" src="/assets/images/right-arrow.svg"
+                width="48px" height="48px">
+              <img *ngIf="showdone" (click)="done(addIndex)" src="/assets/images/check.svg" width="48px" height="48px">
 
             </div>
           </div>
@@ -63,40 +75,81 @@
 
         <div *ngIf="endsurvey" class="end-survey">
           <div class="thanks">
-            உங்கள் பதில்களை பதிவு செய்தமைக்கு நன்றி!
+            {{ 'SURVEY_MODE.thanks' | translate }}
           </div>
 
           <div class="new-guest">
             <ion-row center>
               <ion-col text-center>
-                <ion-button expand="block" fill="solid" shape="round" class="button-align" (click)="newGuest()"
-                  type="button" name="action" color="primary">Next Guest</ion-button>
+                <ion-button expand="block" fill="solid" shape="round" class="button-align" 
+                  (click)="newGuest()" *ngIf="guestorcustomer === 'guest'" 
+                  type="button" name="action" color="primary">{{ 'SURVEY_MODE.next_guest' | translate }}</ion-button>
+
+                  <ion-button expand="block" fill="solid" shape="round" class="button-align" 
+                  (click)="newGuest()"  *ngIf="guestorcustomer === 'customer'"
+                  type="button" name="action" color="primary">{{ 'SURVEY_MODE.next_customer' | translate }}</ion-button>
+
+
               </ion-col>
             </ion-row>
           </div>
           <div class="stop">
-            <ion-row center>
-              <ion-col text-center>
-                <ion-button expand="block" fill="solid" shape="round" class="button-align" (click)="stop()"
-                  type="button" name="action" color="danger">Stop</ion-button>
-              </ion-col>
-            </ion-row>
+            <div class="msg">
+
+              {{ 'SURVEY_MODE.made_by' | translate }}
+            </div>
+            <div class="logo">
+              <img src="/assets/images/survey-team-logo.png" >
+            </div>
+            <div class="msg">
+              <img src="/assets/images/phone.svg" width="20px" height="20px%"> 9731616386
+            </div>
+
+         
           </div>
         </div>
-      </div>
-    </form>
 
-    <div class="squapl-footer">
-     <div class="logo">
-        <img  src="/assets/images/survey-powered-logo.svg" width="100%" height="100%">
-     </div>
-       <div class="copyrights">
-          © copyright Squapl digital media technologies
-       </div>
+
+        <div *ngIf="showcontactsection" class="end-survey">
+          <div class="thanks">
+            
+              {{ 'SURVEY_MODE.contact_details' | translate }}
+          </div>
+
+          <div class="name">
+            <ion-item class="text-style">
+              <ion-label position="stacked" class="label-style">
+                  {{ 'SURVEY_MODE.name' | translate }}
+              </ion-label>
+              <ion-input formControlName="name" clearInput placeholder="{{ 'SURVEY_MODE.enter_name' | translate }}">
+              </ion-input>
+
+            </ion-item>
+           
+          </div>
+          <div class="phone">
+            <ion-item class="text-style">
+              <ion-label position="stacked" class="label-style">
+                  {{ 'SURVEY_MODE.phone' | translate }}
+              </ion-label>
+              <ion-input formControlName="phone" clearInput placeholder="{{ 'SURVEY_MODE.enter_phone_num' | translate }}"></ion-input>
+
+            </ion-item>
+
+          </div>
+          <br>
+          <div class="button">
+
+            <img *ngIf="showdone" (click)="done(addIndex)" src="/assets/images/check.svg" width="48px" height="48px">
+
+          </div>
+
+
+        </div>
+      </form>
     </div>
-    
+
+
 
   </div>
-</ion-content> 
-
-
+</ion-content>

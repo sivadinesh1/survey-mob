@@ -19,10 +19,10 @@ export class AppComponent {
   companyname: any;
 
   public appPages = [
-    {title: 'Settings', url: '/', icon: 'settings'},
-    {title: 'View Members', url: '', icon: 'add'},
-    {title: 'View Companies', url: '', icon: 'add'},
-    {title: 'Signout', url: '/', icon: 'log-out'}
+    {title: 'Settings', url: '/', icon: '/assets/images/settings.svg'},
+    {title: 'View Members', url: '', icon: '/assets/images/group.svg'},
+    {title: 'View Companies', url: '', icon: '/assets/images/factory.svg'},
+    {title: 'Signout', url: '/', icon: '/assets/images/logout.svg'}
   ];
 
   constructor(

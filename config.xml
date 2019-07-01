@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.squapl.food.survey" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Suvai</name>
-    <description>Guest Survey app for Food caterers</description>
-    <author email="hi@ionicframework" href="http://www.squapl.com/">Squapl Digital media technologies</author>
+<widget id="com.squapl.survey.team" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Survey Team</name>
+    <description>Multilingual Survey app for Indian small and medium business enterprises</description>
+    <author email="hi@ionicframework" href="http://www.squapl.com/">Squapl Digital Media Technologies</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -83,5 +83,9 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^3.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-sqlite-storage" spec="^3.2.0" />
-    <engine name="android" spec="7.0.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.4">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
+    </plugin>
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <engine name="android" spec="^8.0.0" />
 </widget>

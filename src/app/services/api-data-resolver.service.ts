@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { CommonApiService } from './common-api.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,10 @@ export class ApiDataResolverService implements Resolve<any> {
 
   loggedinUserId: any;
   url: any;
+
+  
+  yesterdayDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+  todayDate = moment().format('YYYY-MM-DD');
 
   constructor(private _commonapiservice: CommonApiService, 
     private _authservice: AuthService, private router: Router) { 
@@ -30,13 +35,17 @@ export class ApiDataResolverService implements Resolve<any> {
     const surveyinfo = route.paramMap.get('surveyinfo');
     const companylistinfo = route.paramMap.get('companylistinfo');
     const edit_companyid = route.paramMap.get('edit-companyid');
+    const runningsurveyid = route.paramMap.get('runningsurveyid');
   
     if (surveyid != null) {
       return this._commonapiservice.getSurveyInfoById(route.paramMap.get('surveyid'));
     } else if (surveycode != null) {
       return this._commonapiservice.getSurveyInfoByCode(route.paramMap.get('surveycode'));
     } else if (survid != null) {
-      return this._commonapiservice.getSurveyShortSummary(route.paramMap.get('survid'));
+      return this._commonapiservice.getSurveyShortSummary(route.paramMap.get('survid'), this.todayDate);
+    } else if (runningsurveyid != null) {
+      return this._commonapiservice.getSurveyBasicInfoById(route.paramMap.get('runningsurveyid'));
+      // return this._commonapiservice.getSurveyShortSummary(route.paramMap.get('runningsurveyid'), this.yesterdayDate);
     } else if (userid != null) {
       return this._commonapiservice.getUserSurveysByStatus(route.paramMap.get('userid'), 'U');
     } else if (previewsurveyid != null) {

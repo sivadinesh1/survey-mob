@@ -15,8 +15,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AddQuestionsPage implements OnInit {
 
-  survey: any;
+ // survey: any;
   surveyid: any;
+  questionscount: any;
   apiresponse: any;
 
   surveydata: any;
@@ -37,7 +38,7 @@ export class AddQuestionsPage implements OnInit {
   validateAllFormFields = SharedService.validateAllFormFields;
   isFieldInvalidTouched = SharedService.isFieldInvalidTouched;
 
-  flatMap = [];
+  // flatMap = [];
 
   language: any;
   industry: any;
@@ -57,7 +58,7 @@ export class AddQuestionsPage implements OnInit {
       surveyid: new FormControl(this.surveyid, [Validators.required]),
       question: new FormControl(null, [Validators.required]),
       optiongroupname: new FormControl(0, null),
-      question_sequence: new FormControl('1', [Validators.required]),
+      question_sequence: new FormControl(null, [Validators.required]),
       loggedinuser: new FormControl(null, [Validators.required]),
       lang: new FormControl(null, [Validators.required]),
       industry: new FormControl(null, [Validators.required]),
@@ -82,6 +83,8 @@ export class AddQuestionsPage implements OnInit {
 
   ionViewDidEnter() {
     this.surveyid = this._route.snapshot.params['surveyid'];
+    this.questionscount = this._route.snapshot.params['questionscount'];
+    
 
     this.getAsyncData();
 
@@ -93,13 +96,13 @@ export class AddQuestionsPage implements OnInit {
 }
 
   async getAsyncData() {
-    this.flatMap = [];
+    // this.flatMap = [];
 
     this.submitForm.patchValue({
       surveyid: this.surveyid,
       question: '',
       optiongroupname: '',
-      question_sequence: '1',
+      question_sequence: this.questionscount,
 
     });
 
@@ -121,52 +124,52 @@ export class AddQuestionsPage implements OnInit {
       });
 
     // let test;
-    this._surveyService.surveyconfig.subscribe(res => {
-      this.survey = res;
-      console.log('values in ADD QUES>> ' + JSON.stringify(this.survey));
+    // this._surveyService.surveyconfig.subscribe(res => {
+    // //  this.survey = res;
+    //   console.log('values in ADD QUES>> ' + JSON.stringify(this.survey));
 
-      this._cdr.markForCheck();
-    });
+    //   this._cdr.markForCheck();
+    // });
 
-    this._commonApiSevice.getResponseOptions('tamil', 'food').subscribe(data => {
-      this.apiresponse = data;
-      const array = this.apiresponse;
-      console.log('object >> ' + JSON.stringify(array));
+    // this._commonApiSevice.getResponseOptions('tamil', 'food').subscribe(data => {
+    //   this.apiresponse = data;
+    //   const array = this.apiresponse;
+    //   console.log('object >> ' + JSON.stringify(array));
 
-      this.result = array.reduce(function (list, el) {
-        if (!list[el.groupname]) {
-          list[el.groupname] = [];
-        }
-        list[el.groupname].push(el);
-        return list;
-      }, {});
-
-
-      Object.values(this.result).forEach(val => {
-        if (Array.isArray(val)) {
-          const reducedArr = val.reduce((acc, item, idx) => {
-            if (idx === 0) {
-              return acc + ',' + item.res_options;
-            } else {
-              return acc + ' / ' + item.res_options;
-            }
-
-          }, val[0].groupname);
+    //   this.result = array.reduce(function (list, el) {
+    //     if (!list[el.groupname]) {
+    //       list[el.groupname] = [];
+    //     }
+    //     list[el.groupname].push(el);
+    //     return list;
+    //   }, {});
 
 
-          this.flatMap.push({
-            id: reducedArr.substring(0, reducedArr.indexOf(',')),
-            name: reducedArr.substring(reducedArr.indexOf(',') + 1, reducedArr.length)
-          });
+    //   Object.values(this.result).forEach(val => {
+    //     if (Array.isArray(val)) {
+    //       const reducedArr = val.reduce((acc, item, idx) => {
+    //         if (idx === 0) {
+    //           return acc + ',' + item.res_options;
+    //         } else {
+    //           return acc + ' / ' + item.res_options;
+    //         }
 
-        }
+    //       }, val[0].groupname);
 
-      });
 
-      this._cdr.markForCheck();
-      //    console.log('object >> ' + JSON.stringify(this.result));
+    //       this.flatMap.push({
+    //         id: reducedArr.substring(0, reducedArr.indexOf(',')),
+    //         name: reducedArr.substring(reducedArr.indexOf(',') + 1, reducedArr.length)
+    //       });
 
-    });
+    //     }
+
+    //   });
+
+    //   this._cdr.markForCheck();
+      
+
+    // });
 
 
   }
@@ -175,21 +178,14 @@ export class AddQuestionsPage implements OnInit {
 
   onSubmit() {
 
-
-
     if (!this.submitForm.valid) {
       this.validateAllFormFields(this.submitForm);
       this._cdr.markForCheck();
       this.responsemsg = 'Wrong or Missing information. Please check the form.';
     } else {
-
-
-
       this._commonApiSevice.addQuestions(this.submitForm.value).subscribe(data => {
 
         this.apiresponsedata = data;
-        //   this.survey.questions.push({'description': this.submitForm.value.question, 'options': this.submitForm.value.optiongroupname});
-        console.log('object<<<<< ' + JSON.stringify(this.apiresponsedata));
 
         if (this.apiresponsedata.result === 'OK') {
           this.newquestionid = this.apiresponsedata.newquestionid;

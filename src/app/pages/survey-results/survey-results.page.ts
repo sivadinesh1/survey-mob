@@ -1,5 +1,6 @@
+import { ShareComponent } from './../../components/share/share.component';
 
-import { DataService } from './../../services/data.service';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonApiService } from 'src/app/services/common-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,8 +9,12 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestro
 
 import { groupBy } from 'lodash';
 
-import * as socketIo from 'socket.io-client';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { ModalController } from '@ionic/angular';
 import { socketApiUrl } from '../../../environments/environment';
+import * as socketIo from 'socket.io-client';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-survey-results',
@@ -31,15 +36,23 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
   loggedinUserId: any;
   surveyid: any;
   companyId: any;
-
   socketApiUrl = socketApiUrl;
+
+   rescount: any;
+
+  text = 'Check out Survey Results!';
+  shareurl = 'https://squapl.com';
+
+  
+  //yesterdayDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+  todayDate = moment().format('YYYY-MM-DD');
 
   constructor(private _route: ActivatedRoute, private _cdr: ChangeDetectorRef,
     private _router: Router, private _authService: AuthService,
-    private dataservice: DataService,
+    private socialSharing: SocialSharing,
+    private file: File, private _modalcontroller: ModalController,
     private _commonApiService: CommonApiService) {
     this.surveyid = this._route.snapshot.params['survid'];
-
 
   }
 
@@ -52,16 +65,14 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
       this.surveydata = data['surveydata'];
       const array = this.surveydata;
 
-      this.totalresponsesArr = array.reduce(function (list, el) {
-        if (!list[el.guestname]) {
-          list[el.guestname] = [];
-        }
-        list[el.guestname].push(el);
-        return list;
-      }, {});
+      this._commonApiService.getSurveyResponsesCount(this.surveyid, this.todayDate).subscribe(resdat => {
+         this.rescount = resdat[0];
+         
+        this.totalresponses = this.rescount.count;
+        this._cdr.markForCheck();
+      });
 
-      this.totalresponses = Object.entries(this.totalresponsesArr).length;
-
+// debugger;
       let groupedData = groupBy(array, function (d) { return d.questionid; });
 
       Object.values(groupedData).map(e => {
@@ -75,25 +86,29 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
         let k = e[0].question;
         let j = result1;
 
+        // debugger;
 
         this._commonApiService.getSurveyQuestionResponses(e[0].questionid).subscribe(dat => {
           let tmp = dat;
 
           Object.keys(tmp).forEach(key => {
-       //     console.log(tmp[key]);
+       
             let tmpkey = tmp[key].res_options;
-
+            let temokeyid = tmp[key].id;
+       
             if (Object.keys(j).indexOf(tmpkey) === -1) {
 
-              j[tmpkey] = 0;
-
+              j[tmpkey] = [0, temokeyid];
+          //  }
+            } else {
+              j[tmpkey] = [Object.values(j)[0], temokeyid];
             }
 
           });
 
         });
 
-
+        console.log('ff' + JSON.stringify(j));
         this.flatMap.push({ questions: k, responsesummary: j });
 
 
@@ -105,32 +120,22 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
     this.getAsyncData();
 
 
-    // const socket = socketIo('http://localhost:4444/');
+   // const socket = socketIo('http://localhost:4444/');
     const socket = socketIo(`${this.socketApiUrl}`);
     socket.on('hello', (data) => {
-    //  console.log(data);
-
 
        this.surveydata = data;
        const array = this.surveydata;
 
-    //   console.log('>>>>>>>>> ' + JSON.stringify(array));
-
-     //  console.log("is array " + Array.isArray(array1));
-
        if(Array.isArray(array)) {
         this.flatMap = [];
-        this.totalresponsesArr = array.reduce(function (list, el) {
-          if (!list[el.guestname]) {
-            list[el.guestname] = [];
-          }
-          list[el.guestname].push(el);
-          return list;
-        }, {});
 
+        this._commonApiService.getSurveyResponsesCount(this.surveyid, this.todayDate).subscribe(resdat => {
+          this.rescount = resdat;
+        this.totalresponses = this.rescount.count;
+      });
 
-      this.totalresponses = Object.entries(this.totalresponsesArr).length;
-
+// debugger;
       let groupedData = groupBy(array, function (d) { return d.questionid; });
 
       Object.values(groupedData).map(e => {
@@ -165,7 +170,7 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
 
         this.flatMap.push({ questions: k, responsesummary: j });
 
-
+console.log('Final >> ' + JSON.stringify(this.flatMap));
       });
 
 
@@ -181,6 +186,46 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
 
+  }
+
+ 
+
+  async shareWhatsApp() {
+    // Text + Image or URL works
+    this.socialSharing.shareViaWhatsApp(this.text, null, this.shareurl).then(() => {
+      // Success
+    }).catch((e) => {
+      // Error!
+    });
+  }
+ 
+  async resolveLocalFile() {
+    return this.file.copyFile(`${this.file.applicationDirectory}www/assets/imgs/`, 'academy.jpg', this.file.cacheDirectory, `${new Date().getTime()}.jpg`);
+  }
+ 
+  removeTempFile(name) {
+    this.file.removeFile(this.file.cacheDirectory, name);
+  }
+ 
+  async shareEmail() {
+    let file = await this.resolveLocalFile();
+ 
+    this.socialSharing.shareViaEmail(this.text, 'My custom subject', ['sivadinesh@gmail.com'], null, null, file.nativeURL).then(() => {
+      this.removeTempFile(file.name);
+    }).catch((e) => {
+      // Error!
+    });
+  }
+ 
+  async shareFacebook() {
+    let file = await this.resolveLocalFile();
+ 
+    // Image or URL works
+    this.socialSharing.shareViaFacebook(null, file.nativeURL, null).then(() => {
+      this.removeTempFile(file.name);
+    }).catch((e) => {
+      // Error!
+    });
   }
 
 
@@ -204,7 +249,7 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
 
   getWidth(item) {
   
-    const v = (item.value / this.totalresponses) * 100;
+    const v = (item.value[0] / this.totalresponses) * 100;
     return `${v}%`;
   }
 
@@ -213,5 +258,26 @@ export class SurveyResultsPage implements OnInit, OnDestroy {
       return e[key] === value;
     });
   }
+
+
+
+  async share() {
+
+    const modal = await this._modalcontroller.create({
+      component: ShareComponent,
+      componentProps: {
+        data: this.shareurl
+      }
+    });
+ 
+    modal.onDidDismiss().then((result) => {
+   
+  });
+  
+    return await modal.present();
+
+  }
+
+
 
 }
